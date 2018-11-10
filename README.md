@@ -16,6 +16,10 @@ Istovremeno prevođenje i pokretanje: `make makerun`.
 
 Pakovanje direktorijuma: `make dist`.
 
+Za komande sa prevođenjem neophodno je imati kompajler gcc, dok se u include putu moraju nalaziti zaglavlje GL/glut.h i ostali relevantni činioci biblioteke Glut aplikativnog korisničkog interfejsa OpenGL.
+
+Za slučaj da to u trenutku nije dostupno, u direktorijumu projekta nalazi se i izvršiva verzija programa, prevedena na 32-bitnoj verziji operativnog sistema Ubuntu 12.04.5 LTS (Precise Pangolin), pa je moguće probati direktno pokretanje komandom `make run` ili nekom drugom koja odgovara radnom sistemu (na Ubuntuu `./klikerche`).
+
 ## Komande :video_game:
 Zasad su sve komande neosetljive na veličinu slova.
 

@@ -16,7 +16,7 @@ makerun:
 	make run
 
 clean:
-	rm -f *~ *.o $(PROGRAM)
+	rm -f *~
 
 dist: clean
 	-tar -chvj -C .. -f ../$(PROGRAM).tar.bz2 RG31-$(PROGRAM)
