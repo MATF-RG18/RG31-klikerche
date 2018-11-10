@@ -3,8 +3,8 @@ CC      = gcc
 FLAGS   = -Wall
 LIBS    = -lglut -lGLU -lGL -lm
 
-$(PROGRAM): main.c
-	$(CC) $(FLAGS) -o $(PROGRAM) main.c $(LIBS)
+$(PROGRAM): src/main.c
+	$(CC) $(FLAGS) -o $(PROGRAM) src/main.c $(LIBS)
 
 .PHONY: run makerun clean dist
 
@@ -16,7 +16,7 @@ makerun:
 	make run
 
 clean:
-	rm -f *~
+	rm -f *~ src/*~ screenshots/*~
 
 dist: clean
 	-tar -chvj -C .. -f ../$(PROGRAM).tar.bz2 RG31-$(PROGRAM)
