@@ -21,9 +21,14 @@ void napravi_prozor(void)
 void postavi_kolbek(void)
 {
     // Postavljanje kolbek funkcija
-    glutKeyboardFunc(na_tipku);
+    glutIdleFunc(na_cekanje);
+    glutKeyboardFunc(na_tipku_dole);
+    glutKeyboardUpFunc(na_tipku_gore);
     glutReshapeFunc(na_prozor);
     glutDisplayFunc(na_prikaz);
+    
+    // Postavljene tipke
+    tipke = 0;
 }
 
 void postavi_svetlo(void)

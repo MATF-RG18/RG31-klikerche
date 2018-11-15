@@ -10,8 +10,16 @@ extern struct oko oko;
 // sa javnim koord. centra i radijusom r
 extern struct kliker kliker;
 
+// Bafer sa stanjem tipki
+// izrazenim sa sest bitova:
+// NAPRED, NAZAD, GORE,
+// DOLE, LEVO, DESNO
+extern int tipke;
+
 // Deklaracije kolbek funkcija
-void na_tipku(unsigned char, int, int);
+void na_cekanje(void);
+void na_tipku_dole(unsigned char, int, int);
+void na_tipku_gore(unsigned char, int, int);
 void na_prozor(int, int);
 void na_prikaz(void);
 
@@ -42,13 +50,43 @@ int main(int arg_br, char** arg_niz)
     exit(EXIT_SUCCESS);
 }
 
-void na_tipku(unsigned char tipka, int x, int y)
+void na_cekanje(void)
+{
+    // Oko se krece napred
+    if (tipke & NAPRED)
+        oko_napred();
+    
+    // Oko se krece nazad
+    if (tipke & NAZAD)
+        oko_nazad();
+    
+    // Oko se krece gore
+    if (tipke & GORE)
+        oko_gore();
+    
+    // Oko se krece dole
+    if (tipke & DOLE)
+        oko_dole();
+    
+    // Oko se krece levo
+    if (tipke & LEVO)
+        oko_levo();
+    
+    // Oko se krece desno
+    if (tipke & DESNO)
+        oko_desno();
+    
+    // Osvezavanje prozora
+    glutPostRedisplay();
+}
+
+void na_tipku_dole(unsigned char tipka, int x, int y)
 {
     // Zanemaruje se mesto klika
     PONISTI(x);
     PONISTI(y);
     
-    switch (tipka){
+    switch(tipka){
     case ESC:
         // Prekid programa
         exit(EXIT_SUCCESS);
@@ -56,37 +94,25 @@ void na_tipku(unsigned char tipka, int x, int y)
     case 'a':
     case 'A':
         // Oko se krece levo
-        oko_levo();
-        
-        // Osvezavanje scene
-        glutPostRedisplay();
+        tipke |= LEVO;
         break;
     
     case 'd':
     case 'D':
         // Oko se krece desno
-        oko_desno();
-        
-        // Osvezavanje scene
-        glutPostRedisplay();
+        tipke |= DESNO;
         break;
     
     case 'e':
     case 'E':
         // Oko se krece napred
-        oko_napred();
-        
-        // Osvezavanje scene
-        glutPostRedisplay();
+        tipke |= NAPRED;
         break;
     
     case 'q':
     case 'Q':
         // Oko se krece nazad
-        oko_nazad();
-        
-        // Osvezavanje scene
-        glutPostRedisplay();
+        tipke |= NAZAD;
         break;
     
     case 'r':
@@ -101,19 +127,67 @@ void na_tipku(unsigned char tipka, int x, int y)
     case 's':
     case 'S':
         // Oko se krece dole
-        oko_dole();
-        
-        // Osvezavanje scene
-        glutPostRedisplay();
+        tipke |= DOLE;
         break;
     
     case 'w':
     case 'W':
         // Oko se krece gore
-        oko_gore();
-        
-        // Osvezavanje scene
-        glutPostRedisplay();
+        tipke |= GORE;
+        break;
+    }
+}
+
+void na_tipku_gore(unsigned char tipka, int x, int y)
+{
+    // Zanemaruje se mesto klika
+    PONISTI(x);
+    PONISTI(y);
+    
+    switch(tipka){
+    case ESC:
+        // Prekid programa
+        break;
+    
+    case 'a':
+    case 'A':
+        // Oko se krece levo
+        tipke &= ~LEVO;
+        break;
+    
+    case 'd':
+    case 'D':
+        // Oko se krece desno
+        tipke &= ~DESNO;
+        break;
+    
+    case 'e':
+    case 'E':
+        // Oko se krece napred
+        tipke &= ~NAPRED;
+        break;
+    
+    case 'q':
+    case 'Q':
+        // Oko se krece nazad
+        tipke &= ~NAZAD;
+        break;
+    
+    case 'r':
+    case 'R':
+        // Resetovanje oka/kamere
+        break;
+    
+    case 's':
+    case 'S':
+        // Oko se krece dole
+        tipke &= ~DOLE;
+        break;
+    
+    case 'w':
+    case 'W':
+        // Oko se krece gore
+        tipke &= ~GORE;
         break;
     }
 }

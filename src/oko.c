@@ -2,17 +2,17 @@
 
 void napravi_oko(void)
 {
-    // Inicijalizacija radijusa
+    // Postavljanje radijusa
     oko.r = 5;
-    oko.d_r = 0.15;
+    oko.d_r = 0.03;
     
-    // Inicijalizacija azimuta
+    // Postavljanje azimuta
     oko.phi = 0;
-    oko.d_phi = M_PI/90;
+    oko.d_phi = M_PI/450;
     
-    // Inicijalizacija polara
+    // Postavljanje polara
     oko.theta = M_PI/6;
-    oko.d_theta = M_PI/90;
+    oko.d_theta = M_PI/450;
 }
 
 void popravi_oko(void)

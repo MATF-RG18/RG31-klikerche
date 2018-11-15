@@ -20,8 +20,24 @@
 // Makro za nekoriscene promenljive
 #define PONISTI(x) (void)x
 
+// Bafer sa stanjem tipki
+// izrazenim sa sest bitova:
+// prvi = napred, drugi = nazad,
+// treci = gore, cetvrti = dole,
+// peti = levo, sesti = desno
+#define NAPRED 1
+#define NAZAD 2
+#define GORE 4
+#define DOLE 8
+#define LEVO 16
+#define DESNO 32
+
+int tipke;
+
 // Deklaracije kolbek funkcija
-extern void na_tipku(unsigned char, int, int);
+extern void na_cekanje(void);
+extern void na_tipku_dole(unsigned char, int, int);
+extern void na_tipku_gore(unsigned char, int, int);
 extern void na_prozor(int, int);
 extern void na_prikaz(void);
 
