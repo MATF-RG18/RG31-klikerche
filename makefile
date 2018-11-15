@@ -1,10 +1,11 @@
 PROGRAM = klikerche
 CC      = gcc
-FLAGS   = -Wall -Wextra
-LIBS    = -lglut -lGLU -lGL -lm
+ZAST    = -Wall -Wextra
+PROG    = src/main.c src/osnov.c src/oko.c src/kliker.c
+BIBL    = -lglut -lGLU -lGL -lm
 
 $(PROGRAM): src/main.c
-	$(CC) $(FLAGS) -o $(PROGRAM) src/main.c $(LIBS)
+	$(CC) $(ZAST) -o $(PROGRAM) $(PROG) $(BIBL)
 
 .PHONY: run makerun clean
 
