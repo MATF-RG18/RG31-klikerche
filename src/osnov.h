@@ -7,6 +7,7 @@
 // Opis prozora
 #define PROZ_DIM 500
 #define PROZ_POL 100
+#define PROZ_BOJA 0.05
 #define APP_IME "Klikerche"
 
 // Opis perspektive
@@ -21,16 +22,15 @@
 #define PONISTI(x) (void)x
 
 // Bafer sa stanjem tipki
-// izrazenim sa sest bitova:
-// prvi = napred, drugi = nazad,
-// treci = gore, cetvrti = dole,
-// peti = levo, sesti = desno
+// izrazenim vrednoscu bitova,
+// pocevsi od najmanje tezine
 #define NAPRED 1
-#define NAZAD 2
-#define GORE 4
-#define DOLE 8
-#define LEVO 16
-#define DESNO 32
+#define NAZAD 1<<1
+#define GORE 1<<2
+#define DOLE 1<<3
+#define LEVO 1<<4
+#define DESNO 1<<5
+#define RESET 1<<6
 
 int tipke;
 

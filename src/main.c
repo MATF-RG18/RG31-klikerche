@@ -11,9 +11,9 @@ extern struct oko oko;
 extern struct kliker kliker;
 
 // Bafer sa stanjem tipki
-// izrazenim sa sest bitova:
-// NAPRED, NAZAD, GORE,
-// DOLE, LEVO, DESNO
+// iskazanim vrednoscu bitova:
+// NAPRED, NAZAD, GORE, DOLE,
+// LEVO, DESNO, RESET
 extern int tipke;
 
 // Deklaracije kolbek funkcija
@@ -40,7 +40,7 @@ int main(int arg_br, char** arg_niz)
     // Pravljenje oka/kamere
     napravi_oko();
     
-    // Pravljenje klikercheta
+    // Pravljenje klikera
     napravi_kliker();
     
     // Glavna petlja Gluta
@@ -52,29 +52,42 @@ int main(int arg_br, char** arg_niz)
 
 void na_cekanje(void)
 {
+    // Resetovanje kamere
+    if (tipke & RESET){
+        if(resetuj_oko()){
+            tipke &= ~RESET;
+        }
+    }
+    
     // Oko se krece napred
-    if (tipke & NAPRED)
+    if (tipke & NAPRED){
         oko_napred();
+    }
     
     // Oko se krece nazad
-    if (tipke & NAZAD)
+    if (tipke & NAZAD){
         oko_nazad();
+    }
     
     // Oko se krece gore
-    if (tipke & GORE)
+    if (tipke & GORE){
         oko_gore();
+    }
     
     // Oko se krece dole
-    if (tipke & DOLE)
+    if (tipke & DOLE){
         oko_dole();
+    }
     
     // Oko se krece levo
-    if (tipke & LEVO)
+    if (tipke & LEVO){
         oko_levo();
+    }
     
     // Oko se krece desno
-    if (tipke & DESNO)
+    if (tipke & DESNO){
         oko_desno();
+    }
     
     // Osvezavanje prozora
     glutPostRedisplay();
@@ -86,7 +99,7 @@ void na_tipku_dole(unsigned char tipka, int x, int y)
     PONISTI(x);
     PONISTI(y);
     
-    switch(tipka){
+    switch (tipka){
     case ESC:
         // Prekid programa
         exit(EXIT_SUCCESS);
@@ -118,10 +131,7 @@ void na_tipku_dole(unsigned char tipka, int x, int y)
     case 'r':
     case 'R':
         // Resetovanje oka/kamere
-        napravi_oko();
-        
-        // Osvezavanje scene
-        glutPostRedisplay();
+        tipke |= RESET;
         break;
     
     case 's':
@@ -144,49 +154,51 @@ void na_tipku_gore(unsigned char tipka, int x, int y)
     PONISTI(x);
     PONISTI(y);
     
-    switch(tipka){
+    switch (tipka){
     case ESC:
         // Prekid programa
         break;
     
     case 'a':
     case 'A':
-        // Oko se krece levo
+        // Oko se vise ne krece levo
         tipke &= ~LEVO;
         break;
     
     case 'd':
     case 'D':
-        // Oko se krece desno
+        // Oko se vise ne krece desno
         tipke &= ~DESNO;
         break;
     
     case 'e':
     case 'E':
-        // Oko se krece napred
+        // Oko se vise ne krece napred
         tipke &= ~NAPRED;
         break;
     
     case 'q':
     case 'Q':
-        // Oko se krece nazad
+        // Oko se vise ne krece nazad
         tipke &= ~NAZAD;
         break;
     
     case 'r':
     case 'R':
         // Resetovanje oka/kamere
+        // NEMA tipke &= ~RESET;
+        // To radi glutIdleFunc
         break;
     
     case 's':
     case 'S':
-        // Oko se krece dole
+        // Oko se vise ne krece dole
         tipke &= ~DOLE;
         break;
     
     case 'w':
     case 'W':
-        // Oko se krece gore
+        // Oko se vise ne krece gore
         tipke &= ~GORE;
         break;
     }
@@ -221,7 +233,7 @@ void na_prikaz(void)
     
     // Postavljanje vidnih parametara
     popravi_oko();
-    gluLookAt( oko.x,    oko.y,    oko.z,   // centar oka/kamere
+    gluLookAt( oko.x,    oko.y,    oko.z,   // polozaj kamere
               kliker.x, kliker.y, kliker.z, // centar pogleda
                  0,        0,        1);    // vektor normale
     

@@ -4,8 +4,13 @@
 #include <math.h>
 #include <GL/glut.h>
 
-// Struktura koja enkapsulira klikerche
-static struct kliker{
+// Opis klikera
+#define KLIK_CENT 0
+#define KLIK_RAD 1
+#define KLIK_PREC 22
+
+// Struktura koja enkapsulira kliker
+struct kliker{
     // Koordinate centra
     GLdouble x, y, z;
     

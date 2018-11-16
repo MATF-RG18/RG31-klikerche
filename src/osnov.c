@@ -15,7 +15,7 @@ void napravi_prozor(void)
     glutCreateWindow(APP_IME);
     
     // OpenGL ciscenje prozora
-    glClearColor(0.05, 0.05, 0.05, 0);
+    glClearColor(PROZ_BOJA, PROZ_BOJA, PROZ_BOJA, 0);
 }
 
 void postavi_kolbek(void)
@@ -27,7 +27,7 @@ void postavi_kolbek(void)
     glutReshapeFunc(na_prozor);
     glutDisplayFunc(na_prikaz);
     
-    // Postavljene tipke
+    // Na pocetku nista nije stisnuto
     tipke = 0;
 }
 

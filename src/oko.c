@@ -3,16 +3,16 @@
 void napravi_oko(void)
 {
     // Postavljanje radijusa
-    oko.r = 5;
-    oko.d_r = 0.03;
+    oko.r = OKO_RAD;
+    oko.d_r = OKO_RAD_R;
     
     // Postavljanje azimuta
-    oko.phi = 0;
-    oko.d_phi = M_PI/450;
+    oko.phi = OKO_PHI;
+    oko.d_phi = OKO_PHI_R;
     
     // Postavljanje polara
-    oko.theta = M_PI/6;
-    oko.d_theta = M_PI/450;
+    oko.theta = OKO_THETA;
+    oko.d_theta = OKO_THETA_R;
 }
 
 void popravi_oko(void)
@@ -23,15 +23,54 @@ void popravi_oko(void)
     oko.z = oko.r * sin(oko.theta);
 }
 
+int resetuj_oko(void)
+{
+    // Razlike u odnosu na pocetno stanje
+    int r_raz = (oko.r - OKO_RAD) / oko.d_r;
+    int phi_raz = (oko.phi - OKO_PHI) / oko.d_phi;
+    int theta_raz = (oko.theta - OKO_THETA) / oko.d_theta;
+    
+    // Postepeno vracanje oka u pocetno stanje
+    if (r_raz || phi_raz || theta_raz){
+        if (r_raz > 0){
+            oko_napred();
+            r_raz--;
+        } else if (r_raz < 0){
+            oko_nazad();
+            r_raz++;
+        }
+        
+        if (phi_raz > 0){
+            oko_levo();
+            phi_raz--;
+        } else if (phi_raz < 0){
+            oko_desno();
+            phi_raz++;
+        }
+        
+        if (theta_raz > 0){
+            oko_dole();
+            theta_raz--;
+        } else if (theta_raz < 0){
+            oko_gore();
+            theta_raz++;
+        }
+    // vraca 1 ako je u pocetnom stanju
+    } else return 1;
+    
+    // vraca 0 ako nije u pocetnom stanju
+    return 0;
+}
+
 void oko_levo(void)
 {
     // Oko se krece levo:
     // smanjivanje azimuta
     oko.phi -= oko.d_phi;
     
-    // Popravka jer phi = [0, 2pi)
-    if (oko.phi < 0){
-        oko.phi += 2*M_PI;
+    // Popravka jer phi = [-pi, pi)
+    if (oko.phi < OKO_PHI_MIN){
+        oko.phi += OKO_PHI_POM;
     }
 }
 
@@ -41,9 +80,9 @@ void oko_desno(void)
     // povecavanje azimuta
     oko.phi += oko.d_phi;
     
-    // Popravka jer phi = [0, 2pi)
-    if (oko.phi >= 2*M_PI){
-        oko.phi -= 2*M_PI;
+    // Popravka jer phi = [-pi, pi)
+    if (oko.phi >= OKO_PHI_MAX){
+        oko.phi -= OKO_PHI_POM;
     }
 }
 
@@ -56,8 +95,8 @@ void oko_gore(void)
     // Popravka jer theta = [0, pi/2]
     // Inace je [-pi/2, pi/2], ali ovako
     // se izbegava odlazak ispod scene
-    if (oko.theta > M_PI/2){
-        oko.theta = M_PI/2;
+    if (oko.theta > OKO_THETA_MAX){
+        oko.theta = OKO_THETA_MAX;
     }
 }
 
@@ -70,8 +109,8 @@ void oko_dole(void)
     // Popravka jer theta = [0, pi/2]
     // Inace je [-pi/2, pi/2], ali ovako
     // se izbegava odlazak ispod scene
-    if (oko.theta < 0){
-        oko.theta = 0;
+    if (oko.theta < OKO_THETA_MIN){
+        oko.theta = OKO_THETA_MIN;
     }
 }
 
@@ -82,8 +121,8 @@ void oko_napred(void)
     oko.r -= oko.d_r;
     
     // Popravka jer r = [2, 10]
-    if (oko.r < 2){
-        oko.r = 2;
+    if (oko.r < OKO_RAD_MIN){
+        oko.r = OKO_RAD_MIN;
     }
 }
 
@@ -94,7 +133,7 @@ void oko_nazad(void)
     oko.r += oko.d_r;
     
     // Popravka jer r = [2, 10]
-    if (oko.r > 10){
-        oko.r = 10;
+    if (oko.r > OKO_RAD_MAX){
+        oko.r = OKO_RAD_MAX;
     }
 }

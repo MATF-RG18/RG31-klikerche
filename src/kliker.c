@@ -3,15 +3,15 @@
 void napravi_kliker(void)
 {
     // Postavljanje centra sfere
-    kliker.x = 0;
-    kliker.y = 0;
-    kliker.z = 0;
+    kliker.x = KLIK_CENT;
+    kliker.y = KLIK_CENT;
+    kliker.z = KLIK_CENT;
     
     // Postavljanje radijusa sfere
-    kliker.r = 1;
+    kliker.r = KLIK_RAD;
     
     // Postavljanje preciznosti sfere
-    kliker.prec = 22;
+    kliker.prec = KLIK_PREC;
 }
 
 void nacrtaj_kliker(void)
