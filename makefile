@@ -1,8 +1,8 @@
 PROGRAM = klikerche
 CC      = gcc
 ZAST    = -Wall -Wextra
-PROG    = src/main.c src/osnov.c src/oko.c src/kliker.c
-ZAV     = src/osnov.h src/oko.h src/kliker.h
+PROG    = izvor/main.c izvor/osnov.c izvor/kolbek.c izvor/oko.c izvor/kliker.c
+ZAV     = izvor/osnov.h izvor/kolbek.h izvor/oko.h izvor/kliker.h
 BIBL    = -lglut -lGLU -lGL -lm
 
 $(PROGRAM): $(PROG) $(ZAV)
@@ -18,4 +18,4 @@ makerun:
 	make run
 
 clean:
-	rm -f *~ src/*~ screenshots/*~
+	rm -f *~ izvor/*~ slike/*~
