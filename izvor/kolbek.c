@@ -2,89 +2,101 @@
 
 void postavi_kolbek(void)
 {
-    // Postavljanje kolbek funkcija
-    
     /* Funkcija na cekanje obavlja poslove
-       u pozadini, dok je program neaktivan
-       iz tacke korisnika; ponasa se kao opsti,
-       sve vreme aktivan tajmer; ovde proverava
-       stanje bafera tipki, te izracunava i
-       animira sta treba, sto omogucava glatkost
-       i uskladjenost pokreta */
+     * u pozadini, dok je program neaktivan
+     * iz gledista korisnika; ponasa se kao opsti,
+     * sve vreme aktivan tajmer; ovde proverava
+     * stanje bafera tipki, te izracunava i
+     * animira sta treba, sto omogucava glatkost
+     * i uskladjenost pokreta */
     glutIdleFunc(na_cekanje);
     
     /* Funkcija na tipku dole prima podatke
-       o stisnutim tipkama tastature i tu
-       informaciju ubacuje u bafer tipki */
+     * o pritisnutim tipkama tastature i tu
+     * informaciju ubacuje u bafer tipki */
     glutKeyboardFunc(na_tipku_dole);
     
     /* Funkcija na tipku gore prima podatke
-       o otpustenim tipkama tastature i njih
-       izbacuje iz bafera tipki */
+     * o otpustenim tipkama tastature i njih
+     * izbacuje iz bafera tipki */
     glutKeyboardUpFunc(na_tipku_gore);
     
     /* Funkcija na prozor postavlja pogled
-       na scenu, kao i detalje projektivnog
-       preslikavanja koje cini taj pogled,
-       cime usput resava i problem promene
-       dimenzije tj. skaliranja prozora */
+     * na scenu, kao i detalje projektivnog
+     * preslikavanja koje cini taj pogled,
+     * cime usput resava i problem promene
+     * dimenzije tj. skaliranja prozora */
     glutReshapeFunc(na_prozor);
     
     /* Funkcija na prikaz jeste glavna fja
-       koja upravlja izgledom scene; ovde u
-       svakom osvezavanju nanovo postavlja
-       oko, loptu, stazu, prepreke */
+     * koja upravlja izgledom scene; ovde u
+     * svakom osvezavanju nanovo postavlja
+     * oko, loptu, stazu, prepreke */
     glutDisplayFunc(na_prikaz);
     
-    // Na pocetku nista nije stisnuto
+    /* Na pocetku nema pritisnutih tipki */
     tipke = PRAZNO;
 }
 
 void na_cekanje(void)
 {
-    // Resetovanje kamere
+    /* Pauzirana igra znaci da se
+     * nista ne desava na cekanje */
+    if (tipke & PAUZA){
+        return;
+    }
+    
+    /* Kliker skace */
+    if (tipke & SKOK){
+        /* Kraj animacije skoka */
+        if (kliker_skok() == SKOK_KRAJ){
+            tipke &= ~SKOK;
+        }
+    }
+    
+    /* Resetovanje pogleda */
     if (tipke & RESET){
-        // Kraj animacije resetovanja
-        if (resetuj_oko() == RES_KRAJ){
+        /* Kraj animacije resetovanja */
+        if (oko_reset() == RES_KRAJ){
             tipke &= ~RESET;
         }
     }
     
-    // Kliker se krece napred
+    /* Kliker se krece napred */
     if (tipke & KRENI){
         kliker_napred();
     }
     
-    // Kliker se krece nazad
+    /* Kliker se krece nazad */
     if (tipke & VRATI){
         kliker_nazad();
     }
     
-    // Oko se krece napred
+    /* Oko se priblizava */
     if (tipke & NAPRED){
         oko_napred();
     }
     
-    // Oko se krece nazad
+    /* Oko se udaljava */
     if (tipke & NAZAD){
         oko_nazad();
     }
     
-    // Oko se krece gore
+    /* Oko se penje */
     if (tipke & GORE){
         oko_gore();
     }
     
-    // Oko se krece dole
+    /* Oko se spusta */
     if (tipke & DOLE){
         oko_dole();
     }
     
     /* Kliker se okrece nalevo,
-       dakle oko ide desno, osim
-       u slucaju istovremenog
-       kretanja klikera unazad,
-       radi intuitivnijeg pravca */
+     * dakle oko ide desno, osim
+     * u slucaju istovremenog
+     * kretanja klikera unazad,
+     * radi intuitivnijeg pravca */
     if (tipke & LEVO){
         if (tipke & VRATI){
             oko_levo();
@@ -92,82 +104,109 @@ void na_cekanje(void)
     }
     
     /* Kliker se okrece nadesno,
-       dakle oko ide levo, osim
-       u slucaju istovremenog
-       kretanja klikera unazad,
-       radi intuitivnijeg pravca */
+     * dakle oko ide levo, osim
+     * u slucaju istovremenog
+     * kretanja klikera unazad,
+     * radi intuitivnijeg pravca */
     if (tipke & DESNO){
         if (tipke & VRATI){
             oko_desno();
         } else oko_levo();
     }
     
-    // Osvezavanje prozora
+    /* Osvezavanje prozora */
     glutPostRedisplay();
 }
 
 void na_tipku_dole(unsigned char tipka, int x, int y)
 {
-    // Zanemaruje se mesto klika
+    /* Zanemaruje se mesto klika */
     PONISTI(x);
     PONISTI(y);
     
     switch (tipka){
     case ESC:
-        // Prekid programa
+        /* Prekid programa */
         exit(EXIT_SUCCESS);
+    
+    case SPACE:
+        /* Kliker krece u skok, ali
+         * samo ako je igra u toku */
+        if (!(tipke & PAUZA)){
+            tipke |= SKOK;
+        }
+        break;
     
     case 'a':
     case 'A':
-        // Kliker se okrece nalevo
+        /* Kliker se okrece nalevo */
         tipke |= LEVO;
         break;
     
     case 'd':
     case 'D':
-        // Kliker se okrece nadesno
+        /* Kliker se okrece nadesno */
         tipke |= DESNO;
         break;
     
     case 'e':
     case 'E':
-        // Oko se krece napred
+        /* Oko se priblizava */
         tipke |= NAPRED;
+        break;
+    
+    case 'f':
+    case 'F':
+        fullscreen();
+        break;
+    
+    case 'p':
+    case 'P':
+        /* Pauzira se igra ili nastavlja
+         * ako je prethodno pauzirana */
+        tipke ^= PAUZA;
+        
+        /* Zaustavlja se animacija
+         * ako je uopste u toku */
+        tipke &= ~RESET;
         break;
     
     case 'q':
     case 'Q':
-        // Oko se krece nazad
+        /* Oko se udaljava */
         tipke |= NAZAD;
         break;
     
     case 'r':
     case 'R':
-        // Resetovanje oka/kamere
-        tipke |= RESET;
+        /* Resetovanje pogleda, ali
+         * samo ako je igra u toku */
+        if (!(tipke & PAUZA)){
+            tipke |= RESET;
+        }
         break;
     
     case 's':
     case 'S':
-        // Kliker se krece nazad
+        /* Kliker se krece nazad */
         tipke |= VRATI;
         break;
     
     case 'w':
     case 'W':
-        // Kliker se krece napred
+        /* Kliker se krece napred */
         tipke |= KRENI;
         break;
     
     case 'x':
     case 'X':
-        // Oko se krece dole
+        /* Oko se spusta */
         tipke |= DOLE;
         break;
     
     case 'z':
     case 'Z':
-        // Oko se krece gore
+        /* Oko se podize */
         tipke |= GORE;
         break;
     }
@@ -175,69 +214,85 @@ void na_tipku_dole(unsigned char tipka, int x, int y)
 
 void na_tipku_gore(unsigned char tipka, int x, int y)
 {
-    // Zanemaruje se mesto klika
+    /* Zanemaruje se mesto klika */
     PONISTI(x);
     PONISTI(y);
     
     switch (tipka){
     case ESC:
-        /* Inace prekid programa:
-           nema exit(), jer ovo
-           i ne moze da se desi */
+        /* Do prekida programa dolazi
+         * po pritiskanju ESC tipke;
+         * otpustanje nije bitno */
+        break;
+    
+    case SPACE:
+        /* Skok je uglavnom animacija;
+         * otpustanje tipke nije bitno */
         break;
     
     case 'a':
     case 'A':
-        // Kliker se vise ne okrece nalevo
+        /* Kliker se vise ne okrece nalevo */
         tipke &= ~LEVO;
         break;
     
     case 'd':
     case 'D':
-        // Kliker se vise ne okrece nadesno
+        /* Kliker se vise ne okrece nadesno */
         tipke &= ~DESNO;
         break;
     
     case 'e':
     case 'E':
-        // Oko se vise ne krece napred
+        /* Oko se vise ne priblizava */
         tipke &= ~NAPRED;
+        break;
+    
+    case 'f':
+    case 'F':
+        /* Fullscreen je opcija tipa toggle;
+         * otpustanje tipke nije bitno */
+        break;
+    
+    case 'p':
+    case 'P':
+        /* Pauza je opcija tipa toggle;
+         * otpustanje tipke nije bitno */
         break;
     
     case 'q':
     case 'Q':
-        // Oko se vise ne krece nazad
+        /* Oko se vise ne udaljava */
         tipke &= ~NAZAD;
         break;
     
     case 'r':
     case 'R':
-        /* Resetovanje oka/kamere:
-           nema tipke &= ~RESET,
-           to radi glutIdleFunc */
+        /* Resetovanje pogleda je animacija;
+         * otpustanje tipke nije bitno */
         break;
     
     case 's':
     case 'S':
-        // Kliker se vise ne krece nazad
+        /* Kliker se vise ne krece nazad */
         tipke &= ~VRATI;
         break;
     
     case 'w':
     case 'W':
-        // Kliker se vise ne krece napred
+        /* Kliker se vise ne krece napred */
         tipke &= ~KRENI;
         break;
     
     case 'x':
     case 'X':
-        // Oko se vise ne krece dole
+        /* Oko se vise ne spusta */
         tipke &= ~DOLE;
         break;
     
     case 'z':
     case 'Z':
-        // Oko se vise ne krece gore
+        /* Oko se vise ne podize */
         tipke &= ~GORE;
         break;
     }
@@ -245,10 +300,12 @@ void na_tipku_gore(unsigned char tipka, int x, int y)
 
 void na_prozor(int sirina, int visina)
 {
-    // Postavljanje pogleda
+    /* Postavljanje oblasti prikaza */
     glViewport(POGLED, POGLED, sirina, visina);
     
-    // Podesavanje projekcije
+    /* Podesavanje projekcije:
+     * ugao pogleda, aspect ratio,
+     * prednja i zadnja ravan odsecanja */
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluPerspective(PERSP_UGAO, (float)sirina/visina,
@@ -257,32 +314,43 @@ void na_prozor(int sirina, int visina)
 
 void na_prikaz(void)
 {
-    // Osvezavanje prozora
+    /* Osvezavanje prozora:
+     * ciscenje bafera boje i dubine */
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-    // Postavljanje matrice transformacije
+    /* Postavljanje matrice transformacije */
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     
-    /* Polozaj tackastog svetla i njegovo
-       postavljanje pre vidnih parametara,
-       kako bi ono pratilo kretanje kamere */
-    GLint svetlo_pol[] = {0, 0, 0, 1};
-    glLightiv(GL_LIGHT0, GL_POSITION, svetlo_pol);
-    
     /* Izracunavanje pozicije oka, te
-       postavljanje vidnih parametara */
+     * postavljanje vidnih parametara */
     popravi_oko();
-    gluLookAt( oko.x,    oko.y,    oko.z,   // polozaj kamere
-              kliker.x, kliker.y, kliker.z, // centar pogleda
-               NORM_X,   NORM_Y,   NORM_Z); // vektor normale
+    gluLookAt( oko.x,    oko.y,    oko.z,   /* polozaj kamere */
+              kliker.x, kliker.y, kliker.z, /* centar pogleda */
+               NORM_X,   NORM_Y,   NORM_Z); /* vektor normale */
     
-    // Postavljanje staze tj. terena
+    /* Postavljanje staze tj. terena */
     postavi_stazu();
     
-    // Crtanje kugle odnosno klikera
+    /* Crtanje kugle odnosno klikera */
     postavi_kliker();
     
-    // Zamena bafera tj. prikaz slike na ekranu
+    /* Zamena bafera tj. prikaz slike na ekranu */
     glutSwapBuffers();
+}
+
+void fullscreen()
+{
+    /* Ako je trenutni prikaz tipa
+     * fullscreen, menja se u pocetni
+     * windowed prikaz i obrnuto */
+    if (full_screen == SCREEN_FULL){
+        glutReshapeWindow(PROZ_DIM, PROZ_DIM);
+    } else {
+        glutFullScreen();
+    }
+    
+    /* Prostom negacijom azurira se
+     * indikator fullscreen prikaza */
+    full_screen = !full_screen;
 }

@@ -5,27 +5,30 @@
 
 int main(int argc, char** argv)
 {
-    // Pokretanje Gluta
+    /* Pokretanje GLUT-a */
     podesi_biblioteke(&argc, argv);
     
-    // Pravljenje prozora
+    /* Pravljenje prozora */
     napravi_prozor();
     
-    // Postavljanje kolbek fja
+    /* Postavljanje kolbek fja */
     postavi_kolbek();
     
-    // Postavljanje svetla
+    /* Postavljanje svetla */
     postavi_svetlo();
     
-    // Pravljenje oka/kamere
+    /* Pravljenje oka/kamere */
     napravi_oko();
     
-    // Pravljenje klikera
+    /* Pravljenje klikera */
     napravi_kliker();
     
-    // Glavna petlja Gluta
+    /* Pravljenje staze */
+    napravi_stazu();
+    
+    /* Glavna petlja GLUT-a */
     glutMainLoop();
     
-    // Prekid programa
+    /* Kraj programa */
     exit(EXIT_SUCCESS);
 }
