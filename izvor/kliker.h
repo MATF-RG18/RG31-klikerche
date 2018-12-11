@@ -24,7 +24,7 @@
 #define SKOK_MIN 0
 #define SKOK_MAX 180
 #define SKOK_VIS 2.5
-enum skok {SKOK_NIJE, SKOK_KRAJ};
+enum {SKOK_NIJE, SKOK_KRAJ};
 
 /* Opis rotacije */
 #define UGAO_POC 0

@@ -157,6 +157,7 @@ void na_tipku_dole(unsigned char tipka, int x, int y)
     
     case 'f':
     case 'F':
+        /* Promena rezima prikaza */
         fullscreen();
         break;
     

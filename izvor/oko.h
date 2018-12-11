@@ -33,7 +33,7 @@
 #define RAZ_POC 0
 
 /* Enumeracija za resetovanje */
-enum res {RES_NIJE, RES_KRAJ};
+enum {RES_NIJE, RES_KRAJ};
 
 /* Struktura koja enkapsulira kliker
  * sa centrom (x, y, z) i radijusom r */
