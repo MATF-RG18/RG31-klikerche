@@ -3,6 +3,7 @@
 
 #include <GL/glut.h>
 #include <math.h>
+#include "osnov.h"
 #include "kliker.h"
 
 /* Opis kamere */
@@ -12,9 +13,9 @@
 #define OKO_THETA 0.52359877559829887308 /* M_PI/6 */
 
 /* Promena parametara */
-#define OKO_RAD_D 0.03
-#define OKO_PHI_D 0.0069813170079773183077 /* M_PI/450 */
-#define OKO_THETA_D 0.0069813170079773183077 /* M_PI/450 */
+#define OKO_RAD_D 0.008
+#define OKO_PHI_D 0.00098174770424681039 /* M_PI/3200 */
+#define OKO_THETA_D 0.00098174770424681039 /* M_PI/3200 */
 
 /* Minimum parametara */
 #define OKO_RAD_MIN 5
@@ -35,9 +36,13 @@
 /* Enumeracija za resetovanje */
 enum {RES_NIJE, RES_KRAJ};
 
+/* Struktura koja enkapsulira
+ * proteklo vreme u programu */
+extern struct vreme vreme;
+
 /* Struktura koja enkapsulira kliker
- * sa centrom (x, y, z) i radijusom r */
-extern struct kliker kliker;
+ * sa centrom (x, y, z) i radijusom */
+extern struct kliker klik;
 
 /* Struktura koja enkapsulira oko/kameru,
  * predstavljeno sfernim koordinatama */
@@ -60,7 +65,7 @@ struct oko{
  * izmedju pocetnog i trenutnog stanja oka */
 struct razlika{
     int r, phi, theta;
-} razlika;
+} raz;
 
 /* Deklaracije fja za oko/kameru */
 void napravi_oko(void);

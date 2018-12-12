@@ -1,17 +1,14 @@
-#include "kliker.h"
+#include "../include/kliker.h"
 
 void napravi_kliker(void)
 {
     /* Postavljanje centra sfere */
-    kliker.x = KLIK_CENT;
-    kliker.y = KLIK_CENT;
-    kliker.z = KLIK_CENT;
-    
-    /* Postavljanje radijusa sfere */
-    kliker.r = KLIK_RAD;
+    klik.x = KLIK_CENT;
+    klik.y = KLIK_CENT;
+    klik.z = KLIK_CENT;
     
     /* Postavljanje parametra skoka */
-    kliker.s = SKOK_MIN;
+    klik.s = UGAO_POC;
     
     /* Postavljanje ugla rotacije */
     rot.u = UGAO_POC;
@@ -34,21 +31,26 @@ void postavi_kliker(void)
     glMateriali(GL_FRONT, GL_SHININESS, GLATKOST);
     
     /* Pomeranje u centar sfere */
-    glTranslated(kliker.x, kliker.y, kliker.z);
+    glTranslated(klik.x, klik.y, klik.z);
     
     /* Izracunavanje vektora rotacije */
     napravi_vektor();
     
     /* Rotacija radi realisticnijeg kretanja
      * klikera; zapravo simulacija kotrljanja */
-    glRotated(rot.u, rot.a, rot.b, rot.c);
+    glRotated(rot.u, rot.x, rot.y, ROT_Z);
     
-    /* Crtanje zicane sfere */
-    glutWireSphere(kliker.r, KLIK_PREC, KLIK_PREC);
+    /* Crtanje popunjene sfere inace,
+     * a zicane u debag rezimu */
+    if (debag){
+        glutWireSphere(KLIK_RAD, KLIK_PREC, KLIK_PREC);
+    } else {
+        glutSolidSphere(KLIK_RAD, KLIK_PREC, KLIK_PREC);
+    }
     
-    /* Nema poziva glPushMatrix() i glPushMatrix()
+    /* Nema poziva glPushMatrix() i glPopMatrix()
      * posto je postavljanje klikera poslednja u nizu
-     * transformacija, nakon koje se prozor brise */
+     * transformacija, nakon koje se prozor cisti */
 }
 
 void kliker_napred(void)
@@ -57,15 +59,15 @@ void kliker_napred(void)
      * razapinju centar oka i centar klikera
      * na xy ravan, tako da se starim koord.
      * klikera dodaje razlika vrednosti */
-    float duzina = sqrt((kliker.x - oko.x) * (kliker.x - oko.x)
-                 +  (kliker.y - oko.y) * (kliker.y - oko.y))
-                 * POMERAJ; /* normalizacija pomeraja */
-    kliker.x += (kliker.x - oko.x)/duzina;
-    kliker.y += (kliker.y - oko.y)/duzina;
+    float duzina = sqrt((klik.x - oko.x) * (klik.x - oko.x)
+                 +  (klik.y - oko.y) * (klik.y - oko.y))
+                 * KLIK_POM / vreme.pom; /* normalizacija */
+    klik.x += (klik.x - oko.x)/duzina;
+    klik.y += (klik.y - oko.y)/duzina;
     
-    /* Kretanjem napred povecava
-     * se ugao rotacije */
-    rot.u += UGAO_POM;
+    /* Rotacija koja odgovara
+     * kretanju napred */
+    rot_napred();
 }
 
 void kliker_nazad(void)
@@ -74,15 +76,15 @@ void kliker_nazad(void)
      * razapinju centar klikera i centar oka
      * na xy ravan, tako da se starim koord.
      * klikera dodaje razlika vrednosti */
-    float duzina = sqrt((oko.x - kliker.x) * (oko.x - kliker.x)
-                 +  (oko.y - kliker.y) * (oko.y - kliker.y))
-                 * POMERAJ; /* normalizacija pomeraja */
-    kliker.x += (oko.x - kliker.x)/duzina;
-    kliker.y += (oko.y - kliker.y)/duzina;
+    float duzina = sqrt((oko.x - klik.x) * (oko.x - klik.x)
+                 +  (oko.y - klik.y) * (oko.y - klik.y))
+                 * KLIK_POM / vreme.pom; /* normalizacija */
+    klik.x += (oko.x - klik.x)/duzina;
+    klik.y += (oko.y - klik.y)/duzina;
     
-    /* Kretanjem nazad smanjuje
-     * se ugao rotacije */
-    rot.u -= UGAO_POM;
+    /* Rotacija koja odgovara
+     * kretanju nazad */
+    rot_nazad();
 }
 
 int kliker_skok(void)
@@ -92,12 +94,12 @@ int kliker_skok(void)
     int vracam = SKOK_NIJE;
     
     /* Povecavanje parametra skoka */
-    kliker.s++;
+    klik.s += UGAO_PAR * vreme.pom;
     
     /* Ako je parametar dostigao maksimum,
      * resetuje se, sto oznacava kraj skoka */
-    if (kliker.s >= SKOK_MAX){
-        kliker.s = SKOK_MIN;
+    if (klik.s >= UGAO_EXT){
+        klik.s = UGAO_POC;
         vracam = SKOK_KRAJ;
     }
     
@@ -107,7 +109,7 @@ int kliker_skok(void)
      * rastu od nule do jedinice, a zatim opet
      * opadaju do nule; mnozenje sa ocekivanom
      * visinom skoka daje z koordinatu klikera */
-    kliker.z = SKOK_VIS * sin(kliker.s * M_PI / SKOK_MAX);
+    klik.z = SKOK_VIS * sin(klik.s * M_PI / UGAO_EXT);
     
     /* 0 ako nije kraj, 1 ako jeste */
     return vracam;
@@ -115,19 +117,45 @@ int kliker_skok(void)
 
 void napravi_vektor(void)
 {
-    /* Vektor oko kog kliker rotira zapravo je
-     * normala ravni koju razapinju koordinate
-     * oka (ox, oy, oz), centar klikera (kx, ky,
-     * kz) i treca tacka poput (kx, ky, 5) */
+    /* Vektor oko kog kliker rotira normalan je
+     * na vektore koje razapinju koordinate oka
+     * (ox, oy, oz), centar klikera (kx, ky, kz)
+     * i treca tacka cija je xy projekcija na istoj
+     * pravoj kao projekcije prve dve tacke, kao
+     * npr. (kx, ky, oz) za pravougli trougao;
+     * racun se pojednostavljuje ako se visinske
+     * koordinate postave na nule i jedinice, a
+     * kliker translira u koordinatni pocetak, cime
+     * se problem svodi na racunanje vektorskog
+     * proizvoda (normalnog vektora) trojki kao
+     * sto su (ox-kx, oy-ky, 0) za oko, (0, 0, 0)
+     * za kliker i (0, 0, 1) za trecu tacku; taj
+     * proizvod jednak je (oy-ky, kx-ox, 0) */
     
-    /* Trebalo bi da ga je lako pronaci pomocu
-     * algoritma za odredjivanje ravni kroz tri
-     * tacke, ali taj kod, usled malo vremena, ipak
-     * ostaje za narednu sedmicu; trenutne dummy
-     * vrednosti tacne su ukoliko se kliker krece
-     * paralelno x osi, u negativnom smeru, sto znaci
-     * napred ili nazad iz pocetne pozicije */
-    rot.a = 0;
-    rot.b = -1;
-    rot.c = 0;
+    rot.x = oko.y - klik.y;
+    rot.y = klik.x - oko.x;
+}
+
+void rot_napred(void)
+{
+    /* Kretanjem napred povecava
+     * se ugao rotacije */
+    rot.u += UGAO_PAR * vreme.pom;
+    
+    /* Popravka jer u = (-pi, pi] */
+    if (rot.u >= UGAO_EXT){
+        rot.u -= UGAO_POM;
+    }
+}
+
+void rot_nazad(void)
+{
+    /* Kretanjem nazad smanjuje
+     * se ugao rotacije */
+    rot.u -= UGAO_PAR * vreme.pom;
+    
+    /* Popravka jer u = (-pi, pi] */
+    if (rot.u < -UGAO_EXT){
+        rot.u += UGAO_POM;
+    }
 }

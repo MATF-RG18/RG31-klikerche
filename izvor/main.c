@@ -1,7 +1,7 @@
-#include "osnov.h"
-#include "kolbek.h"
-#include "oko.h"
-#include "kliker.h"
+#include "../include/osnov.h"
+#include "../include/kolbek.h"
+#include "../include/oko.h"
+#include "../include/kliker.h"
 
 int main(int argc, char** argv)
 {

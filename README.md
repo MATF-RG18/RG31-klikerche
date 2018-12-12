@@ -3,7 +3,7 @@
 ## Klikerče :globe_with_meridians:
 Projekat na kursu Računarska grafika. Korisnik upravlja klikerom koji se na komande korisnika kreće po generisanom terenu odnosno stazi sa preprekama, sa namerom uspešnog dolaska do cilja – kraja staze.
 
-Ukratko, projekat uključuje većinu gradiva obuhvaćenog vežbama na već pomenutom kursu, kao što je: crtanje 2D i 3D primitiva, provera dubine (depth tj. z-bafer), tempirana animacija, upravljanje pogledom (interaktivno postavljanje tačke i vektora pogleda), osvetljenje, materijali, liste. Do završetka projekta, što se očekuje do Nove godine, planirano je uključivanje ostatka gradiva: površi određene trouglovima i normalama, providnost, ispis teksta, teksture.
+Ukratko, projekat uključuje većinu gradiva obuhvaćenog vežbama na već pomenutom kursu, kao što je: crtanje 2D i 3D primitiva, provera dubine (depth tj. z-bafer), tempirana animacija, upravljanje pogledom (interaktivno postavljanje tačke i vektora pogleda), osvetljenje, materijali, liste. Do završetka projekta, što se očekuje do Nove godine ili Božića, planirano je uključivanje ostatka gradiva: površi određene trouglovima i normalama, providnost, ispis teksta, teksture.
 
 Finiji detalji u vezi sa tokom razvoja projekta – nedeljni izveštaji, kao i snimci ekrana trenutnog stanja programa, u gif formatu radi boljeg prikaza interaktivnosti, napravljenom pomoću aplikacije [recordMyDesktop](http://recordmydesktop.sourceforge.net/about.php) i [onlajn konvertora](http://www.videotogifs.com/ogv-to-gif.html) – mogu se pronaći na wiki stranicama repozitorijuma, dostupnim na meniju glavne stranice ili neposredno [ovde](https://github.com/MATF-RG18/RG31-klikerche/wiki).
 
@@ -27,14 +27,11 @@ Ukoliko iz bilo kog razloga bitne biblioteke u trenutku nisu dostupne, u direkto
 ## Komande :video_game:
 Kako je program interaktivne prirode, ugrađeni su mnogi odgovori na događaje (korisničkog unosa preko) tastature. Sledi tabelarni prikaz implementiranih komandi, uz napomenu da su sve neosetljive na veličinu slova odnosno <kbd>Caps Lock</kbd>.
 
-Tipka | Događaj
------ | ------
-<kbd>W</kbd> <kbd>S</kbd> | kretanje klikera
-<kbd>A</kbd> <kbd>D</kbd> | okretanje oka
-<kbd>Q</kbd> <kbd>E</kbd> | udaljenost oka
-<kbd>Z</kbd> <kbd>X</kbd> | visina pogleda
-<kbd>Space</kbd> | skok
-<kbd>R</kbd> | resetovanje oka
-<kbd>F</kbd> | fullscreen
-<kbd>P</kbd> | pauza
-<kbd>Esc</kbd> | izlaz iz igre
+Tipka | Događaj | Tipka | Događaj
+----- | ------ | ----- | ------
+<kbd>W</kbd> <kbd>S</kbd> | kretanje klikera | <kbd>Q</kbd> <kbd>E</kbd> | udaljenost oka
+<kbd>A</kbd> <kbd>D</kbd> | okretanje oka | <kbd>Z</kbd> <kbd>X</kbd> | visina pogleda
+<kbd>R</kbd> | resetovanje oka | <kbd>Space</kbd> | skok
+<kbd>F</kbd> | fullscreen | <kbd>G</kbd> | debag rezim
+<kbd>K</kbd> | čuvanje igre | <kbd>L</kbd> | čitanje igre
+<kbd>P</kbd> | pauza | <kbd>Esc</kbd> | izlaz iz igre

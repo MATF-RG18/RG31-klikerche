@@ -1,15 +1,16 @@
-#include "kolbek.h"
+#include "../include/kolbek.h"
 
 void postavi_kolbek(void)
 {
-    /* Funkcija na cekanje obavlja poslove
-     * u pozadini, dok je program neaktivan
-     * iz gledista korisnika; ponasa se kao opsti,
-     * sve vreme aktivan tajmer; ovde proverava
-     * stanje bafera tipki, te izracunava i
-     * animira sta treba, sto omogucava glatkost
-     * i uskladjenost pokreta */
-    glutIdleFunc(na_cekanje);
+    /* Funkcija na tajmer tempirano obradjuje
+     * oslusane dogadjaje; ovde proverava stanje
+     * bafera tipki, te izracunava i animira sta
+     * treba, sto omogucava glatkost i uskladjenost
+     * pokreta; zakomentarisana je odbacena upotreba
+     * fje na cekanje u te svrhe, posto kod nje ne
+     * postoji kontrola pozivanja kao kao tajmera */
+    /*glutIdleFunc(na_cekanje);*/
+    glutTimerFunc(TAJMER, na_tajmer, TAJMER);
     
     /* Funkcija na tipku dole prima podatke
      * o pritisnutim tipkama tastature i tu
@@ -38,10 +39,25 @@ void postavi_kolbek(void)
     tipke = PRAZNO;
 }
 
-void na_cekanje(void)
+void na_tajmer(int id)
 {
+    /* Nema potrebe proveravati da li
+     * je pozvan pravi tajmer, posto je
+     * samo jedan i sam sebe poziva */
+    /*if (id != TAJMER){
+          return;
+    }*/
+    PONISTI(id);
+    
+    /* Svakim pozivom fje na tajmer
+     * azurira se vremenski pomeraj;
+     * iako se ocekuje da bude jednak
+     * trajanju tajmera (VREME), ipak
+     * valja preduprediti talasanje */
+    popravi_vreme();
+    
     /* Pauzirana igra znaci da se
-     * nista ne desava na cekanje */
+     * nista ne desava na tajmer */
     if (tipke & PAUZA){
         return;
     }
@@ -116,6 +132,9 @@ void na_cekanje(void)
     
     /* Osvezavanje prozora */
     glutPostRedisplay();
+    
+    /* Ponovno postavljanje tajmera */
+    glutTimerFunc(VREME, na_tajmer, TAJMER);
 }
 
 void na_tipku_dole(unsigned char tipka, int x, int y)
@@ -161,11 +180,38 @@ void na_tipku_dole(unsigned char tipka, int x, int y)
         fullscreen();
         break;
     
+    case 'g':
+    case 'G':
+        /* Promena debag rezima;
+         * AKT. u PAS. i obrnuto */
+        debag = !debag;
+        break;
+    
+    case 'k':
+    case 'K':
+        /* Cuvanje trenutne igre */
+        sacuvaj_igru();
+        break;
+    
+    case 'l':
+    case 'L':
+        /* Citanje sacuvane igre */
+        ucitaj_igru();
+        break;
+    
     case 'p':
     case 'P':
         /* Pauzira se igra ili nastavlja
          * ako je prethodno pauzirana */
         tipke ^= PAUZA;
+        
+        /* Ponovo se postavlja tajmer ako
+         * je igra nastavljena nakon pauze,
+         * a usput se i resetuje vreme */
+        if (!(tipke & PAUZA)){
+            vreme.staro = glutGet(GLUT_ELAPSED_TIME);
+            glutTimerFunc(TAJMER, na_tajmer, TAJMER);
+        }
         
         /* Zaustavlja se animacija
          * ako je uopste u toku */
@@ -255,6 +301,24 @@ void na_tipku_gore(unsigned char tipka, int x, int y)
          * otpustanje tipke nije bitno */
         break;
     
+    case 'g':
+    case 'G':
+        /* Debag je opcija tipa toggle;
+         * otpustanje tipke nije bitno */
+        break;
+    
+    case 'k':
+    case 'K':
+        /* Cuvanje igre ima trenutni efekat;
+         * otpustanje tipke nije bitno */
+        break;
+    
+    case 'l':
+    case 'L':
+        /* Citanje igre ima trenutni efekat;
+         * otpustanje tipke nije bitno */
+        break;
+    
     case 'p':
     case 'P':
         /* Pauza je opcija tipa toggle;
@@ -301,16 +365,25 @@ void na_tipku_gore(unsigned char tipka, int x, int y)
 
 void na_prozor(int sirina, int visina)
 {
-    /* Postavljanje oblasti prikaza */
+    /* Postavljanje oblasti prikaza;
+     * ona se krece od koord. (0, 0)
+     * prozora do (sirina, visina) */
     glViewport(POGLED, POGLED, sirina, visina);
     
-    /* Podesavanje projekcije:
-     * ugao pogleda, aspect ratio,
+    /* Podesavanje perpektive: ugao pogleda,
+     * odnos oblasti prikaza (aspect ratio),
      * prednja i zadnja ravan odsecanja */
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluPerspective(PERSP_UGAO, (float)sirina/visina,
                    PERSP_BLIZ, PERSP_DALJ);
+    
+    /* Odbaceni pokusaj podesavanja perspektive
+     * preko fje glFrustum(); prozor slobodno
+     * menja velicinu, a ova fja nije otporna
+     * na to posto ne gleda aspect ratio */
+    /*glFrustum(-0.75, 0.75, -0.75, 0.75,
+              PERSP_BLIZ, PERSP_DALJ);*/
 }
 
 void na_prikaz(void)
@@ -327,8 +400,15 @@ void na_prikaz(void)
      * postavljanje vidnih parametara */
     popravi_oko();
     gluLookAt( oko.x,    oko.y,    oko.z,   /* polozaj kamere */
-              kliker.x, kliker.y, kliker.z, /* centar pogleda */
+               klik.x,   klik.y,   klik.z,  /* centar pogleda */
                NORM_X,   NORM_Y,   NORM_Z); /* vektor normale */
+    
+    /* Odbaceni polozaj tackastog svetla, posto
+     * za igricu ovog tipa prirodnije izgleda
+     * podrazumevano svetlo, koje podjednako
+     * osvetljava svaki deo iscrtane scene */
+    /*GLint svetlo_pol[] = {1, 1, 1, 0};
+    glLightiv(GL_LIGHT0, GL_POSITION, svetlo_pol);*/
     
     /* Postavljanje staze tj. terena */
     postavi_stazu();
@@ -338,20 +418,4 @@ void na_prikaz(void)
     
     /* Zamena bafera tj. prikaz slike na ekranu */
     glutSwapBuffers();
-}
-
-void fullscreen()
-{
-    /* Ako je trenutni prikaz tipa
-     * fullscreen, menja se u pocetni
-     * windowed prikaz i obrnuto */
-    if (full_screen == SCREEN_FULL){
-        glutReshapeWindow(PROZ_DIM, PROZ_DIM);
-    } else {
-        glutFullScreen();
-    }
-    
-    /* Prostom negacijom azurira se
-     * indikator fullscreen prikaza */
-    full_screen = !full_screen;
 }
