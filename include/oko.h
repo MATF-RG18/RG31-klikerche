@@ -1,10 +1,7 @@
 #ifndef OKO_H
 #define OKO_H
 
-#include <GL/glut.h>
-#include <math.h>
-#include "osnov.h"
-#include "kliker.h"
+#include "main.h"
 
 /* Opis kamere */
 /* Pocetni sferni parametri */

@@ -1,15 +1,12 @@
 #ifndef KLIKER_H
 #define KLIKER_H
 
-#include <GL/glut.h>
-#include <math.h>
-#include "osnov.h"
-#include "oko.h"
+#include "main.h"
 
 /* ANSI standard zabranjuje standardnoj
  * biblioteci da optereti glavni imenski
  * prostor nerezervisanim imenima, tako
- * da M_PI iz math.h nije dostupan */
+ * da M_PI iz <math.h> nije dostupan */
 #ifndef M_PI
 #   define M_PI 3.14159265358979323846
 #endif

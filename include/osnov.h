@@ -1,10 +1,7 @@
 #ifndef OSNOV_H
 #define OSNOV_H
 
-#include <GL/glut.h>
-#include <stdio.h>
-#include "oko.h"
-#include "kliker.h"
+#include "main.h"
 
 /* Opis prozora */
 #define PROZ_DIM 550
@@ -12,9 +9,6 @@
 #define PROZ_BOJA 0.05
 #define PROZ_ALPH 0
 #define APP_IME "Klikerche"
-
-/* Ime sacuvane igre */
-#define SAVEGAME "savegame.txt"
 
 /* Bafer sa stanjem tipki
  * izrazenim vrednoscu bitova,
@@ -46,7 +40,7 @@ GLuint staza1, staza2;
 
 /* Struktura koja enkapsulira
  * proteklo vreme u programu */
-#define POM_MAX 200
+#define POM_MAX 75
 struct vreme{
     int staro;
     int novo;
@@ -59,12 +53,5 @@ void napravi_prozor(void);
 void postavi_svetlo(void);
 void napravi_stazu(void);
 void postavi_stazu(void);
-
-/* Deklaracije funkcija koje
- * pozicaju kolbek funkcije */
-void fullscreen(void);
-void popravi_vreme(void);
-void sacuvaj_igru(void);
-void ucitaj_igru(void);
 
 #endif /* OSNOV_H */

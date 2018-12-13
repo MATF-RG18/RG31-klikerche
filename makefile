@@ -7,9 +7,9 @@ CC      = gcc
 # a biblioteke se traze i na posebnim putevima
 ZAST    = -g -ansi -Wall -Wextra -L/usr/X11R6/lib -L/usr/pkg/lib
 # Spisak datoteka sa glavnim kodom
-PROG    = izvor/main.c izvor/osnov.c izvor/kolbek.c izvor/oko.c izvor/kliker.c
+PROG    = izvor/main.c izvor/osnov.c izvor/kolpom.c izvor/kolbek.c izvor/tajmer.c izvor/dogadjaji.c izvor/oko.c izvor/kliker.c
 # Spisak korisnicki definisanih zaglavlja
-ZAV     = include/osnov.h include/kolbek.h include/oko.h include/kliker.h
+ZAV     = include/main.h include/osnov.h include/kolpom.h include/kolbek.h include/tajmer.h include/dogadjaji.h include/oko.h include/kliker.h
 # Spisak biblioteka koje treba povezati
 BIBL    = -lglut -lGLU -lGL -lm -L/usr/X11R6/lib -L/usr/pkg/lib
 

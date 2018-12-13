@@ -32,6 +32,6 @@ Tipka | Događaj | Tipka | Događaj
 <kbd>W</kbd> <kbd>S</kbd> | kretanje klikera | <kbd>Q</kbd> <kbd>E</kbd> | udaljenost oka
 <kbd>A</kbd> <kbd>D</kbd> | okretanje oka | <kbd>Z</kbd> <kbd>X</kbd> | visina pogleda
 <kbd>R</kbd> | resetovanje oka | <kbd>Space</kbd> | skok
-<kbd>F</kbd> | fullscreen | <kbd>G</kbd> | debag rezim
+<kbd>F</kbd> | fullscreen | <kbd>G</kbd> | debag režim
 <kbd>K</kbd> | čuvanje igre | <kbd>L</kbd> | čitanje igre
 <kbd>P</kbd> | pauza | <kbd>Esc</kbd> | izlaz iz igre
