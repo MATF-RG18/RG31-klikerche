@@ -140,6 +140,18 @@ void napravi_stazu(void)
     
     /* Kraj liste za drugu stazu */
     glEndList();
+    
+    /* Odbaceni pokusaj fantomskog pozivanja
+     * obe liste kako bi bile spremne za dalje
+     * iscrtavanje; slicni pokusaji ubacivanja
+     * u display fju takodje su propali; naime,
+     * problem je sto iz nekog razloga dolazi
+     * do kocenja prilikom prvog ulaska u debag
+     * rezim, ali izgleda da tome nema spasa;
+     * probane su i razne druge stvari, kao sto
+     * je rezim liste GL_COMPILE_AND_EXECUTE */
+    /*glCallList(staza1);
+    glCallList(staza2);*/
 }
 
 void postavi_stazu(void)

@@ -124,8 +124,12 @@ void ucitaj_igru(void)
     /* Citanje skoka i rotacije */
     fscanf(fajl, "%lf %lf", &klik.s, &rot.u);
     
+    /* Sacuvane tipke pamte da li
+     * su u toku skok ili pauza */
+    int ntipke;
+    
     /* Citanje stanja indikatora */
-    fscanf(fajl, "%d %d %d", &fulskrin, &debag, &tipke);
+    fscanf(fajl, "%d %d %d", &fulskrin, &debag, &ntipke);
     
     /* Zatvaranje fajla */
     fclose(fajl);
@@ -136,6 +140,26 @@ void ucitaj_igru(void)
      * (dupla negacija daje pocetno stanje) */
     fullscreen();
     
-    /* Osvezavanje prozora */
-    glutPostRedisplay();
+    /* Tekucim tipkama dodaju se stari
+     * sacuvani parametri, pri cemu se
+     * zanemaruju oni od pre citanja koji
+     * nemaju veze sa kretanje, mada se
+     * pauza ipak nezavisno pamti */
+    int bila_pauza = tipke & PAUZA;
+    tipke = (tipke & ~RESET & ~SKOK & ~PAUZA) | ntipke;
+    
+    /* Ukoliko je bilo pauze pre citanja,
+     * a posle ne, postavlja se tajmer,
+     * a usput se i resetuje vreme */
+    if (bila_pauza && !(tipke & PAUZA)){
+        vreme.staro = glutGet(GLUT_ELAPSED_TIME);
+        glutTimerFunc(TAJMER, na_tajmer, TAJMER);
+    }
+    
+    /* Ukoliko je ucitana igra pauzirana,
+     * osvezava se prozor, posto u suprotnom
+     * biva prikazana stara zaledjena slika */
+    if (tipke & PAUZA){
+        glutPostRedisplay();
+    }
 }
