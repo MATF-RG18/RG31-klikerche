@@ -33,14 +33,6 @@
 /* Enumeracija za resetovanje */
 enum {RES_NIJE, RES_KRAJ};
 
-/* Struktura koja enkapsulira
- * proteklo vreme u programu */
-extern struct vreme vreme;
-
-/* Struktura koja enkapsulira kliker
- * sa centrom (x, y, z) i radijusom */
-extern struct kliker klik;
-
 /* Struktura koja enkapsulira oko/kameru,
  * predstavljeno sfernim koordinatama */
 struct oko{

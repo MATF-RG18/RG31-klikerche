@@ -45,8 +45,9 @@ void na_tipku_dole(unsigned char tipka, int x, int y)
     
     case 'g':
     case 'G':
-        /* Promena debag rezima;
-         * AKT. u PAS. i obrnuto */
+        /* Prostom negacijom azurira se
+         * indikator rezima za debagovanje;
+         * AKT. postaje PAS. i obrnuto */
         debag = !debag;
         break;
     

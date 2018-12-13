@@ -16,7 +16,7 @@
 #define KLIK_RAD 1
 #define KLIK_PREC 22
 #define KLIK_POM 60
-#define GLATKOST 100
+#define KLIK_GLAT 100
 
 /* Opis skoka i rotacije */
 #define UGAO_POC 0
@@ -26,17 +26,6 @@
 #define ROT_Z 0
 #define SKOK_VIS 2.75
 enum {SKOK_NIJE, SKOK_KRAJ};
-
-/* Indikator debag rezima */
-extern int debag;
-
-/* Struktura koja enkapsulira
- * proteklo vreme u programu */
-extern struct vreme vreme;
-
-/* Struktura koja enkapsulira oko/kameru
- * sa javnim polozajem (x, y, z) */
-extern struct oko oko;
 
 /* Struktura koja enkapsulira kliker */
 struct kliker{

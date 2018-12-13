@@ -32,7 +32,7 @@ void postavi_kolbek(void)
     /* Funkcija na prikaz jeste glavna fja
      * koja upravlja izgledom scene; ovde u
      * svakom osvezavanju nanovo postavlja
-     * oko, loptu, stazu, prepreke */
+     * oko, kliker, stazu, prepreke */
     glutDisplayFunc(na_prikaz);
     
     /* Na pocetku nema pritisnutih tipki */
@@ -57,14 +57,14 @@ void na_prozor(int sirina, int visina)
     /* Odbaceni pokusaj podesavanja perspektive
      * preko fje glFrustum(); prozor slobodno
      * menja velicinu, a ova fja nije otporna
-     * na to posto ne gleda aspect ratio */
+     * na to posto ne razmatra aspect ratio */
     /*glFrustum(-0.75, 0.75, -0.75, 0.75,
               PERSP_BLIZ, PERSP_DALJ);*/
 }
 
 void na_prikaz(void)
 {
-    /* Osvezavanje prozora:
+    /* Ciscenje scene tj. prozora:
      * ciscenje bafera boje i dubine */
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
@@ -75,9 +75,9 @@ void na_prikaz(void)
     /* Izracunavanje pozicije oka, te
      * postavljanje vidnih parametara */
     popravi_oko();
-    gluLookAt( oko.x,    oko.y,    oko.z,   /* polozaj kamere */
-               klik.x,   klik.y,   klik.z,  /* centar pogleda */
-               NORM_X,   NORM_Y,   NORM_Z); /* vektor normale */
+    gluLookAt( oko.x,  oko.y,  oko.z,  /* polozaj kamere */
+              klik.x, klik.y, klik.z,  /* centar pogleda */
+              NORM_X, NORM_Y, NORM_Z); /* vektor normale */
     
     /* Odbaceni pokusaj ukljucivanja fiksiranog
      * pogleda koji simulira pticju perspektivu koja
@@ -86,12 +86,12 @@ void na_prikaz(void)
      * je bio vise nego zanimljiv, tako da su vidni
      * parametri zakomentarisani, a celoj situaciji
      * posvecen je bonus gif iz pete sedmice */
-    /*gluLookAt(  20,     20,     20, 
-               -15,      8,      2,
-              NORM_X, NORM_Y, NORM_Z);*/
+    /*gluLookAt( 20,     20,     20, 
+                -15,      8,      2,
+                NORM_X, NORM_Y, NORM_Z);*/
     
-    /* Odbaceni polozaji postavljanje tackastog,
-     * a zatim i direkcionog svetla, posto za
+    /* Odbaceno postavljanje tackastog, a zatim
+     * i usmerenog/direkcionog svetla, posto za
      * igricu ovog tipa ipak prirodnije izgleda
      * podrazumevano svetlo, koje podjednako
      * osvetljava svaki deo prikazane scene */

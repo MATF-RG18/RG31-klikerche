@@ -3,14 +3,15 @@
 
 /* Sveobuhvatno (catch-all) zaglavlje
  * koje zbrinjava ceo projekat; nije bas
- * uobicajena C-ovska praksa, ali olaksava
+ * najbolja C-ovska praksa, ali olaksava
  * posao kada je mali program u pitanju;
  * usput se simuliraju paketno i takmicarsko
  * (npr. <bits/stdc++.h>) programiranje */
 
-#include <GL/glut.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
+#include <GL/glut.h>
 #include "osnov.h"
 #include "oko.h"
 #include "kliker.h"

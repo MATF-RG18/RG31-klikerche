@@ -145,7 +145,7 @@ void napravi_stazu(void)
 void postavi_stazu(void)
 {
     /* Pozivanje liste za iscrtavanje staze;
-     * crta se poligonalna staza inace, a
+     * crta se popunjena staza inace, a
      * zicana u slucaju debag rezima */
     if (debag){
         glCallList(staza2);

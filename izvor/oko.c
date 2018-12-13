@@ -44,8 +44,7 @@ int oko_reset(void)
         
         /* Azimutalna razlika u sustini nije znacajna,
          * jer kamera ne treba da se vrati bas u pocetnu
-         * tacku; stoga algoritam samo postavlja na nulu,
-         * ali cuva se u komentaru ako kasnije zatreba */
+         * tacku; stoga je algoritam postavlja na nulu */
         /*if (raz.phi > RAZ_POC){
             oko_levo();
         } else if (raz.phi < RAZ_POC){

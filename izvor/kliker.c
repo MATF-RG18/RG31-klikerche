@@ -28,7 +28,7 @@ void postavi_kliker(void)
     glMaterialfv(GL_FRONT, GL_AMBIENT, amb_ref);
     glMaterialfv(GL_FRONT, GL_DIFFUSE, dif_ref);
     glMaterialfv(GL_FRONT, GL_SPECULAR, spek_ref);
-    glMateriali(GL_FRONT, GL_SHININESS, GLATKOST);
+    glMateriali(GL_FRONT, GL_SHININESS, KLIK_GLAT);
     
     /* Pomeranje u centar sfere */
     glTranslated(klik.x, klik.y, klik.z);
@@ -62,8 +62,8 @@ void kliker_napred(void)
     float duzina = sqrt((klik.x - oko.x) * (klik.x - oko.x)
                  +  (klik.y - oko.y) * (klik.y - oko.y))
                  * KLIK_POM / vreme.pom; /* normalizacija */
-    klik.x += (klik.x - oko.x)/duzina;
-    klik.y += (klik.y - oko.y)/duzina;
+    klik.x += (klik.x - oko.x) / duzina;
+    klik.y += (klik.y - oko.y) / duzina;
     
     /* Rotacija koja odgovara
      * kretanju napred */
@@ -79,8 +79,8 @@ void kliker_nazad(void)
     float duzina = sqrt((oko.x - klik.x) * (oko.x - klik.x)
                  +  (oko.y - klik.y) * (oko.y - klik.y))
                  * KLIK_POM / vreme.pom; /* normalizacija */
-    klik.x += (oko.x - klik.x)/duzina;
-    klik.y += (oko.y - klik.y)/duzina;
+    klik.x += (oko.x - klik.x) / duzina;
+    klik.y += (oko.y - klik.y) / duzina;
     
     /* Rotacija koja odgovara
      * kretanju nazad */
@@ -142,7 +142,7 @@ void rot_napred(void)
      * se ugao rotacije */
     rot.u += UGAO_PAR * vreme.pom;
     
-    /* Popravka jer u = (-pi, pi] */
+    /* Popravka jer u = [-pi, pi) */
     if (rot.u >= UGAO_EXT){
         rot.u -= UGAO_POM;
     }
@@ -154,7 +154,7 @@ void rot_nazad(void)
      * se ugao rotacije */
     rot.u -= UGAO_PAR * vreme.pom;
     
-    /* Popravka jer u = (-pi, pi] */
+    /* Popravka jer u = [-pi, pi) */
     if (rot.u < -UGAO_EXT){
         rot.u += UGAO_POM;
     }

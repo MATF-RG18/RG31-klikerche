@@ -71,8 +71,8 @@ void sacuvaj_igru(void)
      * su u toku skok ili pauza */
     int ntipke = tipke & (SKOK | PAUZA);
     
-    /* Upisivanje stanja indikatora,
-     * fullscreen sa namerom obrnut */
+    /* Upisivanje stanja indikatora;
+     * fullscreen namerno obrnut */
     fprintf(fajl, "%d %d %d\n", !fulskrin, debag, ntipke);
     
     /* Upisivanje dokumentacionih komentara
