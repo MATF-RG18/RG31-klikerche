@@ -5,7 +5,7 @@
 0 1 0
 
 # Sacuvana igra zadrzi pet redova;
-# detalji se mogu naci u funkciji;
+# detalji se mogu naci u samom kodu;
 # prvi: sferni parametri oka/kamere;
 # drugi: razlike oka, za resetovanje;
 # treci: polozaj igracevog klikera;

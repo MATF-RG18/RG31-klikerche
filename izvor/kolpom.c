@@ -79,7 +79,7 @@ void sacuvaj_igru(void)
      * u fajl pre njegovog zatvaranja */
     fputc('\n', fajl);
     fprintf(fajl, "# Sacuvana igra zadrzi pet redova;\n");
-    fprintf(fajl, "# detalji se mogu naci u funkciji;\n");
+    fprintf(fajl, "# detalji se mogu naci u samom kodu;\n");
     fprintf(fajl, "# prvi: sferni parametri oka/kamere;\n");
     fprintf(fajl, "# drugi: razlike oka, za resetovanje;\n");
     fprintf(fajl, "# treci: polozaj igracevog klikera;\n");

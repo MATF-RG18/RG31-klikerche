@@ -1,8 +1,8 @@
 # Ime programa i izvrsive datoteke je klikerche
 PROGRAM = klikerche
-# Koristi se prevodilac gcc, jezik je C
+# Koristi se prevodilac GCC; jezik je C
 CC      = gcc
-# Zastavice za prevodjenje; ukljucuju se
+# Zastavice za prevodjenje: ukljucuju se
 # debag rezim, ANSI standard, sva upozorenja,
 # a biblioteke se traze i na posebnim putevima
 ZAST    = -g -ansi -Wall -Wextra -L/usr/X11R6/lib -L/usr/pkg/lib
