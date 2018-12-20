@@ -8,7 +8,7 @@
  * prostor nerezervisanim imenima, tako
  * da M_PI iz <math.h> nije dostupan */
 #ifndef M_PI
-#   define M_PI 3.14159265358979323846
+#define M_PI 3.14159265358979323846
 #endif
 
 /* Opis klikera */

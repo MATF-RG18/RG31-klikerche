@@ -11,4 +11,4 @@
 # treci: polozaj igracevog klikera;
 # cetvrti: parametri skoka i rotacije;
 # peti: stanja indikatora za rezim
-# prikaza, debag rezim i tipke
+# prikaza, zicani rezim i tipke

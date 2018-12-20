@@ -1,21 +1,14 @@
-#ifndef KOLBEK_H
-#define KOLBEK_H
+#ifndef TIPKE_H
+#define TIPKE_H
 
 #include "main.h"
 
 /* Makro za nekoriscene promenljive */
 #define PONISTI(x) (void)x
 
-/* Opis perspektive */
-#define PERSP_UGAO 60
-#define PERSP_BLIZ 1
-#define PERSP_DALJ 100
-
-/* Opis pogleda */
-#define POGLED 0
-#define NORM_X 0
-#define NORM_Y 0
-#define NORM_Z 1
+/* Nealfanumericki aski kodovi */
+#define ESC 27 /* eskejp za prekid */
+#define SPACE 32 /* spejs za skok */
 
 /* Bafer sa stanjem tipki
  * izrazenim vrednoscu bitova,
@@ -23,8 +16,8 @@
 #define PRAZNO 0 /* sve nule */
 #define NAPRED 1 /* jedinica */
 #define NAZAD 2 /* 1 << 1 */
-#define GORE 4 /* 1 << 2 */
-#define DOLE 8 /* 1 << 3 */
+#define NAGORE 4 /* 1 << 2 */
+#define NADOLE 8 /* 1 << 3 */
 #define LEVO 16 /* 1 << 4 */
 #define DESNO 32 /* 1 << 5 */
 #define RESET 64 /* 1 << 6 */
@@ -35,11 +28,14 @@
 
 int tipke;
 
-/* Deklaracije kolbek funkcija
- * prikaza i fje koja postavlja
- * sve kolbek funkcije */
-void postavi_kolbek(void);
-void na_prozor(int, int);
-void na_prikaz(void);
+/* Indikator da li je tipka
+ * pritisnuta ili pustena */
+enum {DOLE, GORE};
 
-#endif /* KOLBEK_H */
+/* Deklaracije kolbek funkcija
+ * na dogadjaje tastature */
+void na_tipku(unsigned char, int);
+void na_tipku_dole(unsigned char, int, int);
+void na_tipku_gore(unsigned char, int, int);
+
+#endif /* TIPKE.H */

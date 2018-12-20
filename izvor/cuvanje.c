@@ -1,43 +1,18 @@
-#include "../include/kolpom.h"
+#include "../include/cuvanje.h"
 
-void fullscreen(void)
+/* Odbaceni nacin promene rezima prikaza
+ * pomocu indikatora u korist ugradjene
+ * FreeGLUT-ove fje i indikatora */
+/*void fullscreen(void)
 {
-    /* Ako je trenutni prikaz tipa
-     * fullscreen, menja se u pocetni
-     * windowed prikaz i obrnuto */
     if (fulskrin == AKTIVAN){
         glutReshapeWindow(PROZ_DIM, PROZ_DIM);
     } else {
         glutFullScreen();
     }
     
-    /* Prostom negacijom azurira se
-     * indikator fullscreen prikaza;
-     * AKT. postaje PAS. i obrnuto */
     fulskrin = !fulskrin;
-}
-
-void popravi_vreme(void)
-{
-    /* Novo proteklo vreme dobavlja
-     * ugradjena GLUT-ova funkcija */
-    vreme.novo = glutGet(GLUT_ELAPSED_TIME);
-    
-    /* Vremenski pomeraj, neophodan kako
-     * bi se njime pomnozio svaki fizicki
-     * pokret; time kretanje biva uniformno
-     * i nezavisno od brzine racunara */
-    vreme.pom = vreme.novo - vreme.staro;
-    
-    /* Maksimalnim pomerajem izbegava
-     * se prevelika razlika u vremenima */
-    if (vreme.pom > POM_MAX){
-        vreme.pom = POM_MAX;
-    }
-    
-    /* Novo vreme zastareva */
-    vreme.staro = vreme.novo;
-}
+}*/
 
 void sacuvaj_igru(void)
 {
@@ -71,9 +46,9 @@ void sacuvaj_igru(void)
      * su u toku skok ili pauza */
     int ntipke = tipke & (SKOK | PAUZA);
     
-    /* Upisivanje stanja indikatora;
-     * fullscreen namerno obrnut */
-    fprintf(fajl, "%d %d %d\n", !fulskrin, debag, ntipke);
+    /* Upisivanje stanja indikatora */
+    fprintf(fajl, "%d %d %d\n",
+            glutGet(GLUT_FULL_SCREEN), zicani, ntipke);
     
     /* Upisivanje dokumentacionih komentara
      * u fajl pre njegovog zatvaranja */
@@ -85,7 +60,7 @@ void sacuvaj_igru(void)
     fprintf(fajl, "# treci: polozaj igracevog klikera;\n");
     fprintf(fajl, "# cetvrti: parametri skoka i rotacije;\n");
     fprintf(fajl, "# peti: stanja indikatora za rezim\n");
-    fprintf(fajl, "# prikaza, debag rezim i tipke\n");
+    fprintf(fajl, "# prikaza, zicani rezim i tipke\n");
     
     /* Zatvaranje fajla */
     fclose(fajl);
@@ -126,24 +101,24 @@ void ucitaj_igru(void)
     
     /* Sacuvane tipke pamte da li
      * su u toku skok ili pauza */
-    int ntipke;
+    int nprikaz, ntipke;
     
     /* Citanje stanja indikatora */
-    fscanf(fajl, "%d %d %d", &fulskrin, &debag, &ntipke);
+    fscanf(fajl, "%d %d %d", &nprikaz, &zicani, &ntipke);
     
     /* Zatvaranje fajla */
     fclose(fajl);
     
-    /* Postavljanje rezima prikaza na stanje
-     * pre cuvanja igre, sto se postize novim
-     * obrtanjem ucitanog vec obrnutog stanja
-     * (dupla negacija daje pocetno stanje) */
-    fullscreen();
+    /* Promena rezima prikaza u slucaju
+     * da se stari i ucitani razlikuju */
+    if (nprikaz != glutGet(GLUT_FULL_SCREEN)){
+        glutFullScreenToggle();
+    }
     
     /* Tekucim tipkama dodaju se stari
      * sacuvani parametri, pri cemu se
      * zanemaruju oni od pre citanja koji
-     * nemaju veze sa kretanje, mada se
+     * nemaju veze sa kretanjem, mada se
      * pauza ipak nezavisno pamti */
     int bila_pauza = tipke & PAUZA;
     tipke = (tipke & ~RESET & ~SKOK & ~PAUZA) | ntipke;

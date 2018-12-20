@@ -1,43 +1,4 @@
-#include "../include/kolbek.h"
-
-void postavi_kolbek(void)
-{
-    /* Funkcija na tajmer tempirano obradjuje
-     * oslusane dogadjaje; ovde proverava stanje
-     * bafera tipki, te izracunava i animira sta
-     * treba, sto omogucava glatkost i uskladjenost
-     * pokreta; zakomentarisana je odbacena upotreba
-     * fje na cekanje u te svrhe, posto kod nje ne
-     * postoji kontrola pozivanja kao kao tajmera */
-    /*glutIdleFunc(na_cekanje);*/
-    glutTimerFunc(TAJMER, na_tajmer, TAJMER);
-    
-    /* Funkcija na tipku dole prima podatke
-     * o pritisnutim tipkama tastature i tu
-     * informaciju ubacuje u bafer tipki */
-    glutKeyboardFunc(na_tipku_dole);
-    
-    /* Funkcija na tipku gore prima podatke
-     * o otpustenim tipkama tastature i njih
-     * izbacuje iz bafera tipki */
-    glutKeyboardUpFunc(na_tipku_gore);
-    
-    /* Funkcija na prozor postavlja pogled
-     * na scenu, kao i detalje projektivnog
-     * preslikavanja koje cini taj pogled,
-     * cime usput resava i problem promene
-     * dimenzije tj. skaliranja prozora */
-    glutReshapeFunc(na_prozor);
-    
-    /* Funkcija na prikaz jeste glavna fja
-     * koja upravlja izgledom scene; ovde u
-     * svakom osvezavanju nanovo postavlja
-     * oko, kliker, stazu, prepreke */
-    glutDisplayFunc(na_prikaz);
-    
-    /* Na pocetku nema pritisnutih tipki */
-    tipke = PRAZNO;
-}
+#include "../include/prikaz.h"
 
 void na_prozor(int sirina, int visina)
 {
@@ -64,16 +25,22 @@ void na_prozor(int sirina, int visina)
 
 void na_prikaz(void)
 {
-    /* Ciscenje scene tj. prozora:
-     * ciscenje bafera boje i dubine */
+    /* Ciscenje prozora: ciscenje bafera boje i dubine;
+     * prothodni sadrzaj prozora brise se tako sto se boja
+     * svih piksela postavlja na zadatu boju pozadine */
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-    /* Postavljanje matrice transformacije */
+    /* Postavljanje matrice transformacije;
+     * ucitava se jedinicna matrica koja se
+     * kasnije mnozi matricama odgovarajucih
+     * geometrijskih transformacija */
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     
-    /* Izracunavanje pozicije oka, te
-     * postavljanje vidnih parametara */
+    /* Izracunavanje pozicije oka, te postavljanje
+     * vidnih parametara; scena se tranformise tako
+     * da se oko nadje ispred, a kliker na centru
+     * scene, cime se simulira sinteticka kamera */
     popravi_oko();
     gluLookAt( oko.x,  oko.y,  oko.z,  /* polozaj kamere */
               klik.x, klik.y, klik.z,  /* centar pogleda */
@@ -93,8 +60,8 @@ void na_prikaz(void)
     /* Odbaceno postavljanje tackastog, a zatim
      * i usmerenog/direkcionog svetla, posto za
      * igricu ovog tipa ipak prirodnije izgleda
-     * podrazumevano svetlo, koje podjednako
-     * osvetljava svaki deo prikazane scene */
+     * podrazumevano svetlo, koje u pravcu pogleda
+     * podjednako osvetljava vidljiv deo scene */
     /*GLint svetlo_pol[] = {1, 1, 1, 0};
     glLightiv(GL_LIGHT0, GL_POSITION, svetlo_pol);*/
     
@@ -104,6 +71,7 @@ void na_prikaz(void)
     /* Crtanje kugle odnosno klikera */
     postavi_kliker();
     
-    /* Zamena bafera tj. prikaz slike na ekranu */
+    /* Zamena bafera tj. prikaz novonacrtane
+     * slike na ekranu umesto prethodne */
     glutSwapBuffers();
 }

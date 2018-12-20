@@ -5,19 +5,20 @@
  * koje zbrinjava ceo projekat; nije bas
  * najbolja C-ovska praksa, ali olaksava
  * posao kada je mali program u pitanju;
- * usput se simuliraju paketno i takmicarsko
- * (npr. <bits/stdc++.h>) programiranje */
+ * ugleda se na paketni i takmicarski stil
+ * (npr. <bits/stdc++.h>) programiranja */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <GL/glut.h>
+#include <GL/freeglut.h>
 #include "osnov.h"
+#include "prikaz.h"
+#include "vreme.h"
+#include "tipke.h"
 #include "oko.h"
 #include "kliker.h"
-#include "kolpom.h"
-#include "kolbek.h"
-#include "tajmer.h"
-#include "dogadjaji.h"
+#include "staza.h"
+#include "cuvanje.h"
 
 #endif /* MAIN_H */

@@ -7,9 +7,9 @@ CC      = gcc
 # a biblioteke se traze i na posebnim putevima
 ZAST    = -g -ansi -Wall -Wextra -L/usr/X11R6/lib -L/usr/pkg/lib
 # Spisak datoteka sa glavnim kodom
-PROG    = izvor/main.c izvor/osnov.c izvor/kolpom.c izvor/kolbek.c izvor/tajmer.c izvor/dogadjaji.c izvor/oko.c izvor/kliker.c
+PROG    = izvor/main.c izvor/osnov.c izvor/prikaz.c izvor/vreme.c izvor/tipke.c izvor/oko.c izvor/kliker.c izvor/staza.c izvor/cuvanje.c
 # Spisak korisnicki definisanih zaglavlja
-ZAV     = include/main.h include/osnov.h include/kolpom.h include/kolbek.h include/tajmer.h include/dogadjaji.h include/oko.h include/kliker.h
+ZAV     = include/main.h include/osnov.h include/prikaz.h include/vreme.h include/tipke.h include/oko.h include/kliker.h include/staza.h include/cuvanje.h
 # Spisak biblioteka koje treba povezati
 BIBL    = -lglut -lGLU -lGL -lm -L/usr/X11R6/lib -L/usr/pkg/lib
 
@@ -20,14 +20,13 @@ $(PROGRAM): $(PROG) $(ZAV)
 # Spisak pomocnih pravila
 .PHONY: run makerun clean
 
-# Pravilo za pokretanje prevedenog programa
+# Pravilo za pokretanje prevedenog programa u pozadini
 run:
 	./$(PROGRAM) &
 
 # Pravilo za istovremeno prevodjenje i pokretanje
 makerun:
-	make
-	make run
+	make && make run
 
 # Pravilo za ciscenje direktorijuma projekta
 clean:

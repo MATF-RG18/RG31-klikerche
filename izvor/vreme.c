@@ -1,14 +1,15 @@
-#include "../include/tajmer.h"
+#include "../include/vreme.h"
 
 void na_tajmer(int id)
 {
-    /* Nema potrebe proveravati da li
-     * je pozvan pravi tajmer, posto je
-     * samo jedan i sam sebe poziva */
-    /*if (id != TAJMER){
+    /* Provera da li poziv dolazi od
+     * odgovarajuceg tajmera; nije bas
+     * neophodno, pogotovu posto ovde
+     * ima samo jedan tajmer koji sam
+     * sebe poziva, ali je dobra praksa */
+    if (id != TAJMER){
           return;
-    }*/
-    PONISTI(id);
+    }
     
     /* Svakim pozivom fje na tajmer
      * azurira se vremenski pomeraj;
@@ -60,12 +61,12 @@ void na_tajmer(int id)
     }
     
     /* Oko se penje */
-    if (tipke & GORE){
+    if (tipke & NAGORE){
         oko_gore();
     }
     
     /* Oko se spusta */
-    if (tipke & DOLE){
+    if (tipke & NADOLE){
         oko_dole();
     }
     
@@ -100,4 +101,26 @@ void na_tajmer(int id)
     
     /* Ponovno postavljanje tajmera */
     glutTimerFunc(VREME, na_tajmer, TAJMER);
+}
+
+void popravi_vreme(void)
+{
+    /* Novo proteklo vreme dobavlja
+     * ugradjena GLUT-ova funkcija */
+    vreme.novo = glutGet(GLUT_ELAPSED_TIME);
+    
+    /* Vremenski pomeraj, neophodan kako
+     * bi se njime pomnozio svaki fizicki
+     * pokret; time kretanje biva uniformno
+     * i nezavisno od brzine racunara */
+    vreme.pom = vreme.novo - vreme.staro;
+    
+    /* Maksimalnim pomerajem izbegava
+     * se prevelika razlika u vremenima */
+    if (vreme.pom > POM_MAX){
+        vreme.pom = POM_MAX;
+    }
+    
+    /* Novo vreme zastareva */
+    vreme.staro = vreme.novo;
 }

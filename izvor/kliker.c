@@ -41,8 +41,8 @@ void postavi_kliker(void)
     glRotated(rot.u, rot.x, rot.y, ROT_Z);
     
     /* Crtanje popunjene sfere inace,
-     * a zicane u debag rezimu */
-    if (debag){
+     * a zicane u zicanom rezimu */
+    if (zicani){
         glutWireSphere(KLIK_RAD, KLIK_PREC, KLIK_PREC);
     } else {
         glutSolidSphere(KLIK_RAD, KLIK_PREC, KLIK_PREC);
@@ -131,7 +131,6 @@ void napravi_vektor(void)
      * sto su (ox-kx, oy-ky, 0) za oko, (0, 0, 0)
      * za kliker i (0, 0, 1) za trecu tacku; taj
      * proizvod jednak je (oy-ky, kx-ox, 0) */
-    
     rot.x = oko.y - klik.y;
     rot.y = klik.x - oko.x;
 }

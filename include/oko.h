@@ -3,8 +3,8 @@
 
 #include "main.h"
 
-/* Opis kamere */
-/* Pocetni sferni parametri */
+/* Pocetni sferni parametri oka
+ * odnosno sinteticke kamere */
 #define OKO_RAD 15
 #define OKO_PHI 0
 #define OKO_THETA 0.52359877559829887308 /* M_PI/6 */
