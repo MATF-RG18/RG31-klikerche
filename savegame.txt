@@ -1,5 +1,4 @@
 8.096000 -1.002364 0.273253
--17 -20 -5
 -33.411275 0.272625 0.000000
 0.000000 -154.500000
 0 1 0
@@ -7,8 +6,7 @@
 # Sacuvana igra zadrzi pet redova;
 # detalji se mogu naci u samom kodu;
 # prvi: sferni parametri oka/kamere;
-# drugi: razlike oka, za resetovanje;
-# treci: polozaj igracevog klikera;
-# cetvrti: parametri skoka i rotacije;
-# peti: stanja indikatora za rezim
+# drugi: polozaj igracevog klikera;
+# treci: parametri skoka i rotacije;
+# cetvrti: stanja indikatora za rezim
 # prikaza, zicani rezim i tipke

@@ -16,19 +16,20 @@ void napravi_kliker(void)
 
 void postavi_kliker(void)
 {
-    /* Ambijentalna, difuzna i spekularna
-     * refleksija materijala igracevog klikera;
+    /* Refleksija materijala igracevog klikera;
      * magicni brojevi koji se po zelji mogu
-     * menjati u cilju promene boje sfere */
+     * menjati u cilju promene boje sfere; u
+     * trenutnom obliku kliker je zelenkaste
+     * boje nastale kombinacijom ambijentalne
+     * i difuzne komponente, dok su mu glatkost
+     * (shininess), presijavanje (specular),
+     * i isijavanje (emmision) reda nula */
     GLfloat amb_ref[] = {0.3f, 0.7f, 0.3f, 1.0f};
     GLfloat dif_ref[] = {0.2f, 1.0f, 0.2f, 1.0f};
-    GLfloat spek_ref[] = {1.0f, 1.0f, 1.0f, 1.0f};
     
     /* Postavljanje svojstava klikera */
     glMaterialfv(GL_FRONT, GL_AMBIENT, amb_ref);
     glMaterialfv(GL_FRONT, GL_DIFFUSE, dif_ref);
-    glMaterialfv(GL_FRONT, GL_SPECULAR, spek_ref);
-    glMateriali(GL_FRONT, GL_SHININESS, KLIK_GLAT);
     
     /* Pomeranje u centar sfere */
     glTranslated(klik.x, klik.y, klik.z);
@@ -59,9 +60,9 @@ void kliker_napred(void)
      * razapinju centar oka i centar klikera
      * na xy ravan, tako da se starim koord.
      * klikera dodaje razlika vrednosti */
-    float duzina = sqrt((klik.x - oko.x) * (klik.x - oko.x)
-                 +  (klik.y - oko.y) * (klik.y - oko.y))
-                 * KLIK_POM / vreme.pom; /* normalizacija */
+    double duzina = sqrt((klik.x - oko.x) * (klik.x - oko.x)
+                    + (klik.y - oko.y) * (klik.y - oko.y))
+                    * KLIK_POM / vreme.pom; /* normalizacija */
     klik.x += (klik.x - oko.x) / duzina;
     klik.y += (klik.y - oko.y) / duzina;
     
@@ -76,9 +77,9 @@ void kliker_nazad(void)
      * razapinju centar klikera i centar oka
      * na xy ravan, tako da se starim koord.
      * klikera dodaje razlika vrednosti */
-    float duzina = sqrt((oko.x - klik.x) * (oko.x - klik.x)
-                 +  (oko.y - klik.y) * (oko.y - klik.y))
-                 * KLIK_POM / vreme.pom; /* normalizacija */
+    double duzina = sqrt((oko.x - klik.x) * (oko.x - klik.x)
+                    + (oko.y - klik.y) * (oko.y - klik.y))
+                    * KLIK_POM / vreme.pom; /* normalizacija */
     klik.x += (oko.x - klik.x) / duzina;
     klik.y += (oko.y - klik.y) / duzina;
     

@@ -4,10 +4,12 @@
 #include "main.h"
 
 /* Opis prozora */
-#define PROZ_DIM 550
+#define PROZ_DIM 512
 #define PROZ_POL 50
 #define PROZ_BOJA 0.05
 #define PROZ_ALPHA 0
+
+/* Ime aplikacije */
 #define APP_IME "Klikerche"
 
 /* Zastavica zicanog rezima */

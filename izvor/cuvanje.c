@@ -34,7 +34,7 @@ void sacuvaj_igru(void)
     fprintf(fajl, "%lf %lf %lf\n", oko.r, oko.phi, oko.theta);
     
     /* Upisivanje razlika oka */
-    fprintf(fajl, "%d %d %d\n", raz.r, raz.phi, raz.theta);
+    /*fprintf(fajl, "%d %d %d\n", raz.r, raz.phi, raz.theta);*/
     
     /* Upisivanje polozaja klikera */
     fprintf(fajl, "%lf %lf %lf\n", klik.x, klik.y, klik.z);
@@ -56,10 +56,10 @@ void sacuvaj_igru(void)
     fprintf(fajl, "# Sacuvana igra zadrzi pet redova;\n");
     fprintf(fajl, "# detalji se mogu naci u samom kodu;\n");
     fprintf(fajl, "# prvi: sferni parametri oka/kamere;\n");
-    fprintf(fajl, "# drugi: razlike oka, za resetovanje;\n");
-    fprintf(fajl, "# treci: polozaj igracevog klikera;\n");
-    fprintf(fajl, "# cetvrti: parametri skoka i rotacije;\n");
-    fprintf(fajl, "# peti: stanja indikatora za rezim\n");
+    /*fprintf(fajl, "# drugi: razlike oka, za resetovanje;\n");*/
+    fprintf(fajl, "# drugi: polozaj igracevog klikera;\n");
+    fprintf(fajl, "# treci: parametri skoka i rotacije;\n");
+    fprintf(fajl, "# cetvrti: stanja indikatora za rezim\n");
     fprintf(fajl, "# prikaza, zicani rezim i tipke\n");
     
     /* Zatvaranje fajla */
@@ -76,7 +76,6 @@ void ucitaj_igru(void)
      * otvoren ili ne sadrzi sve neophodne
      * podatke, zasad se prosto odustaje */
     if (fajl == NULL || fscanf(fajl, "%*f %*f %*f \
-                            %*d %*d %*d \
                             %*f %*f %*f \
                             %*f %*f \
                             %*d %*d %*d") == EOF){
@@ -91,7 +90,7 @@ void ucitaj_igru(void)
     fscanf(fajl, "%lf %lf %lf", &oko.r, &oko.phi, &oko.theta);
     
     /* Citanje razlika oka */
-    fscanf(fajl, "%d %d %d", &raz.r, &raz.phi, &raz.theta);
+    /*fscanf(fajl, "%d %d %d", &raz.r, &raz.phi, &raz.theta);*/
     
     /* Citanje polozaja klikera */
     fscanf(fajl, "%lf %lf %lf", &klik.x, &klik.y, &klik.z);

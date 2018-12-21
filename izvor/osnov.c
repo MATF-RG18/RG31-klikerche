@@ -90,17 +90,23 @@ void postavi_svetlo(void)
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
     
-    /* Ambijentalna, difuzna i spekularna
-     * boja svetla koje osvetljuje scenu;
-     * magicni brojevi koji se mogu menjati
-     * u cilju promene boje svetla; u trenutnom
-     * obliku opisuju prirodno belo svetlo */
-    GLfloat amb_svetlo[] = {0.0f, 0.0f, 0.0f, 1.0f};
+    /* Odbacene osobine svetla koje osvetljuje scenu;
+     * magicni brojevi boje opisivali su nesto poput
+     * prirodne bele svetlosti, sto je podrazumevano
+     * u OpenGL-u, tako da su fakticki suvisni. */
+    /*GLfloat amb_svetlo[] = {0.0f, 0.0f, 0.0f, 1.0f};
     GLfloat dif_svetlo[] = {1.0f, 1.0f, 1.0f, 1.0f};
-    GLfloat spek_svetlo[] = {1.0f, 1.0f, 1.0f, 1.0f};
+    GLfloat spek_svetlo[] = {1.0f, 1.0f, 1.0f, 1.0f};*/
     
     /* Postavljanje svojstava svetla */
-    glLightfv(GL_LIGHT0, GL_AMBIENT, amb_svetlo);
+    /*glLightfv(GL_LIGHT0, GL_AMBIENT, amb_svetlo);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, dif_svetlo);
-    glLightfv(GL_LIGHT0, GL_SPECULAR, spek_svetlo);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, spek_svetlo);*/
+    
+    /* Odbaceno eksperimentisanje sa dodatnim
+     * mogucnostima upravljanja osvetljenjem */
+    /*GLfloat amb_scene[] = {0.0f, 0.1f, 0.1f, 1.0f};
+    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb_scene);
+    glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, 1);
+    glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, 1);*/
 }

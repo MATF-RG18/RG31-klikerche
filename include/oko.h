@@ -3,6 +3,11 @@
 
 #include "main.h"
 
+/* Makroi za minimum i maksimum
+ * uporedivih/brojevnih vrednosti */
+#define MINIM(A, B) (((A) < (B)) ? (A) : (B))
+#define MAXIM(A, B) (((A) > (B)) ? (A) : (B))
+
 /* Pocetni sferni parametri oka
  * odnosno sinteticke kamere */
 #define OKO_RAD 15
@@ -27,8 +32,11 @@
 /* Pun krug za azimut */
 #define OKO_PHI_POM 6.2831853071795864769 /* 2*M_PI */
 
-/* Pocetne razlike */
-#define RAZ_POC 0
+/* Pocetne razlike i 
+ * parametri reseta */
+/*#define RAZ_POC 0*/
+#define RES_PAR 200
+#define RES_THETA 5
 
 /* Enumeracija za resetovanje */
 enum {RES_NIJE, RES_KRAJ};
@@ -52,9 +60,9 @@ struct oko{
 
 /* Struktura koja enkapsulira razlike
  * izmedju pocetnog i trenutnog stanja oka */
-struct razlika{
+/*struct razlika{
     int r, phi, theta;
-} raz;
+} raz;*/
 
 /* Deklaracije fja za oko/kameru */
 void napravi_oko(void);

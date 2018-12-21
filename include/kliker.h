@@ -16,7 +16,6 @@
 #define KLIK_RAD 1
 #define KLIK_PREC 22
 #define KLIK_POM 60
-#define KLIK_GLAT 100
 
 /* Opis skoka i rotacije */
 #define UGAO_POC 0

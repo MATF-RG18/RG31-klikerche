@@ -2,6 +2,29 @@
 
 void na_prozor(int sirina, int visina)
 {
+    /* Sprecavanje da prozor postane vertikalno
+     * deformisan u odnosu na pocetni kvadrat;
+     * visina veca od sirine postaje iste
+     * duzine kao i sirina prozora */
+    if (visina > sirina){
+        glutReshapeWindow(sirina, sirina);
+        return;
+    }
+    
+    /* Sprecavanje da sirina, a samim tim i ceo
+     * prozor bude manji od pocetnog kvadrata;
+     * i sirina i visina postaju pocetne duzine */
+    if (sirina < PROZ_DIM){
+        glutReshapeWindow(PROZ_DIM, PROZ_DIM);
+        return;
+    /* Popravka visine, za slucaj da je ona manja
+     * od minimalne dimenzije, a sirina nije;
+     * visina postaje pocetne duzine */
+    } else if (visina < PROZ_DIM){
+        glutReshapeWindow(sirina, PROZ_DIM);
+        return;
+    }
+    
     /* Postavljanje oblasti prikaza;
      * ona se krece od koord. (0, 0)
      * prozora do (sirina, visina) */
