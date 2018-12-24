@@ -79,7 +79,7 @@ void popravi_oko(void)
 
 int oko_reset(void)
 {
-    /* Drugi nacin modelovanja resetovanja oka;
+    /* Novi i precizniji model resetovanja oka;
      * kamera se u sfernom koordinatnom sistemu
      * posmatra kao trojka (r, phi, theta); cilj
      * resetovanja je da tu trojku transformise

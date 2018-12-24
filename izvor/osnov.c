@@ -107,6 +107,6 @@ void postavi_svetlo(void)
      * mogucnostima upravljanja osvetljenjem */
     /*GLfloat amb_scene[] = {0.0f, 0.1f, 0.1f, 1.0f};
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb_scene);
-    glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, 1);
-    glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, 1);*/
+    glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
+    glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);*/
 }

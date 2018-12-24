@@ -9,14 +9,14 @@ void na_prozor(int sirina, int visina)
     if (visina > sirina){
         glutReshapeWindow(sirina, sirina);
         return;
-    }
     
     /* Sprecavanje da sirina, a samim tim i ceo
      * prozor bude manji od pocetnog kvadrata;
      * i sirina i visina postaju pocetne duzine */
-    if (sirina < PROZ_DIM){
+    } else if (sirina < PROZ_DIM){
         glutReshapeWindow(PROZ_DIM, PROZ_DIM);
         return;
+    
     /* Popravka visine, za slucaj da je ona manja
      * od minimalne dimenzije, a sirina nije;
      * visina postaje pocetne duzine */

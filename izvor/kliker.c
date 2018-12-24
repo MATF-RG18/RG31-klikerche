@@ -10,8 +10,15 @@ void napravi_kliker(void)
     /* Postavljanje parametra skoka */
     klik.s = UGAO_POC;
     
-    /* Postavljanje ugla rotacije */
-    rot.u = UGAO_POC;
+    /* Postavljanje ugla rotacije; nije
+     * vazno u novom modelu kotrljanja */
+    /*rot.u = UGAO_POC;*/
+    
+    /* Postavljanje matrice rotacije
+     * na jedinicnu (identitet) */
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    glGetDoublev(GL_MODELVIEW_MATRIX, rot.mat);
 }
 
 void postavi_kliker(void)
@@ -34,12 +41,18 @@ void postavi_kliker(void)
     /* Pomeranje u centar sfere */
     glTranslated(klik.x, klik.y, klik.z);
     
-    /* Izracunavanje vektora rotacije */
-    napravi_vektor();
+    /* Izracunavanje vektora rotacije;
+     * premesteno u novom modelu kotrljanja */
+    /*napravi_vektor();*/
     
     /* Rotacija radi realisticnijeg kretanja
-     * klikera; zapravo simulacija kotrljanja */
-    glRotated(rot.u, rot.x, rot.y, ROT_Z);
+     * klikera; zapravo simulacija kotrljanja;
+     * u starom modelu izvodi se rotacijom oko
+     * izracunatog vektora, a u novom mnozenjem
+     * tekuce matrice tranformacije modela i
+     * pogleda (modelview) sa izracunatom */
+    /*glRotated(rot.u, rot.x, rot.y, ROT_Z);*/
+    glMultMatrixd(rot.mat);
     
     /* Crtanje popunjene sfere inace,
      * a zicane u zicanom rezimu */
@@ -67,8 +80,9 @@ void kliker_napred(void)
     klik.y += (klik.y - oko.y) / duzina;
     
     /* Rotacija koja odgovara
-     * kretanju napred */
-    rot_napred();
+     * kretanju unapred */
+    /*rot_napred();*/
+    kotrljaj(UNAPRED);
 }
 
 void kliker_nazad(void)
@@ -84,8 +98,9 @@ void kliker_nazad(void)
     klik.y += (oko.y - klik.y) / duzina;
     
     /* Rotacija koja odgovara
-     * kretanju nazad */
-    rot_nazad();
+     * kretanju unazad */
+    /*rot_nazad();*/
+    kotrljaj(UNAZAD);
 }
 
 int kliker_skok(void)
@@ -131,31 +146,81 @@ void napravi_vektor(void)
      * proizvoda (normalnog vektora) trojki kao
      * sto su (ox-kx, oy-ky, 0) za oko, (0, 0, 0)
      * za kliker i (0, 0, 1) za trecu tacku; taj
-     * proizvod jednak je (oy-ky, kx-ox, 0) */
+     * proizvod jednak je (oy-ky, kx-ox, 0), koji je
+     * inace jednakog smera, ali suprotnog pravca od
+     * vektora nadesno sintetickog modela kamere,
+     * kako bi rotacija bila u odgovarajucem smeru */
     rot.x = oko.y - klik.y;
     rot.y = klik.x - oko.x;
 }
 
-void rot_napred(void)
-{
+/* Odbaceni model kotrljanja u kome se cuva
+ * ugao rotacije; kako se rotacija obavljala
+ * u odnosu na trenutni vektor nadesno, kliker
+ * se okretao zajedno sa okom, sto mozda i nije
+ * najocekivanije ponasanje kada se uzme u
+ * obzir cinjenica da je u pitanju objekat koji
+ * nema jasno izdvojeno nesto poput ociju, pa da
+ * mora da "gleda" u pravcu kretanja */
+/*void rot_napred(void)
+{*/
     /* Kretanjem napred povecava
      * se ugao rotacije */
-    rot.u += UGAO_PAR * vreme.pom;
+    /*rot.u += UGAO_PAR * vreme.pom;*/
     
     /* Popravka jer u = [-pi, pi) */
-    if (rot.u >= UGAO_EXT){
+    /*if (rot.u >= UGAO_EXT){
         rot.u -= UGAO_POM;
-    }
-}
+    }*/
+/*}*/
 
-void rot_nazad(void)
-{
+/* Druga funkcija starog modela kotrljanja */
+/*void rot_nazad(void)
+{*/
     /* Kretanjem nazad smanjuje
      * se ugao rotacije */
-    rot.u -= UGAO_PAR * vreme.pom;
+    /*rot.u -= UGAO_PAR * vreme.pom;*/
     
     /* Popravka jer u = [-pi, pi) */
-    if (rot.u < -UGAO_EXT){
+    /*if (rot.u < -UGAO_EXT){
         rot.u += UGAO_POM;
-    }
+    }*/
+/*}*/
+
+void kotrljaj(int pravac)
+{
+    /* Kopiranje tekuce matrice */
+    glPushMatrix();
+    
+    /* Odabir matrice transformacije modela
+     * i pogleda kao trenutne; bez ovoga bi
+     * doslo do problema ako se u toku kretanja
+     * menja velicina prozora, jer u tom trenutku
+     * postaje aktivna matrica projekcije */
+    glMatrixMode(GL_MODELVIEW);
+    
+    /* Ucitavanje jedinicne matrice */
+    glLoadIdentity();
+    
+    /* Izracunavanje vektora rotacije */
+    napravi_vektor();
+    
+    /* Dodavanje nove rotacije oko izracunatog
+     * vektora na sve prethodne sacuvane */
+    rot.u = pravac * UGAO_PAR * vreme.pom;
+    glRotated(rot.u, rot.x, rot.y, ROT_Z);
+    
+    /* Mnozenje sacuvanom matricom rotacije,
+     * cime se izvode zapamcene rotacije; ovime
+     * novi model kotrljanja, uz cinjenicu da je
+     * izracunavanje nezavisno od iscrtavanja,
+     * cini kotrljanje klikera realnijim i
+     * nezavisnim od polozaja kamere */
+    glMultMatrixd(rot.mat);
+    
+    /* Cuvanje nove matrice rotacije */
+    glGetDoublev(GL_MODELVIEW_MATRIX, rot.mat);
+    
+    /* Vracanje kopirane matrice */
+    glPopMatrix();
 }

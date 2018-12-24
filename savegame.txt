@@ -1,12 +1,14 @@
 8.096000 -1.002364 0.273253
 -33.411275 0.272625 0.000000
-0.000000 -154.500000
-0 1 0
+0.000000 0 1 0
+0.787530 -0.439149 -0.432371
+-0.439149 0.092333 -0.893657
+0.432371 0.893657 -0.120137
 
-# Sacuvana igra zadrzi pet redova;
+# Sacuvana igra sadrzi sest redova;
 # detalji se mogu naci u samom kodu;
 # prvi: sferni parametri oka/kamere;
 # drugi: polozaj igracevog klikera;
-# treci: parametri skoka i rotacije;
-# cetvrti: stanja indikatora za rezim
-# prikaza, zicani rezim i tipke
+# treci: parametar skoka, indikatori
+# rezima prikaza i zicanosti, tipke;
+# ostali: matrica rotacije/kotrljanja

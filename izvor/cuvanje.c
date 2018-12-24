@@ -40,27 +40,44 @@ void sacuvaj_igru(void)
     fprintf(fajl, "%lf %lf %lf\n", klik.x, klik.y, klik.z);
     
     /* Upisivanje skoka i rotacije */
-    fprintf(fajl, "%lf %lf\n", klik.s, rot.u);
+    /*fprintf(fajl, "%lf %lf\n", klik.s, rot.u);*/
     
     /* Od tipki je bitno samo da li
      * su u toku skok ili pauza */
     int ntipke = tipke & (SKOK | PAUZA);
     
-    /* Upisivanje stanja indikatora */
-    fprintf(fajl, "%d %d %d\n",
+    /* Upisivanje parametra skoka,
+     * kao i stanja indikatora */
+    fprintf(fajl, "%lf %d %d %d\n", klik.s,
             glutGet(GLUT_FULL_SCREEN), zicani, ntipke);
+    
+    /* Upisivanje matrice rotacije; iako je u pitanju
+     * matrica dimenzija 4x4, vredna cuvanja je samo
+     * njena gornja leva podmatrica 3x3; naime, u pitanju
+     * je matrica u homogenim koordinatama, i to dodatno
+     * homogenizovanim, pri cemu ne postoji translatorna
+     * komponenta, posto je posredi cista rotacija, tako
+     * da su poslednji red i kolona fiksno (0, 0, 0, 1) */
+    int i, kor = (int)sqrt(MAT_DIM);
+    for (i = 0; i < kor-1; i++){
+        int j;
+        for (j = 0; j < kor-2; j++){
+            fprintf(fajl, "%lf ", rot.mat[i*kor+j]);
+        }
+        fprintf(fajl, "%lf\n", rot.mat[i*kor+j]);
+    }
     
     /* Upisivanje dokumentacionih komentara
      * u fajl pre njegovog zatvaranja */
     fputc('\n', fajl);
-    fprintf(fajl, "# Sacuvana igra zadrzi pet redova;\n");
+    fprintf(fajl, "# Sacuvana igra sadrzi sest redova;\n");
     fprintf(fajl, "# detalji se mogu naci u samom kodu;\n");
     fprintf(fajl, "# prvi: sferni parametri oka/kamere;\n");
     /*fprintf(fajl, "# drugi: razlike oka, za resetovanje;\n");*/
     fprintf(fajl, "# drugi: polozaj igracevog klikera;\n");
-    fprintf(fajl, "# treci: parametri skoka i rotacije;\n");
-    fprintf(fajl, "# cetvrti: stanja indikatora za rezim\n");
-    fprintf(fajl, "# prikaza, zicani rezim i tipke\n");
+    fprintf(fajl, "# treci: parametar skoka, indikatori\n");
+    fprintf(fajl, "# rezima prikaza i zicanosti, tipke;\n");
+    fprintf(fajl, "# ostali: matrica rotacije/kotrljanja\n");
     
     /* Zatvaranje fajla */
     fclose(fajl);
@@ -74,11 +91,21 @@ void ucitaj_igru(void)
     
     /* Ukoliko fajl nije mogao da bude
      * otvoren ili ne sadrzi sve neophodne
-     * podatke, zasad se prosto odustaje */
-    if (fajl == NULL || fscanf(fajl, "%*f %*f %*f \
-                            %*f %*f %*f \
-                            %*f %*f \
-                            %*d %*d %*d") == EOF){
+     * podatke, zasad se prosto odustaje;
+     * stdio nazalost nije previse precizan
+     * kada je u pitanju provera tipova ulaznih
+     * podataka, tako da je za test odabran
+     * pocetak komentara, posto dolazenje dotle
+     * kazuje da su predjeni zahtevani brojevi */
+    char test[TEST_MAX];
+    if (fajl == NULL || fscanf(fajl, "%*f %*f %*f\n \
+                            %*f %*f %*f\n \
+                            %*f %*d %*d %*d\n \
+                            %*f %*f %*f\n \
+                            %*f %*f %*f\n \
+                            %*f %*f %*f\n\n \
+                            %s", test) == EOF ||
+                            strcmp(test, "#")){
         return;
     }
     
@@ -96,14 +123,25 @@ void ucitaj_igru(void)
     fscanf(fajl, "%lf %lf %lf", &klik.x, &klik.y, &klik.z);
     
     /* Citanje skoka i rotacije */
-    fscanf(fajl, "%lf %lf", &klik.s, &rot.u);
+    /*fscanf(fajl, "%lf %lf", &klik.s, &rot.u);*/
     
     /* Sacuvane tipke pamte da li
      * su u toku skok ili pauza */
     int nprikaz, ntipke;
     
-    /* Citanje stanja indikatora */
-    fscanf(fajl, "%d %d %d", &nprikaz, &zicani, &ntipke);
+    /* Citanje parametra skoka,
+     * kao i stanja indikatora */
+    fscanf(fajl, "%lf %d %d %d", &klik.s,
+                 &nprikaz, &zicani, &ntipke);
+    
+    /* Citanje matrice rotacije */
+    int i, kor = (int)sqrt(MAT_DIM);
+    for (i = 0; i < kor-1; i++){
+        int j;
+        for (j = 0; j < kor-1; j++){
+            fscanf(fajl, "%lf", &rot.mat[i*kor+j]);
+        }
+    }
     
     /* Zatvaranje fajla */
     fclose(fajl);

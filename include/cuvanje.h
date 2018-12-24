@@ -6,6 +6,9 @@
 /* Ime sacuvane igre */
 #define SAVEGAME "savegame.txt"
 
+/* Velicina test bafera */
+#define TEST_MAX 100
+
 /* Deklaracije funkcija za
  * cuvanje i citanje igre */
 void sacuvaj_igru(void);
