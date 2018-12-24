@@ -93,7 +93,8 @@ void postavi_svetlo(void)
     /* Odbacene osobine svetla koje osvetljuje scenu;
      * magicni brojevi boje opisivali su nesto poput
      * prirodne bele svetlosti, sto je podrazumevano
-     * u OpenGL-u, tako da su fakticki suvisni. */
+     * u OpenGL-u, tako da su fakticki suvisni, te je
+     * jedino neophodno ukljucuti osvetljenje */
     /*GLfloat amb_svetlo[] = {0.0f, 0.0f, 0.0f, 1.0f};
     GLfloat dif_svetlo[] = {1.0f, 1.0f, 1.0f, 1.0f};
     GLfloat spek_svetlo[] = {1.0f, 1.0f, 1.0f, 1.0f};*/

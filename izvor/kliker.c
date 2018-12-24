@@ -214,7 +214,7 @@ void kotrljaj(int pravac)
      * cime se izvode zapamcene rotacije; ovime
      * novi model kotrljanja, uz cinjenicu da je
      * izracunavanje nezavisno od iscrtavanja,
-     * cini kotrljanje klikera realnijim i
+     * cini kotrljanje klikera prirodnijim i
      * nezavisnim od polozaja kamere */
     glMultMatrixd(rot.mat);
     
