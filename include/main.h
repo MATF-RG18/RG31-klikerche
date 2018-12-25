@@ -21,5 +21,6 @@
 #include "kliker.h"
 #include "staza.h"
 #include "cuvanje.h"
+#include "meni.h"
 
 #endif /* MAIN_H */

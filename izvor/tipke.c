@@ -69,10 +69,13 @@ void na_tipku(unsigned char tipka, int stanje)
     
     case 'g':
     case 'G':
-        /* Azuriranje indikatora zicanog
-         * rezima prostom negacijom */
+        /* Azuriranje indikatora ikosaedarskog
+         * rezima prostim obrtanjem/negacijom;
+         * tipka 'g' asocira na debag rezim kod
+         * kompilatora GCC, posto u igri ovaj
+         * rezim sluzi da prikaze kotrljanje */
         if (stanje == DOLE){
-            zicani = !zicani;
+            ikosaedar = !ikosaedar;
         }
         break;
     

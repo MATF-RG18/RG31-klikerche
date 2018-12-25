@@ -16,6 +16,14 @@ int main(int argc, char** argv)
      * event-driven programiranja */
     postavi_kolbek();
     
+    /* Postavljanje menija, koji je u biti
+     * prosirenje kolbeka; u konkretnom slucaju
+     * sluzi da olaksa upotrebu dodatnih opcija
+     * koje se inace ostvaruju preko tastature,
+     * posto iz korisnicke tacke gledista i nema
+     * mnogo svrhe pamtiti koja tipka sta radi */
+    postavi_meni();
+    
     /* Postavljanje svetala, u konkretnom
      * slucaju samo jednog i to prirodnog,
      * koje osvetljuje celu scenu */

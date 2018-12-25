@@ -12,9 +12,9 @@
 /* Ime aplikacije */
 #define APP_IME "Klikerche"
 
-/* Zastavica zicanog rezima */
+/* Zastavica ikosaedarskog rezima */
 enum {NEAKTIVAN, AKTIVAN};
-int zicani;
+int ikosaedar;
 
 /* Deklaracije osnovnih fja */
 void podesi_biblioteke(int*, char**);

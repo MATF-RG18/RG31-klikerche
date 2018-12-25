@@ -54,10 +54,10 @@ void postavi_kliker(void)
     /*glRotated(rot.u, rot.x, rot.y, ROT_Z);*/
     glMultMatrixd(rot.mat);
     
-    /* Crtanje popunjene sfere inace,
-     * a zicane u zicanom rezimu */
-    if (zicani){
-        glutWireSphere(KLIK_RAD, KLIK_PREC, KLIK_PREC);
+    /* Crtanje sfere inace, a ikosaedra
+     * u ikosaedarskom (debag) rezimu */
+    if (ikosaedar){
+        glutSolidIcosahedron();
     } else {
         glutSolidSphere(KLIK_RAD, KLIK_PREC, KLIK_PREC);
     }
@@ -187,17 +187,17 @@ void napravi_vektor(void)
     }*/
 /*}*/
 
-void kotrljaj(int pravac)
+void kotrljaj(int smer)
 {
-    /* Kopiranje tekuce matrice */
-    glPushMatrix();
-    
     /* Odabir matrice transformacije modela
      * i pogleda kao trenutne; bez ovoga bi
      * doslo do problema ako se u toku kretanja
      * menja velicina prozora, jer u tom trenutku
      * postaje aktivna matrica projekcije */
     glMatrixMode(GL_MODELVIEW);
+    
+    /* Kopiranje tekuce matrice */
+    glPushMatrix();
     
     /* Ucitavanje jedinicne matrice */
     glLoadIdentity();
@@ -207,7 +207,7 @@ void kotrljaj(int pravac)
     
     /* Dodavanje nove rotacije oko izracunatog
      * vektora na sve prethodne sacuvane */
-    rot.u = pravac * UGAO_PAR * vreme.pom;
+    rot.u = smer * UGAO_PAR * vreme.pom;
     glRotated(rot.u, rot.x, rot.y, ROT_Z);
     
     /* Mnozenje sacuvanom matricom rotacije,

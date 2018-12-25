@@ -3,9 +3,9 @@
 
 #include "main.h"
 
-/* Liste za iscrtavanje staze */
+/* Lista za iscrtavanje staze */
 #define STAZA 1
-GLuint staza1, staza2;
+GLuint staza;
 
 /* Deklaracije fja za stazu */
 void napravi_stazu(void);

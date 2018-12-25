@@ -10,5 +10,5 @@
 # prvi: sferni parametri oka/kamere;
 # drugi: polozaj igracevog klikera;
 # treci: parametar skoka, indikatori
-# rezima prikaza i zicanosti, tipke;
+# rezima prikaza i ikosaedra, tipke;
 # ostali: matrica rotacije/kotrljanja

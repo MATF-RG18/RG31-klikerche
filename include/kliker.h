@@ -28,8 +28,8 @@
 enum {SKOK_NIJE, SKOK_KRAJ};
 
 /* Dodatni opis rotacije; posebna
- * enumeracija zapravo predstavlja
- * znak ugla za koji se rotira */
+ * enumeracija predstavlja znak ugla
+ * to jest smer u kom se rotira */
 #define MAT_DIM 16
 #define ROT_Z 0
 enum {UNAPRED = 1, UNAZAD = -1};

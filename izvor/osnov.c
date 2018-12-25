@@ -31,9 +31,9 @@ void napravi_prozor(void)
         glutEnterGameMode();
     }*/
     
-    /* Na pocetku nije aktivan zicani rezim,
-     * a vreme je postavljeno na nulu */
-    zicani = NEAKTIVAN;
+    /* Na pocetku nije aktivan ikosaedarski
+     * rezim, a vreme je postavljeno na nulu */
+    ikosaedar = NEAKTIVAN;
     vreme.staro = NEAKTIVAN;
     
     /* OpenGL inicijalizacija; postavlja se boja

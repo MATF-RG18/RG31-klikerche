@@ -49,7 +49,7 @@ void sacuvaj_igru(void)
     /* Upisivanje parametra skoka,
      * kao i stanja indikatora */
     fprintf(fajl, "%lf %d %d %d\n", klik.s,
-            glutGet(GLUT_FULL_SCREEN), zicani, ntipke);
+            glutGet(GLUT_FULL_SCREEN), ikosaedar, ntipke);
     
     /* Upisivanje matrice rotacije; iako je u pitanju
      * matrica dimenzija 4x4, vredna cuvanja je samo
@@ -76,7 +76,7 @@ void sacuvaj_igru(void)
     /*fprintf(fajl, "# drugi: razlike oka, za resetovanje;\n");*/
     fprintf(fajl, "# drugi: polozaj igracevog klikera;\n");
     fprintf(fajl, "# treci: parametar skoka, indikatori\n");
-    fprintf(fajl, "# rezima prikaza i zicanosti, tipke;\n");
+    fprintf(fajl, "# rezima prikaza i ikosaedra, tipke;\n");
     fprintf(fajl, "# ostali: matrica rotacije/kotrljanja\n");
     
     /* Zatvaranje fajla */
@@ -132,7 +132,7 @@ void ucitaj_igru(void)
     /* Citanje parametra skoka,
      * kao i stanja indikatora */
     fscanf(fajl, "%lf %d %d %d", &klik.s,
-                 &nprikaz, &zicani, &ntipke);
+                 &nprikaz, &ikosaedar, &ntipke);
     
     /* Citanje matrice rotacije */
     int i, kor = (int)sqrt(MAT_DIM);

@@ -3,7 +3,7 @@
 ## Klikerče :globe_with_meridians:
 Projekat na kursu Računarska grafika. Korisnik upravlja klikerom koji se na komande korisnika kreće po generisanom terenu odnosno stazi sa preprekama, sa namerom uspešnog dolaska do cilja – kraja staze.
 
-Ukratko, projekat uključuje većinu gradiva obuhvaćenog vežbama na već pomenutom kursu, kao što je: crtanje 2D i 3D primitiva, provera dubine (depth tj. z-bafer), tempirana animacija, upravljanje pogledom (interaktivno postavljanje oka i perspektive), upotreba korisnički kreiranih matrica transformacija, osvetljenje, materijali, liste, tastatura. Do završetka projekta, što se očekuje do Nove godine ili Božića, planirano je uključivanje ostatka gradiva: parametrizovane površi, ispis teksta, teksture, eventualno providnost i miš. Od bitnih stvari, jedino dodatne ravni odsecanja nisu u planu, pošto nije primećeno da se ikako uklapaju u koncept programa.
+Ukratko, projekat uključuje većinu gradiva obuhvaćenog vežbama na već pomenutom kursu, kao što je: crtanje 2D i 3D primitiva, provera dubine (depth tj. z-bafer), tempirana animacija, upravljanje pogledom (interaktivno postavljanje oka i perspektive), upotreba korisnički kreiranih matrica transformacija, osvetljenje, materijali, liste, tastatura, miš. Do završetka projekta, što se očekuje do Nove godine ili Božića, planirano je uključivanje ostatka gradiva: parametrizovane površi, ispis teksta, teksture. Od bitnih stvari, jedino dodatne ravni odsecanja nisu u planu, pošto nije primećeno da se uklapaju u koncept.
 
 Finiji detalji u vezi sa tokom razvoja projekta – nedeljni izveštaji, kao i snimci ekrana trenutnog stanja programa, u gif formatu radi boljeg prikaza interaktivnosti, napravljenom pomoću aplikacije [recordMyDesktop](http://recordmydesktop.sourceforge.net/about.php) i [onlajn konvertora](http://www.videotogifs.com/ogv-to-gif.html) – mogu se pronaći na wiki stranicama repozitorijuma, dostupnim na meniju glavne stranice ili neposredno [ovde](https://github.com/MATF-RG18/RG31-klikerche/wiki).
 
@@ -32,6 +32,6 @@ Tipka | Događaj | Tipka | Događaj
 <kbd>W</kbd> <kbd>S</kbd> | kretanje klikera | <kbd>Q</kbd> <kbd>E</kbd> | udaljenost oka
 <kbd>A</kbd> <kbd>D</kbd> | okretanje oka | <kbd>Z</kbd> <kbd>X</kbd> | visina pogleda
 <kbd>R</kbd> | resetovanje oka | <kbd>Space</kbd> | skok
-<kbd>F</kbd> | fullscreen | <kbd>G</kbd> | žičani režim
+<kbd>F</kbd> | fullscreen | <kbd>G</kbd> | ikosaedarski režim
 <kbd>K</kbd> | čuvanje igre | <kbd>L</kbd> | čitanje igre
 <kbd>P</kbd> | pauza | <kbd>Esc</kbd> | izlaz iz igre
