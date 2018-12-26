@@ -3,7 +3,7 @@
 ## Klikerče :globe_with_meridians:
 Projekat na kursu Računarska grafika. Korisnik upravlja klikerom koji se na komande korisnika kreće po generisanom terenu odnosno stazi sa preprekama, sa namerom uspešnog dolaska do cilja – kraja staze.
 
-Ukratko, projekat uključuje većinu gradiva obuhvaćenog vežbama na već pomenutom kursu, kao što je: crtanje 2D i 3D primitiva, provera dubine (depth tj. z-bafer), tempirana animacija, upravljanje pogledom (interaktivno postavljanje oka i perspektive), upotreba korisnički kreiranih matrica transformacija, osvetljenje, materijali, liste, tastatura, miš. Do završetka projekta, što se očekuje do Nove godine ili Božića, planirano je uključivanje ostatka gradiva: parametrizovane površi, ispis teksta, teksture. Od bitnih stvari, jedino dodatne ravni odsecanja nisu u planu, pošto nije primećeno da se uklapaju u koncept.
+Ukratko, projekat uključuje većinu gradiva obuhvaćenog vežbama na već pomenutom kursu, kao što je: crtanje 2D i 3D primitiva, provera dubine (depth tj. z-bafer), tempirana animacija, upravljanje pogledom (interaktivno postavljanje oka i perspektive), upotreba korisnički kreiranih matrica transformacija, osvetljenje, materijali, liste, tastatura, miš. Do završetka projekta, što se očekuje do Nove godine, planirano je uključivanje ostatka gradiva: parametrizovane površi, ispis teksta, teksture. Od bitnih stvari, jedino dodatne ravni odsecanja nisu u planu, pošto nije primećeno da se uklapaju u koncept.
 
 Finiji detalji u vezi sa tokom razvoja projekta – nedeljni izveštaji, kao i snimci ekrana trenutnog stanja programa, u gif formatu radi boljeg prikaza interaktivnosti, napravljenom pomoću aplikacije [recordMyDesktop](http://recordmydesktop.sourceforge.net/about.php) i [onlajn konvertora](http://www.videotogifs.com/ogv-to-gif.html) – mogu se pronaći na wiki stranicama repozitorijuma, dostupnim na meniju glavne stranice ili neposredno [ovde](https://github.com/MATF-RG18/RG31-klikerche/wiki).
 
@@ -35,3 +35,12 @@ Tipka | Događaj | Tipka | Događaj
 <kbd>F</kbd> | fullscreen | <kbd>G</kbd> | ikosaedarski režim
 <kbd>K</kbd> | čuvanje igre | <kbd>L</kbd> | čitanje igre
 <kbd>P</kbd> | pauza | <kbd>Esc</kbd> | izlaz iz igre
+
+Za ljubitelje miša, ugrađene su mnoge paralelne komande koje omogućuju igru uz minimalnu upotrebu tastature. Naime, preko miša jedino nije moguće ići unazad i skočiti, s tim što, kada se uzme u obzir da se kretanje unazad može izvesti okretanjem za pola kruga, a zatim kretanjem unapred, prvo ograničenje i nije veliki problem.
+
+Taster | Događaj
+----- | ------
+prevlačenje miša | (o)kretanje oka
+kotrljanje točka | udaljenost oka
+desni klik | meni sa opcijama
+

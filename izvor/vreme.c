@@ -96,7 +96,8 @@ void na_tajmer(int id)
         }
     }
     
-    /* Osvezavanje prozora */
+    /* Osvezavanje prozora; forsira se
+     * ponovno iscrtavanje scene */
     glutPostRedisplay();
     
     /* Ponovno postavljanje tajmera */

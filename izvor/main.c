@@ -16,13 +16,11 @@ int main(int argc, char** argv)
      * event-driven programiranja */
     postavi_kolbek();
     
-    /* Postavljanje menija, koji je u biti
-     * prosirenje kolbeka; u konkretnom slucaju
-     * sluzi da olaksa upotrebu dodatnih opcija
-     * koje se inace ostvaruju preko tastature,
-     * posto iz korisnicke tacke gledista i nema
-     * mnogo svrhe pamtiti koja tipka sta radi */
-    postavi_meni();
+    /* Postavljanje funkcija vezanih za mis,
+     * sto je u biti prosirenje kolbeka; ovde
+     * sluzi da uvede paralelne komande misa
+     * preko vec uvedenih komandi tastature */
+    postavi_mis();
     
     /* Postavljanje svetala, u konkretnom
      * slucaju samo jednog i to prirodnog,
