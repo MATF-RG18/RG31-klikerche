@@ -118,9 +118,10 @@ void popravi_vreme(void)
     
     /* Maksimalnim pomerajem izbegava
      * se prevelika razlika u vremenima */
-    if (vreme.pom > POM_MAX){
+    /*if (vreme.pom > POM_MAX){
         vreme.pom = POM_MAX;
-    }
+    }*/
+    vreme.pom = MINIM(vreme.pom, POM_MAX);
     
     /* Novo vreme zastareva */
     vreme.staro = vreme.novo;

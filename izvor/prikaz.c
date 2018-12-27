@@ -94,6 +94,9 @@ void na_prikaz(void)
     /* Crtanje kugle odnosno klikera */
     postavi_kliker();
     
+    /* Ispis aktivnih poruka na ekran */
+    ispisi_poruke();
+    
     /* Zamena bafera tj. prikaz novonacrtane
      * slike na ekranu umesto prethodne */
     glutSwapBuffers();

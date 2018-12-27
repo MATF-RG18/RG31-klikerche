@@ -6,7 +6,7 @@ void na_tipku(unsigned char tipka, int stanje)
     case ESC:
         /* Prekid programa, nije
          * bitno stanje tipke */
-        exit(EXIT_SUCCESS);
+        napusti_igru();
     
     case SPACE:
         /* Kliker krece u skok, ali

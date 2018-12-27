@@ -21,7 +21,7 @@ struct mis{
 
 /* Enumeracija koja opisuje
  * odrednice menija */
-enum {RESETUJ, FULLSCREEN, ZICANI,
+enum {RESETUJ, FULLSCREEN, IKOSAEDAR,
       SACUVAJ, UCITAJ, PAUZIRAJ, IZADJI};
 
 /* Identifikator menija */

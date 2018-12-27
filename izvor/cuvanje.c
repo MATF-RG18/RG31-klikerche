@@ -20,10 +20,14 @@ void sacuvaj_igru(void)
      * igrom u rezimu za pisanje */
     FILE* fajl = fopen(SAVEGAME, "w");
     
-    /* Ukoliko fajl nije mogao da bude
-     * otvoren, zasad se prosto odustaje */
+    /* U zavisnosti od uspeha otvaranja fajla,
+     * aktivira se ispis odgovarajuce poruke */
+    por.vreme = vreme.novo;
     if (fajl == NULL){
+        por.poruka = NEUSPESNO_CUVANJE;
         return;
+    } else {
+        por.poruka = USPESNO_CUVANJE;
     }
     
     /* Ne postoji serijalizacija u C-u,
@@ -89,14 +93,15 @@ void ucitaj_igru(void)
      * igrom u rezimu za citanje */
     FILE* fajl = fopen(SAVEGAME, "r");
     
-    /* Ukoliko fajl nije mogao da bude
-     * otvoren ili ne sadrzi sve neophodne
-     * podatke, zasad se prosto odustaje;
+    /* U zavisnosti od uspeha otvaranja fajla
+     * i provere postojanja neophodnih podataka,
+     * aktivira se ispis odgovarajuce poruke;
      * stdio nazalost nije previse precizan
      * kada je u pitanju provera tipova ulaznih
      * podataka, tako da je za test odabran
      * pocetak komentara, posto dolazenje dotle
      * kazuje da su predjeni zahtevani brojevi */
+    por.vreme = vreme.novo;
     char test[TEST_MAX];
     if (fajl == NULL || fscanf(fajl, "%*f %*f %*f\n \
                             %*f %*f %*f\n \
@@ -106,7 +111,10 @@ void ucitaj_igru(void)
                             %*f %*f %*f\n\n \
                             %s", test) == EOF ||
                             strcmp(test, "#")){
+        por.poruka = NEUSPESNO_CITANJE;
         return;
+    } else {
+        por.poruka = USPESNO_CITANJE;
     }
     
     /* Resetovanje offseta, koji je zbog

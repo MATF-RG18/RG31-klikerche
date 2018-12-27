@@ -22,5 +22,6 @@
 #include "staza.h"
 #include "cuvanje.h"
 #include "mish.h"
+#include "ispis.h"
 
 #endif /* MAIN_H */

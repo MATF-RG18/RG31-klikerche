@@ -100,7 +100,7 @@ void na_pomeraj(int x, int y)
         return;
     }
     
-    /* Promene pozicije pokazivaca misa */
+    /* Promena pozicije pokazivaca misa */
     int pom_x = x - mis.x;
     int pom_y = y - mis.y;
 
@@ -110,7 +110,7 @@ void na_pomeraj(int x, int y)
     
     /* Ukoliko je pomeraj po x osi pozitivan,
      * mis je prevucen nadesno, sto znaci da
-     * se oko pomera nalevo i suprotno */
+     * se oko pomera nalevo, i suprotno */
     if (pom_x > PRAZNO){
         oko_levo();
     } else if (pom_x < PRAZNO){
@@ -119,10 +119,10 @@ void na_pomeraj(int x, int y)
     
     /* Ukoliko je pomeraj po y osi pozitivan,
      * mis je prevucen nagore, sto znaci da
-     * se i oko pomera nagore i suprotno, ali
+     * se i oko pomera nagore, i suprotno, ali
      * samo ukoliko se kliker ne krece, posto
      * je inace tesko ispratiti kretanje */
-    if (!(tipke & KRENI) && !(tipke && VRATI)){
+    if (!(tipke & KRENI) && !(tipke & VRATI)){
         if (pom_y > PRAZNO){
             oko_gore();
         } else if (pom_y < PRAZNO){
@@ -139,13 +139,13 @@ void postavi_meni(void)
     
     /* Postavljanje fonta odrednica; nazalost,
      * ova funkcija FreeGLUT-a nije dostupna */
-    /*glutSetMenuFont(meni, GLUT_BITMAP_HELVETICA_10);*/
+    /*glutSetMenuFont(meni, GLUT_BITMAP_9_BY_15);*/
     
     /* Ubacivanje odrednica menija; imenovanje
      * i povezivanje sa odgovarajucim enumima */
     glutAddMenuEntry("Resetuj oko (R)", RESETUJ);
     glutAddMenuEntry("Promeni rezim prikaza (F)", FULLSCREEN);
-    glutAddMenuEntry("Promeni rezim crtanja (G)", ZICANI);
+    glutAddMenuEntry("Promeni rezim crtanja (G)", IKOSAEDAR);
     glutAddMenuEntry("Sacuvaj igru (K)", SACUVAJ);
     glutAddMenuEntry("Ucitaj igru (L)", UCITAJ);
     glutAddMenuEntry("Pauziraj igru (P)", PAUZIRAJ);
@@ -173,7 +173,7 @@ void na_meni(int opcija)
             tipka = 'F';
             break;
         
-        case ZICANI:
+        case IKOSAEDAR:
             tipka = 'G';
             break;
         
@@ -194,6 +194,6 @@ void na_meni(int opcija)
             break;
     }
     
-    /* Pozivanje kolbeka za tastaturu */
+    /* Pozivanje funkcije za tastaturu */
     na_tipku(tipka, DOLE);
 }

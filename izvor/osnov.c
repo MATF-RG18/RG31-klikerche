@@ -32,14 +32,22 @@ void napravi_prozor(void)
     }*/
     
     /* Na pocetku nije aktivan ikosaedarski
-     * rezim, a vreme je postavljeno na nulu */
-    ikosaedar = NEAKTIVAN;
-    vreme.staro = NEAKTIVAN;
+     * rezim, nema aktivnih ispisa, a vreme
+     * je postavljeno na nulu */
+    ikosaedar = NEAKTIVNO;
+    por.poruka = NEAKTIVNO;
+    vreme.staro = NEAKTIVNO;
+    fps.vreme = NEAKTIVNO;
     
     /* OpenGL inicijalizacija; postavlja se boja
      * koja ce nadalje sluziti za ciscenje prozora;
      * ona se ujedno uzima za zadatu boju pozadine */
     glClearColor(PROZ_BOJA, PROZ_BOJA, PROZ_BOJA, PROZ_ALPHA);
+    
+    /* Postavljanje svetala, u konkretnom
+     * slucaju samo jednog, i to prirodnog,
+     * koje osvetljuje celu scenu */
+    postavi_svetlo();
 }
 
 void postavi_kolbek(void)
@@ -110,4 +118,23 @@ void postavi_svetlo(void)
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb_scene);
     glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
     glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);*/
+}
+
+void napusti_igru(void)
+{
+    /* Brisanje liste za icrtavanje staze */
+    glDeleteLists(staza, STAZA);
+    
+    /* Otklanjanje veze menija i desnog tastera
+     * misa, kao i brisanje samog menija */
+    glutDetachMenu(GLUT_RIGHT_BUTTON);
+    glutDestroyMenu(meni);
+    
+    /* Datoteke u koje se upisuju i iz kojih se
+     * citaju podaci zatvaraju se odmah po upotrebi */
+    /*fclose(...);*/
+    
+    /* Izlaz iz programa sa oslobadjanjem
+     * ostalih alociranih resursa */
+    exit(EXIT_SUCCESS);
 }

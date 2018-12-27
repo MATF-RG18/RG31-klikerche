@@ -47,7 +47,7 @@ struct kliker{
 struct rotacija{
     /* Ugao rotacije; vazan za
      * prvi model kotrljanja */
-    GLdouble u;
+    /*GLdouble u;*/
     
     /* Vektor rotacije */
     GLdouble x, y;

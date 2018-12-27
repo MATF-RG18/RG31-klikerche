@@ -3,11 +3,6 @@
 
 #include "main.h"
 
-/* Makroi za minimum i maksimum
- * uporedivih/brojevnih vrednosti */
-#define MINIM(A, B) (((A) < (B)) ? (A) : (B))
-#define MAXIM(A, B) (((A) > (B)) ? (A) : (B))
-
 /* Pocetni sferni parametri oka
  * odnosno sinteticke kamere */
 #define OKO_RAD 15

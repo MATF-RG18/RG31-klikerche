@@ -6,8 +6,10 @@ int main(int argc, char** argv)
      * definisanje nacina prikaza */
     podesi_biblioteke(&argc, argv);
     
-    /* Pravljenje i postavljanje
-     * osobina glavnog prozora */
+    /* Pravljenje i postavljanje osobina
+     * glavnog prozora; sto ukljucuje i
+     * inicijalizaciju vremena i poruka,
+     * kao i postavljanje glavnog svetla */
     napravi_prozor();
     
     /* Postavljanje kolbek fja, koje
@@ -21,11 +23,6 @@ int main(int argc, char** argv)
      * sluzi da uvede paralelne komande misa
      * preko vec uvedenih komandi tastature */
     postavi_mis();
-    
-    /* Postavljanje svetala, u konkretnom
-     * slucaju samo jednog i to prirodnog,
-     * koje osvetljuje celu scenu */
-    postavi_svetlo();
     
     /* Pravljenje oka/kamere; inicijalizacija
      * koja imitira konstruktor u oop */
@@ -43,6 +40,6 @@ int main(int argc, char** argv)
      * koja osluskuje dogadjaje */
     glutMainLoop();
     
-    /* Kraj programa */
+    /* Prekid odnosno kraj programa */
     exit(EXIT_SUCCESS);
 }

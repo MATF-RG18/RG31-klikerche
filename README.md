@@ -43,4 +43,3 @@ Taster | Događaj
 prevlačenje miša | (o)kretanje oka
 kotrljanje točka | udaljenost oka
 desni klik | meni sa opcijama
-
