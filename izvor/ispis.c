@@ -18,9 +18,15 @@ void ispisi_poruke(void)
      * se prostire preko cele oblasti prikaza; na
      * ovaj nacin ce paralelno projektovani tekst
      * biti prelepljen preko prethodno iscrtane
-     * perspektivno projektovane scene */
+     * perspektivno projektovane scene; visinske
+     * koordinate su obrnute kako bi, komfora radi,
+     * poruka o FPS imala nepromenljiv polozaj */
     gluOrtho2D(POGLED, glutGet(GLUT_WINDOW_WIDTH),
                glutGet(GLUT_WINDOW_HEIGHT), POGLED);
+    
+    /* Iskljucivanje osvetljenja, kako prethodna
+     * iscrtavanja ne bi uticala na izgled teksta */
+    glDisable(GL_LIGHTING);
     
     /* Ispis broja slika po sekundi
      * (frames per second, FPS) */
@@ -28,7 +34,12 @@ void ispisi_poruke(void)
     
     /* Ispis eventualnih poruka u vezi
      * sa cuvanjem i citanjem igre */
-    ispisi_cuvanje();
+    if (por.poruka != NEAKTIVNO){
+        ispisi_cuvanje();
+    }
+    
+    /* Ponovno ukljucivanje osvetljenja */
+    glEnable(GL_LIGHTING);
     
     /* Odabir matrice projekcije za tekucu
      * i odbacivanje kopirane matrice */
@@ -53,7 +64,9 @@ void ispisi_fps(void)
     
     /* Ako je pomeraj veci od sekunde, niska
      * koja cuva FPS i vreme se azuriraju, a
-     * brojac resetuje postavljanjem na nulu */
+     * brojac resetuje postavljanjem na nulu;
+     * tacan prebacaj pomeraja zanemaruje se
+     * ukoliko je manji od jedne sekunde */
     if (pomeraj >= SEKUNDA){
         int frps = frejm * SEKUNDA / pomeraj;
         sprintf(fps.niska, "%3d FPS", frps);
@@ -80,30 +93,22 @@ void ispisi_fps(void)
 
 void ispisi_cuvanje(void)
 {
-    /* Ako nema aktivnih ispisa,
-     * izlazi se iz funkcije */
-    if (por.poruka == NEAKTIVNO){
-        return;
-    }
-    
-    /* Ako je isteklo vreme za prikazivanje poruke,
-     * prekida se sa njenim ispisivanjem */
-    if (vreme.novo - por.vreme > TRAJANJE){
-        por.poruka = NEAKTIVNO;
-        return;
-    }
-    
     /* Omogucavanje upotrebe obicnih boja
      * umesto materijala za ispis teksta */
     glEnable(GL_COLOR_MATERIAL);
     
     /* Postavljanje boje teksta; poruke uspeha
-     * su svetlo zelene, a neuspeha crvene boje */
-    if (por.poruka == USPESNO_CUVANJE ||
-        por.poruka == USPESNO_CITANJE){
-        glColor3f(0.2f, 1.0f, 0.1f);
-    } else {
-        glColor3f(1.0f, 0.2f, 0.0f);
+     * su svetlozelene, a neuspeha crvene boje */
+    switch (por.poruka){
+        case USPESNO_CUVANJE:
+        case USPESNO_CITANJE:
+            glColor3f(0.2f, 1.0f, 0.0f);
+            break;
+        
+        case NEUSPESNO_CUVANJE:
+        case NEUSPESNO_CITANJE:
+            glColor3f(1.0f, 0.2f, 0.0f);
+            break;
     }
     
     /* Prestanak upotrebe obicnih boja

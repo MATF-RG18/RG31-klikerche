@@ -38,6 +38,7 @@ void napravi_prozor(void)
     por.poruka = NEAKTIVNO;
     vreme.staro = NEAKTIVNO;
     fps.vreme = NEAKTIVNO;
+    sprintf(fps.niska, "  0 FPS");
     
     /* OpenGL inicijalizacija; postavlja se boja
      * koja ce nadalje sluziti za ciscenje prozora;

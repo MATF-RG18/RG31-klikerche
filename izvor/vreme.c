@@ -110,10 +110,25 @@ void popravi_vreme(void)
      * ugradjena GLUT-ova funkcija */
     vreme.novo = glutGet(GLUT_ELAPSED_TIME);
     
+    /* Ako je isteklo vreme za prikazivanje
+     * poruke cuvanja odnosno citanja igre,
+     * prekida se sa njenim ispisivanjem */
+    if (por.poruka != NEAKTIVNO &&
+        vreme.novo - por.vreme > TRAJANJE){
+        por.poruka = NEAKTIVNO;
+    }
+    
+    /* Mozda bi logicno bilo da se ovde nalazi
+     * i azuriranje poruke o FPS, ali je ono
+     * ipak ostavljeno za fuknciju ispisa kako
+     * bi popravka vremena bila manje opterecena */
+    
     /* Vremenski pomeraj, neophodan kako
      * bi se njime pomnozio svaki fizicki
      * pokret; time kretanje biva uniformno
-     * i nezavisno od brzine racunara */
+     * i nezavisno od brzine racunara, kao i
+     * trajanja tajmera i broja prikazanih
+     * slika (frejmova) u sekundi (FPS) */
     vreme.pom = vreme.novo - vreme.staro;
     
     /* Maksimalnim pomerajem izbegava

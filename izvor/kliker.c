@@ -54,10 +54,8 @@ void postavi_kliker(void)
     /*glRotated(rot.u, rot.x, rot.y, ROT_Z);*/
     glMultMatrixd(rot.mat);
     
-    /* Crtanje sfere inace, a ikosaedra u ikosaedarskom
-     * (debag) rezimu; napomena: neobicna implementacija
-     * FreeGLUT-ove funkcije glutSolidIcosahedron() cini
-     * da ispis teksta na ekranu postane poluprovidan */
+    /* Crtanje sfere inace, a ikosaedra
+     * u ikosaedarskom (debag) rezimu */
     if (ikosaedar){
         glutSolidIcosahedron();
     } else {
