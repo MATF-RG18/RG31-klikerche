@@ -3,7 +3,7 @@
 ## Klikerče :globe_with_meridians:
 Projekat na kursu Računarska grafika. Korisnik upravlja klikerom koji se na komande korisnika kreće po generisanom terenu odnosno stazi sa preprekama, sa namerom uspešnog dolaska do cilja – kraja staze.
 
-Ukratko, projekat uključuje većinu gradiva obuhvaćenog vežbama na već pomenutom kursu, kao što je: crtanje 2D i 3D primitiva, provera dubine (depth tj. z-bafer), tempirana animacija, upravljanje pogledom (interaktivno postavljanje oka i perspektive), upotreba korisnički kreiranih matrica transformacija, osvetljenje, materijali, liste, tastatura, miš, ispis teksta, parametrizovane površi, teksture... Od bitnih stvari, jedino dodatne ravni odsecanja nisu u planu, pošto nije primećeno da se ikako uklapaju u koncept.
+Ukratko, projekat uključuje većinu gradiva obuhvaćenog vežbama na već pomenutom kursu, kao što je: crtanje 2D i 3D primitiva, provera dubine (depth tj. z-bafer), tempirana animacija, upravljanje pogledom (interaktivno postavljanje oka i perspektive), upotreba korisnički kreiranih matrica transformacija, osvetljenje, materijali, liste, tastatura, miš, ispis teksta, parametrizovane površi, teksture... Za bolji uvid preporučuje se analiza koda i proba same igre. :smiley:
 
 Finiji detalji u vezi sa tokom razvoja projekta – nedeljni izveštaji, kao i snimci ekrana trenutnog stanja programa, u gif formatu radi boljeg prikaza interaktivnosti, napravljenom pomoću aplikacije [recordMyDesktop](http://recordmydesktop.sourceforge.net/about.php) i [onlajn konvertora](http://www.videotogifs.com/ogv-to-gif.html) – mogu se pronaći na wiki stranicama repozitorijuma, dostupnim na meniju glavne stranice ili neposredno [ovde](https://github.com/MATF-RG18/RG31-klikerche/wiki).
 
