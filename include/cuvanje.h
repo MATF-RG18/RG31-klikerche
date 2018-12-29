@@ -4,7 +4,7 @@
 #include "main.h"
 
 /* Ime sacuvane igre */
-#define SAVEGAME "savegame.txt"
+#define SAVEGAME "ostalo/savegame.txt"
 
 /* Velicina test bafera */
 #define TEST_MAX 100

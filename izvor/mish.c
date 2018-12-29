@@ -144,12 +144,12 @@ void postavi_meni(void)
     /* Ubacivanje odrednica menija; imenovanje
      * i povezivanje sa odgovarajucim enumima */
     glutAddMenuEntry("Resetuj oko (R)", RESETUJ);
-    glutAddMenuEntry("Promeni rezim prikaza (F)", FULLSCREEN);
-    glutAddMenuEntry("Promeni rezim crtanja (G)", IKOSAEDAR);
+    glutAddMenuEntry("Promeni prikaz (F)", FULLSCREEN);
+    /*glutAddMenuEntry("Promeni rezim crtanja (G)", IKOSAEDAR);*/
     glutAddMenuEntry("Sacuvaj igru (K)", SACUVAJ);
     glutAddMenuEntry("Ucitaj igru (L)", UCITAJ);
     glutAddMenuEntry("Pauziraj igru (P)", PAUZIRAJ);
-    glutAddMenuEntry("Izadji iz igre (Esc)", IZADJI);
+    glutAddMenuEntry("Napusti igru (Esc)", NAPUSTI);
     
     /* Povezivanje menija sa
      * desnim klikom misa */
@@ -173,9 +173,9 @@ void na_meni(int opcija)
             tipka = 'F';
             break;
         
-        case IKOSAEDAR:
+        /*case IKOSAEDAR:
             tipka = 'G';
-            break;
+            break;*/
         
         case SACUVAJ:
             tipka = 'K';
@@ -189,7 +189,7 @@ void na_meni(int opcija)
             tipka = 'P';
             break;
         
-        case IZADJI:
+        case NAPUSTI:
             tipka = ESC;
             break;
     }

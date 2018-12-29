@@ -16,6 +16,7 @@
 #define KLIK_RAD 1
 #define KLIK_PREC 22
 #define KLIK_POM 60
+#define KLIK_TEKST "ostalo/mermer.png"
 
 /* Uglovi skoka i rotacije */
 #define UGAO_POC 0
@@ -38,6 +39,12 @@ enum {UNAPRED = 1, UNAZAD = -1};
 struct kliker{
     /* Koordinate centra */
     GLdouble x, y, z;
+    
+    /* Tekstura mermera */
+    GLuint tekst;
+    
+    /* GLU-ov quadric objekat */
+    GLUquadricObj* obj;
     
     /* Parametar skoka */
     GLdouble s;

@@ -56,7 +56,7 @@ void ispisi_fps(void)
 {
     /* Staticki brojac koji prebrojava slike koje
      * se prikazuju pre nego sto prodje sekund */
-    static int frejm = 0;
+    static int frejm = NEAKTIVNO;
     frejm++;
     
     /* Izracunavanje vremenskog pomeraja */
@@ -70,7 +70,7 @@ void ispisi_fps(void)
     if (pomeraj >= SEKUNDA){
         int frps = frejm * SEKUNDA / pomeraj;
         sprintf(fps.niska, "%3d FPS", frps);
-        frejm = 0;
+        frejm = NEAKTIVNO;
         fps.vreme = vreme.novo;
     }
     

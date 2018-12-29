@@ -80,13 +80,10 @@ void na_prikaz(void)
                 -15,      8,      2,
                 NORM_X, NORM_Y, NORM_Z);*/
     
-    /* Odbaceno postavljanje tackastog, a zatim
-     * i usmerenog/direkcionog svetla, posto za
-     * igricu ovog tipa ipak prirodnije izgleda
-     * podrazumevano svetlo, koje u pravcu pogleda
-     * podjednako osvetljava vidljiv deo scene */
-    /*GLint svetlo_pol[] = {1, 1, 1, 0};
-    glLightiv(GL_LIGHT0, GL_POSITION, svetlo_pol);*/
+    /* Postavljanje usmerenog odnosno direkcionog
+     * svetla, koje poput Sunca obasjava scenu */
+    GLint svetlo_pol[] = {S_X, S_Y, S_Z, S_A};
+    glLightiv(GL_LIGHT0, GL_POSITION, svetlo_pol);
     
     /* Postavljanje staze tj. terena */
     postavi_stazu();

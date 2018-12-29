@@ -69,14 +69,14 @@ void na_tipku(unsigned char tipka, int stanje)
     
     case 'g':
     case 'G':
-        /* Azuriranje indikatora ikosaedarskog
-         * rezima prostim obrtanjem/negacijom;
-         * tipka 'g' asocira na debag rezim kod
-         * kompilatora GCC, posto u igri ovaj
-         * rezim sluzi da prikaze kotrljanje */
-        if (stanje == DOLE){
+        /* Odbaceno azuriranje indikatora
+         * ikosaedarskog rezima obrtanjem/negacijom;
+         * tipka 'g' asocirala je na debag rezim kod
+         * kompilatora GCC, posto je pre tekstura ovaj
+         * rezim sluzio da prikaze kotrljanje */
+        /*if (stanje == DOLE){
             ikosaedar = !ikosaedar;
-        }
+        }*/
         break;
     
     case 'k':

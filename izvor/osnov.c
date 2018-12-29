@@ -31,10 +31,9 @@ void napravi_prozor(void)
         glutEnterGameMode();
     }*/
     
-    /* Na pocetku nije aktivan ikosaedarski
-     * rezim, nema aktivnih ispisa, a vreme
-     * je postavljeno na nulu */
-    ikosaedar = NEAKTIVNO;
+    /* Na pocetku nema aktivnih ispisa,
+     * a vreme je postavljeno na nulu */
+    /*ikosaedar = NEAKTIVNO;*/
     por.poruka = NEAKTIVNO;
     vreme.staro = NEAKTIVNO;
     fps.vreme = NEAKTIVNO;
@@ -124,7 +123,7 @@ void postavi_svetlo(void)
 void napusti_igru(void)
 {
     /* Brisanje liste za icrtavanje staze */
-    glDeleteLists(staza, STAZA);
+    glDeleteLists(staza.lista, AKTIVNO);
     
     /* Otklanjanje veze menija i desnog tastera
      * misa, kao i brisanje samog menija */
@@ -134,6 +133,16 @@ void napusti_igru(void)
     /* Datoteke u koje se upisuju i iz kojih se
      * citaju podaci zatvaraju se odmah po upotrebi */
     /*fclose(...);*/
+    
+    /* Brisanje quadric objekta, kako ne
+     * bi doslo do curenja memorije */
+    gluDeleteQuadric(klik.obj);
+    
+    /* Oslobadjanje resursa koje koriste
+     * napravljene teksture objekata */
+    glDeleteTextures(AKTIVNO, &staza.tekst);
+    glDeleteTextures(AKTIVNO, &staza.kraj);
+    glDeleteTextures(AKTIVNO, &klik.tekst);
     
     /* Izlaz iz programa sa oslobadjanjem
      * ostalih alociranih resursa */

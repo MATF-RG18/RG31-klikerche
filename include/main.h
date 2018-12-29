@@ -23,5 +23,6 @@
 #include "cuvanje.h"
 #include "mish.h"
 #include "ispis.h"
+#include "SOIL.h"
 
 #endif /* MAIN_H */

@@ -52,8 +52,8 @@ void sacuvaj_igru(void)
     
     /* Upisivanje parametra skoka,
      * kao i stanja indikatora */
-    fprintf(fajl, "%lf %d %d %d\n", klik.s,
-            glutGet(GLUT_FULL_SCREEN), ikosaedar, ntipke);
+    fprintf(fajl, "%lf %d %d\n", klik.s,
+            glutGet(GLUT_FULL_SCREEN), ntipke);
     
     /* Upisivanje matrice rotacije; iako je u pitanju
      * matrica dimenzija 4x4, vredna cuvanja je samo
@@ -79,8 +79,8 @@ void sacuvaj_igru(void)
     fprintf(fajl, "# prvi: sferni parametri oka/kamere;\n");
     /*fprintf(fajl, "# drugi: razlike oka, za resetovanje;\n");*/
     fprintf(fajl, "# drugi: polozaj igracevog klikera;\n");
-    fprintf(fajl, "# treci: parametar skoka, indikatori\n");
-    fprintf(fajl, "# rezima prikaza i ikosaedra, tipke;\n");
+    fprintf(fajl, "# treci: parametar skoka, indikator\n");
+    fprintf(fajl, "# rezima prikaza i stanje bitnih tipki;\n");
     fprintf(fajl, "# ostali: matrica rotacije/kotrljanja\n");
     
     /* Zatvaranje fajla */
@@ -105,7 +105,7 @@ void ucitaj_igru(void)
     char test[TEST_MAX];
     if (fajl == NULL || fscanf(fajl, "%*f %*f %*f\n \
                             %*f %*f %*f\n \
-                            %*f %*d %*d %*d\n \
+                            %*f %*d %*d\n \
                             %*f %*f %*f\n \
                             %*f %*f %*f\n \
                             %*f %*f %*f\n\n \
@@ -139,8 +139,8 @@ void ucitaj_igru(void)
     
     /* Citanje parametra skoka,
      * kao i stanja indikatora */
-    fscanf(fajl, "%lf %d %d %d", &klik.s,
-                 &nprikaz, &ikosaedar, &ntipke);
+    fscanf(fajl, "%lf %d %d", &klik.s,
+                 &nprikaz, &ntipke);
     
     /* Citanje matrice rotacije */
     int i, kor = (int)sqrt(MAT_DIM);

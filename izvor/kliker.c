@@ -7,6 +7,24 @@ void napravi_kliker(void)
     klik.y = KLIK_CENT;
     klik.z = KLIK_CENT;
     
+    /* Pravljenje teksture mermera; ona se pravi
+     * pomocu biblioteke SOIL tako sto se ucitava
+     * u podrazumevanom rezimu, a prave joj se novi
+     * identifikator, kao i propratna mipmapa; ovime
+     * SOIL postedjuje rukovanja sa redudantnim
+     * fjama poput glGenTextures() i slicnim; sama
+     * tekstura je stock slika sa interneta */
+    klik.tekst = SOIL_load_OGL_texture(KLIK_TEKST,
+    SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
+    
+    /* Iscrtavanje klikera resava se preko
+     * GLU-ovog quadric objekta, posto on
+     * ima ugradjenu podrsku za teksture;
+     * pravi se novi quadric i sugerise mu
+     * se da prihvati aktivnu teksturu */
+    klik.obj = gluNewQuadric();
+    gluQuadricTexture(klik.obj, GLU_TRUE);
+    
     /* Postavljanje parametra skoka */
     klik.s = UGAO_POC;
     
@@ -26,17 +44,13 @@ void postavi_kliker(void)
     /* Refleksija materijala igracevog klikera;
      * magicni brojevi koji se po zelji mogu
      * menjati u cilju promene boje sfere; u
-     * trenutnom obliku kliker je zelenkaste
+     * trenutnom obliku kliker je sedefaste
      * boje nastale kombinacijom ambijentalne
      * i difuzne komponente, dok su mu glatkost
      * (shininess), presijavanje (specular),
      * i isijavanje (emmision) reda nula */
-    GLfloat amb_ref[] = {0.3f, 0.7f, 0.3f, 1.0f};
-    GLfloat dif_ref[] = {0.2f, 1.0f, 0.2f, 1.0f};
-    
-    /* Postavljanje svojstava klikera */
-    glMaterialfv(GL_FRONT, GL_AMBIENT, amb_ref);
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, dif_ref);
+    GLfloat refl[] = {0.7f, 0.9f, 0.8f, 1.0f};
+    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, refl);
     
     /* Pomeranje u centar sfere */
     glTranslated(klik.x, klik.y, klik.z);
@@ -54,13 +68,68 @@ void postavi_kliker(void)
     /*glRotated(rot.u, rot.x, rot.y, ROT_Z);*/
     glMultMatrixd(rot.mat);
     
-    /* Crtanje sfere inace, a ikosaedra
-     * u ikosaedarskom (debag) rezimu */
-    if (ikosaedar){
+    /* Odbaceno crtanje GLUT-ove sfere inace, a
+     * ikosaedra u ikosaedarskom (debag) rezimu */
+    /*if (ikosaedar){
         glutSolidIcosahedron();
     } else {
         glutSolidSphere(KLIK_RAD, KLIK_PREC, KLIK_PREC);
-    }
+    }*/
+    
+    /* Ukljucivanje 2D tekstura i vezivanje
+     * one namenjene za iscrtavanje klikera */
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, klik.tekst);
+    
+    /* Odbaceno parametrizovano iscrtavanje klikera
+     * zasnovano  na iscrtavanju sferne trake trouglova;
+     * bilo je potpuno isto kao parametrizacija oka, ali
+     * ipak nije lako zalepiti teksturu u tom slucaju */
+    /*GLfloat theta = -M_PI/2, phi = -M_PI;
+    GLfloat pomeraj = M_PI/klik.prec;
+    for ( ; theta < M_PI/2; theta += pomeraj){
+        glBegin(GL_TRIANGLE_STRIP);
+        for ( ; phi <= M_PI + M_PI/klik.prec; phi += pomeraj){*/
+            /* Postavljaju se normala i koordinate
+             * jedne obicne tacke sfernog klikera */
+            /*glTexCoord2f(0, 0);
+            glNormal3f(
+                KLIK_RAD * cos(theta) * cos(phi),
+                KLIK_RAD * cos(theta) * sin(phi),
+                KLIK_RAD * sin(theta)
+                );
+            glVertex3f(
+                KLIK_RAD * cos(theta) * cos(phi),
+                KLIK_RAD * cos(theta) * sin(phi),
+                KLIK_RAD * sin(theta)
+                );*/
+            
+            /* Postavljaju se normala i koordinate
+             * jedne "vise" tacke sfernog klikera */
+            /*glTexCoord2f(0, 1);
+            glNormal3f(
+                KLIK_RAD * cos(theta + pomeraj) * cos(phi),
+                KLIK_RAD * cos(theta + pomeraj) * sin(phi),
+                KLIK_RAD * sin(theta + pomeraj)
+                );
+             glVertex3f(
+                KLIK_RAD * cos(theta + pomeraj) * cos(phi),
+                KLIK_RAD * cos(theta + pomeraj) * sin(phi),
+                KLIK_RAD * sin(theta + pomeraj)
+                );
+        }
+    glEnd();*/
+    
+    /* Reinicijalizacija azimuta */
+    /*phi = -M_PI;
+    }*/
+    
+    /* Iscrtavanje klikera kao quadrica */
+    gluSphere(klik.obj, KLIK_RAD, KLIK_PREC, KLIK_PREC);
+    
+    /* Iskljucivanje 2D tekstura */
+    glBindTexture(GL_TEXTURE_2D, NEAKTIVNO);
+    glDisable(GL_TEXTURE_2D);
     
     /* Nema poziva glPushMatrix() i glPopMatrix()
      * posto je postavljanje klikera poslednja u nizu

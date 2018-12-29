@@ -9,9 +9,9 @@ ZAST    = -g -ansi -Wall -Wextra -L/usr/X11R6/lib -L/usr/pkg/lib
 # Spisak datoteka sa glavnim kodom
 PROG    = izvor/main.c izvor/osnov.c izvor/prikaz.c izvor/vreme.c izvor/tipke.c izvor/oko.c izvor/kliker.c izvor/staza.c izvor/cuvanje.c izvor/mish.c izvor/ispis.c
 # Spisak korisnicki definisanih zaglavlja
-ZAV     = include/main.h include/osnov.h include/prikaz.h include/vreme.h include/tipke.h include/oko.h include/kliker.h include/staza.h include/cuvanje.h include/mish.h include/ispis.h
+ZAV     = include/main.h include/osnov.h include/prikaz.h include/vreme.h include/tipke.h include/oko.h include/kliker.h include/staza.h include/cuvanje.h include/mish.h include/ispis.h include/SOIL.h
 # Spisak biblioteka koje treba povezati
-BIBL    = -lglut -lGLU -lGL -lm -L/usr/X11R6/lib -L/usr/pkg/lib
+BIBL    = -lSOIL -lglut -lGLU -lGL -lm -L/usr/X11R6/lib -L/usr/pkg/lib
 
 # Pravilo za prevodjenje programa
 $(PROGRAM): $(PROG) $(ZAV)
