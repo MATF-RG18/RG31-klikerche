@@ -18,18 +18,21 @@ void na_tajmer(int id)
      * valja preduprediti talasanje */
     popravi_vreme();
     
-    /* Pauzirana igra znaci da se
-     * nista ne desava na tajmer */
-    if (tipke & PAUZA){
+    /* Igra koja nije u toku znaci da se nista
+     * posebno ne desava na tajmer, te se samo
+     * forsira ponovno iscrtavanje scene, a sam
+     * tajmer ne gasi, vec samo resetuje; usput
+     * se azurira vreme mirovanja */
+    if (stanje != U_TOKU){
+        vreme.pauza += vreme.pom;
+        glutPostRedisplay();
+        glutTimerFunc(VREME, na_tajmer, TAJMER);
         return;
     }
     
     /* Kliker skace */
-    if (tipke & SKOK){
-        /* Kraj animacije skoka */
-        if (kliker_skok() == SKOK_KRAJ){
-            tipke &= ~SKOK;
-        }
+    if (klik.s != UGAO_POC){
+        kliker_skok();
     }
     
     /* Resetovanje pogleda */
@@ -102,6 +105,24 @@ void na_tajmer(int id)
     
     /* Ponovno postavljanje tajmera */
     glutTimerFunc(VREME, na_tajmer, TAJMER);
+}
+
+void postavi_vreme(void)
+{
+    /* Ispis poruka o cuvanju i
+     * citanju igre je neaktivan */
+    por.poruka = NEAKTIVNO;
+    
+    /* Svako vreme je na nuli */
+    vreme.staro = NEAKTIVNO;
+    vreme.pauza = NEAKTIVNO;
+    fps.vreme = NEAKTIVNO;
+    stopw.pocetak = NEAKTIVNO;
+    stopw.starov = NEAKTIVNO;
+    
+    /* Vremenske niske takodje su nulte */
+    sprintf(fps.niska, " 0 FPS");
+    sprintf(stopw.niska, "00m:00s");
 }
 
 void popravi_vreme(void)

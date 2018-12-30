@@ -6,7 +6,7 @@
 /* Opis perspektive */
 #define PERSP_UGAO 60
 #define PERSP_BLIZ 1
-#define PERSP_DALJ 100
+#define PERSP_DALJ 220
 
 /* Opis pogleda; pogled krece
  * od koordinatnog pocetka, a

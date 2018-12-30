@@ -80,13 +80,16 @@ void na_prikaz(void)
                 -15,      8,      2,
                 NORM_X, NORM_Y, NORM_Z);*/
     
-    /* Postavljanje usmerenog odnosno direkcionog
-     * svetla, koje poput Sunca obasjava scenu */
+    /* Postavljanje dva usmerena tj, direkciona
+     * svetla, koja poput svojevrsnih sunaca odnosno
+     * jakih reflektora obasjavaju scenu */
     GLint svetlo_pol[] = {S_X, S_Y, S_Z, S_A};
     glLightiv(GL_LIGHT0, GL_POSITION, svetlo_pol);
+    svetlo_pol[0] = S_Y; svetlo_pol[1] = S_X;
+    glLightiv(GL_LIGHT1, GL_POSITION, svetlo_pol);
     
-    /* Postavljanje staze tj. terena */
-    postavi_stazu();
+    /* Postavljanje scene i staze */
+    postavi_scenu();
     
     /* Crtanje kugle odnosno klikera */
     postavi_kliker();

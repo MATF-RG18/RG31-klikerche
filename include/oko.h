@@ -22,7 +22,7 @@
 /* Maksimum parametara */
 #define OKO_RAD_MAX 20
 #define OKO_PHI_MAX 3.14159265358979323846 /* M_PI */
-#define OKO_THETA_MAX 1.5638150097869193009 /* M_PI/2-M_PI/450 */
+#define OKO_THETA_MAX 1.41371669411540695731 /* M_PI/2-M_PI/20 */
 
 /* Pun krug za azimut */
 #define OKO_PHI_POM 6.2831853071795864769 /* 2*M_PI */

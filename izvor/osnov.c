@@ -31,13 +31,14 @@ void napravi_prozor(void)
         glutEnterGameMode();
     }*/
     
-    /* Na pocetku nema aktivnih ispisa,
-     * a vreme je postavljeno na nulu */
-    /*ikosaedar = NEAKTIVNO;*/
-    por.poruka = NEAKTIVNO;
-    vreme.staro = NEAKTIVNO;
-    fps.vreme = NEAKTIVNO;
-    sprintf(fps.niska, "  0 FPS");
+    /* Ulazak u rezim prikaza preko celog ekrana */
+    glutFullScreen();
+    
+    /* Stanje igre je pocetno */
+    stanje = POCETAK;
+    
+    /* Inicijalizacija vremena */
+    postavi_vreme();
     
     /* OpenGL inicijalizacija; postavlja se boja
      * koja ce nadalje sluziti za ciscenje prozora;
@@ -97,33 +98,76 @@ void postavi_svetlo(void)
     /* Ukljucivanje svetla */
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
+    glEnable(GL_LIGHT1);
     
-    /* Odbacene osobine svetla koje osvetljuje scenu;
-     * magicni brojevi boje opisivali su nesto poput
-     * prirodne bele svetlosti, sto je podrazumevano
-     * u OpenGL-u, tako da su fakticki suvisni, te je
-     * jedino neophodno ukljucuti osvetljenje */
-    /*GLfloat amb_svetlo[] = {0.0f, 0.0f, 0.0f, 1.0f};
+    /* Osobine drugog svetla koje osvetljuje scenu;
+     * magicni brojevi boje opisuju nesto poput prirodne
+     * bele svetlosti, sto je podrazumevano u OpenGL-u,
+     * ali samo za prvo/nulto svetlo, pa je za drugo
+     * neophodno inicijalizovati nenulte vrednosti */
+    GLfloat amb_svetlo[] = {0.3f, 0.3f, 0.3f, 1.0f};
     GLfloat dif_svetlo[] = {1.0f, 1.0f, 1.0f, 1.0f};
-    GLfloat spek_svetlo[] = {1.0f, 1.0f, 1.0f, 1.0f};*/
+    GLfloat spek_svetlo[] = {0.8f, 0.8f, 0.8f, 1.0f};
     
     /* Postavljanje svojstava svetla */
-    /*glLightfv(GL_LIGHT0, GL_AMBIENT, amb_svetlo);
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, dif_svetlo);
-    glLightfv(GL_LIGHT0, GL_SPECULAR, spek_svetlo);*/
+    glLightfv(GL_LIGHT1, GL_AMBIENT, amb_svetlo);
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, dif_svetlo);
+    glLightfv(GL_LIGHT1, GL_SPECULAR, spek_svetlo);
     
     /* Odbaceno eksperimentisanje sa dodatnim
      * mogucnostima upravljanja osvetljenjem */
     /*GLfloat amb_scene[] = {0.0f, 0.1f, 0.1f, 1.0f};
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb_scene);
-    glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
-    glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);*/
+    glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);*/
+    
+    /* Ukljucivanje dvostranog sencenja */
+    glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
+}
+
+void zapocni_igru(void)
+{
+    /* Igra je sada u toku */
+    stanje = U_TOKU;
+    
+    /* Postavljanje menija, koji sluzi da olaksa
+     * upotrebu opcija koje nisu u vezi sa kretanjem
+     * (osnovna interkativna komponenta igre), a koje su
+     * podrazumevano dostupne preko tipki tastature,
+     * posto iz korisnicke tacke gledista i nema mnogo
+     * svrhe pamtiti koji taster sta radi */
+    postavi_meni();
+}
+
+void restartuj_igru(void)
+{
+    /* Oslobadjanje resursa koji ce
+     * ponovo biti inicijalizovani */
+    glutDetachMenu(GLUT_RIGHT_BUTTON);
+    glutDestroyMenu(meni);
+    glDeleteTextures(AKTIVNO, &klik.tekst);
+    gluDeleteQuadric(klik.obj);
+    
+    /* Stanje je pocetno, poruke o
+     * cuvanju igre postaju nebitne,
+     * a resetuje se i stoperica */
+    stanje = POCETAK;
+    por.poruka = NEAKTIVNO;
+    stopw.starov = NEAKTIVNO;
+    stopw.pocetak = vreme.novo;
+    vreme.pauza = NEAKTIVNO;
+    sprintf(stopw.niska, "00m:00s");
+    
+    /* Resetovanje parametara oka */
+    napravi_oko();
+    
+    /* Resetovanje parametara klikera */
+    napravi_kliker();
 }
 
 void napusti_igru(void)
 {
     /* Brisanje liste za icrtavanje staze */
-    glDeleteLists(staza.lista, AKTIVNO);
+    glDeleteLists(scena.lista, AKTIVNO);
     
     /* Otklanjanje veze menija i desnog tastera
      * misa, kao i brisanje samog menija */
@@ -134,14 +178,17 @@ void napusti_igru(void)
      * citaju podaci zatvaraju se odmah po upotrebi */
     /*fclose(...);*/
     
-    /* Brisanje quadric objekta, kako ne
+    /* Brisanje quadric objekata, kako ne
      * bi doslo do curenja memorije */
+    gluDeleteQuadric(scena.obj);
     gluDeleteQuadric(klik.obj);
     
     /* Oslobadjanje resursa koje koriste
      * napravljene teksture objekata */
-    glDeleteTextures(AKTIVNO, &staza.tekst);
-    glDeleteTextures(AKTIVNO, &staza.kraj);
+    glDeleteTextures(AKTIVNO, &scena.pozt);
+    glDeleteTextures(AKTIVNO, &scena.zaklop);
+    glDeleteTextures(AKTIVNO, &scena.staza);
+    glDeleteTextures(AKTIVNO, &scena.kraj);
     glDeleteTextures(AKTIVNO, &klik.tekst);
     
     /* Izlaz iz programa sa oslobadjanjem

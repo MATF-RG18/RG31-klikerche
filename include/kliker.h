@@ -22,11 +22,11 @@
 #define UGAO_POC 0
 #define UGAO_EXT 180
 /*#define UGAO_POM 360*/
-#define UGAO_PAR 0.3
+#define UGAO_PAR 0.333333
 
 /* Dodatni opis skoka */
 #define SKOK_VIS 2.75
-enum {SKOK_NIJE, SKOK_KRAJ};
+/*enum {SKOK_NIJE, SKOK_KRAJ};*/
 
 /* Dodatni opis rotacije; posebna
  * enumeracija predstavlja znak ugla
@@ -69,7 +69,7 @@ void napravi_kliker(void);
 void postavi_kliker(void);
 void kliker_napred(void);
 void kliker_nazad(void);
-int kliker_skok(void);
+void kliker_skok(void);
 void napravi_vektor(void);
 /*void rot_napred(void);
 void rot_nazad(void);*/

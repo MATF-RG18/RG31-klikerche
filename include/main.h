@@ -19,7 +19,7 @@
 #include "tipke.h"
 #include "oko.h"
 #include "kliker.h"
-#include "staza.h"
+#include "scena.h"
 #include "cuvanje.h"
 #include "mish.h"
 #include "ispis.h"

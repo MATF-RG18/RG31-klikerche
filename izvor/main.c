@@ -9,7 +9,7 @@ int main(int argc, char** argv)
     /* Pravljenje i postavljanje osobina
      * glavnog prozora; sto ukljucuje i
      * inicijalizaciju vremena i poruka,
-     * kao i postavljanje glavnog svetla */
+     * kao i postavljanje osvetljenja */
     napravi_prozor();
     
     /* Postavljanje kolbek fja, koje
@@ -32,9 +32,9 @@ int main(int argc, char** argv)
      * koja imitira konstruktor u oop */
     napravi_kliker();
     
-    /* Pravljenje staze; postavljanje koda
-     * koji generise stazu u listu */
-    napravi_stazu();
+    /* Pravljenje scene; postavljanje koda
+     * koji generise scenu u listu */
+    napravi_scenu();
     
     /* Pokretanje glavne petlje GLUT-a,
      * koja osluskuje dogadjaje */

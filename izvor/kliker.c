@@ -172,11 +172,11 @@ void kliker_nazad(void)
     kotrljaj(UNAZAD);
 }
 
-int kliker_skok(void)
+void kliker_skok(void)
 {
-    /* Cuva se povratna vrednost;
-     * podrazumevano nije kraj skoka */
-    int vracam = SKOK_NIJE;
+    /* Odbaceno cuvanje povratne vrednosti;
+     * podrazumevano nije bio kraj skoka */
+    /*int vracam = SKOK_NIJE;*/
     
     /* Povecavanje parametra skoka */
     klik.s += UGAO_PAR * vreme.pom;
@@ -185,7 +185,7 @@ int kliker_skok(void)
      * resetuje se, sto oznacava kraj skoka */
     if (klik.s >= UGAO_EXT){
         klik.s = UGAO_POC;
-        vracam = SKOK_KRAJ;
+        /*vracam = SKOK_KRAJ;*/
     }
     
     /* Skok se modeluje sinusoidnom funkcijom;
@@ -197,7 +197,7 @@ int kliker_skok(void)
     klik.z = SKOK_VIS * sin(klik.s * M_PI / UGAO_EXT);
     
     /* 0 ako nije kraj, 1 ako jeste */
-    return vracam;
+    /*return vracam;*/
 }
 
 void napravi_vektor(void)

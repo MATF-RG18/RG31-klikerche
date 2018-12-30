@@ -46,14 +46,13 @@ void sacuvaj_igru(void)
     /* Upisivanje skoka i rotacije */
     /*fprintf(fajl, "%lf %lf\n", klik.s, rot.u);*/
     
-    /* Od tipki je bitno samo da li
-     * su u toku skok ili pauza */
-    int ntipke = tipke & (SKOK | PAUZA);
+    /* Od tipki nista nije bitno */
+    /*int skok = tipke & SKOK;*/
     
     /* Upisivanje parametra skoka,
      * kao i stanja indikatora */
-    fprintf(fajl, "%lf %d %d\n", klik.s,
-            glutGet(GLUT_FULL_SCREEN), ntipke);
+    fprintf(fajl, "%lf %d %d\n", klik.s, stanje,
+            glutGet(GLUT_FULL_SCREEN));
     
     /* Upisivanje matrice rotacije; iako je u pitanju
      * matrica dimenzija 4x4, vredna cuvanja je samo
@@ -79,8 +78,8 @@ void sacuvaj_igru(void)
     fprintf(fajl, "# prvi: sferni parametri oka/kamere;\n");
     /*fprintf(fajl, "# drugi: razlike oka, za resetovanje;\n");*/
     fprintf(fajl, "# drugi: polozaj igracevog klikera;\n");
-    fprintf(fajl, "# treci: parametar skoka, indikator\n");
-    fprintf(fajl, "# rezima prikaza i stanje bitnih tipki;\n");
+    fprintf(fajl, "# treci: parametar skoka, indikatori\n");
+    fprintf(fajl, "# stanja igre i rezima prikaza/ekrana;\n");
     fprintf(fajl, "# ostali: matrica rotacije/kotrljanja\n");
     
     /* Zatvaranje fajla */
@@ -133,14 +132,10 @@ void ucitaj_igru(void)
     /* Citanje skoka i rotacije */
     /*fscanf(fajl, "%lf %lf", &klik.s, &rot.u);*/
     
-    /* Sacuvane tipke pamte da li
-     * su u toku skok ili pauza */
-    int nprikaz, ntipke;
-    
     /* Citanje parametra skoka,
      * kao i stanja indikatora */
-    fscanf(fajl, "%lf %d %d", &klik.s,
-                 &nprikaz, &ntipke);
+    int prikaz;
+    fscanf(fajl, "%lf %d %d", &klik.s, &stanje, &prikaz);
     
     /* Citanje matrice rotacije */
     int i, kor = (int)sqrt(MAT_DIM);
@@ -156,30 +151,12 @@ void ucitaj_igru(void)
     
     /* Promena rezima prikaza u slucaju
      * da se stari i ucitani razlikuju */
-    if (nprikaz != glutGet(GLUT_FULL_SCREEN)){
+    if (prikaz != glutGet(GLUT_FULL_SCREEN)){
         glutFullScreenToggle();
     }
     
-    /* Tekucim tipkama dodaju se stari
-     * sacuvani parametri, pri cemu se
-     * zanemaruju oni od pre citanja koji
-     * nemaju veze sa kretanjem, mada se
-     * pauza ipak nezavisno pamti */
-    int bila_pauza = tipke & PAUZA;
-    tipke = (tipke & ~RESET & ~SKOK & ~PAUZA) | ntipke;
-    
-    /* Ukoliko je bilo pauze pre citanja,
-     * a posle ne, postavlja se tajmer,
-     * a usput se i resetuje vreme */
-    if (bila_pauza && !(tipke & PAUZA)){
-        vreme.staro = glutGet(GLUT_ELAPSED_TIME);
-        glutTimerFunc(TAJMER, na_tajmer, TAJMER);
-    }
-    
-    /* Ukoliko je ucitana igra pauzirana,
-     * osvezava se prozor, posto u suprotnom
-     * biva prikazana stara zaledjena slika */
-    if (tipke & PAUZA){
-        glutPostRedisplay();
-    }
+    /* Tekucim tipkama menja se stanje
+     * tako sto se zanemaruje resetovanje
+     * oka koje je potencijalno u toku */
+    tipke &= ~RESET;
 }

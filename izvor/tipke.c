@@ -1,19 +1,20 @@
 #include "../include/tipke.h"
 
-void na_tipku(unsigned char tipka, int stanje)
+void na_tipku(unsigned char tipka, int dogadjaj)
 {
     switch (tipka){
     case ESC:
         /* Prekid programa, nije
-         * bitno stanje tipke */
+         * bitan dogadjaj tipke */
         napusti_igru();
     
     case SPACE:
         /* Kliker krece u skok, ali
          * samo ako je igra u toku;
          * otpustanje nije bitno */
-        if (stanje == DOLE && !(tipke & PAUZA)){
-            tipke |= SKOK;
+        if (dogadjaj == DOLE && stanje == U_TOKU
+            && klik.s == UGAO_POC){
+            kliker_skok();
         }
         break;
     
@@ -21,7 +22,7 @@ void na_tipku(unsigned char tipka, int stanje)
     case 'A':
         /* Kliker se okrece nalevo
          * ili prestaje to da radi */
-        switch (stanje) {
+        switch (dogadjaj) {
             case DOLE:
                 tipke |= LEVO;
                 break;
@@ -35,7 +36,7 @@ void na_tipku(unsigned char tipka, int stanje)
     case 'D':
         /* Kliker se okrece nadesno
          * ili prestaje to da radi */
-        switch (stanje) {
+        switch (dogadjaj) {
             case DOLE:
                 tipke |= DESNO;
                 break;
@@ -49,7 +50,7 @@ void na_tipku(unsigned char tipka, int stanje)
     case 'E':
         /* Oko se priblizava klikeru
          * ili prestaje to da radi */
-        switch (stanje) {
+        switch (dogadjaj) {
             case DOLE:
                 tipke |= NAPRED;
                 break;
@@ -62,7 +63,7 @@ void na_tipku(unsigned char tipka, int stanje)
     case 'f':
     case 'F':
         /* Promena rezima prikaza */
-        if (stanje == DOLE){
+        if (dogadjaj == DOLE){
             glutFullScreenToggle();
         }
         break;
@@ -74,15 +75,28 @@ void na_tipku(unsigned char tipka, int stanje)
          * tipka 'g' asocirala je na debag rezim kod
          * kompilatora GCC, posto je pre tekstura ovaj
          * rezim sluzio da prikaze kotrljanje */
-        /*if (stanje == DOLE){
+        /*if (dogadjaj == DOLE){
             ikosaedar = !ikosaedar;
         }*/
+        
+        /* Zapocinjanje igre ili
+         * njeno restartovanje */
+        if (dogadjaj == DOLE){
+            if (stanje == POCETAK){
+                zapocni_igru();
+            } else {
+                restartuj_igru();
+            }
+        }
         break;
     
     case 'k':
     case 'K':
-        /* Cuvanje trenutne igre */
-        if (stanje == DOLE){
+        /* Cuvanje trenutne igre, ali
+         * samo ukoliko je u toku ili
+         * je privremeno pauzirana */
+        if (dogadjaj == DOLE &&
+            (stanje == U_TOKU || stanje == PAUZA)){
             sacuvaj_igru();
         }
         break;
@@ -90,7 +104,7 @@ void na_tipku(unsigned char tipka, int stanje)
     case 'l':
     case 'L':
         /* Citanje sacuvane igre */
-        if (stanje == DOLE){
+        if (dogadjaj == DOLE){
             ucitaj_igru();
         }
         break;
@@ -99,15 +113,11 @@ void na_tipku(unsigned char tipka, int stanje)
     case 'P':
         /* Pauzira se igra ili nastavlja
          * ako je prethodno pauzirana */
-        if (stanje == DOLE){
-            tipke ^= PAUZA;
-            
-            /* Ponovo se postavlja tajmer ako
-             * je igra nastavljena nakon pauze,
-             * a usput se i resetuje vreme */
-            if (!(tipke & PAUZA)){
-              vreme.staro = glutGet(GLUT_ELAPSED_TIME);
-              glutTimerFunc(TAJMER, na_tajmer, TAJMER);
+        if (dogadjaj == DOLE){
+            if (stanje == U_TOKU){
+                stanje = PAUZA;
+            } else if (stanje == PAUZA){
+                stanje = U_TOKU;
             }
             
             /* Zaustavlja se animacija
@@ -120,7 +130,7 @@ void na_tipku(unsigned char tipka, int stanje)
     case 'Q':
         /* Oko se udaljava od klikera
          * ili prestaje to da radi */
-        switch (stanje) {
+        switch (dogadjaj) {
             case DOLE:
                 tipke |= NAZAD;
                 break;
@@ -134,7 +144,7 @@ void na_tipku(unsigned char tipka, int stanje)
     case 'R':
         /* Resetovanje pogleda, ali
          * samo ako je igra u toku */
-        if (stanje == DOLE && !(tipke & PAUZA)){
+        if (dogadjaj == DOLE && stanje == U_TOKU){
             tipke |= RESET;
         }
         break;
@@ -143,7 +153,7 @@ void na_tipku(unsigned char tipka, int stanje)
     case 'S':
         /* Kliker se krece unazad
          * ili prestaje to da radi */
-        switch (stanje) {
+        switch (dogadjaj) {
             case DOLE:
                 tipke |= VRATI;
                 break;
@@ -157,7 +167,7 @@ void na_tipku(unsigned char tipka, int stanje)
     case 'W':
         /* Kliker se krece napred
          * ili prestaje to da radi */
-        switch (stanje) {
+        switch (dogadjaj) {
             case DOLE:
                 tipke |= KRENI;
                 break;
@@ -171,7 +181,7 @@ void na_tipku(unsigned char tipka, int stanje)
     case 'X':
         /* Oko se spusta prema zemlji
          * ili prestaje to da radi */
-        switch (stanje) {
+        switch (dogadjaj) {
             case DOLE:
                 tipke |= NADOLE;
                 break;
@@ -185,7 +195,7 @@ void na_tipku(unsigned char tipka, int stanje)
     case 'Z':
         /* Oko se podize od zemlje
          * ili prestaje to da radi */
-        switch (stanje) {
+        switch (dogadjaj) {
             case DOLE:
                 tipke |= NAGORE;
                 break;
@@ -205,7 +215,7 @@ void na_tipku_dole(unsigned char tipka, int x, int y)
     
     /* Glavnoj funkciji za obradu
      * dogadjaja tastature prosledjuje
-     * se tipka i njeno stanje */
+     * se tipka i tip dogadjaja */
     na_tipku(tipka, DOLE);
 }
 
@@ -217,6 +227,6 @@ void na_tipku_gore(unsigned char tipka, int x, int y)
     
     /* Glavnoj funkciji za obradu
      * dogadjaja tastature prosledjuje
-     * se tipka i njeno stanje */
+     * se tipka i tip dogadjaja */
     na_tipku(tipka, GORE);
 }

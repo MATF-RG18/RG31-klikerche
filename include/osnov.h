@@ -22,11 +22,19 @@
 enum {NEAKTIVNO, AKTIVNO};
 /*int ikosaedar;*/
 
+/* Enumeracija koja predstavlja tekuce
+ * stanje igre sa gledista gameplaya */
+int stanje;
+enum {POCETAK, U_TOKU, PAUZA,
+      CESTITKE, GAME_OVER};
+
 /* Deklaracije osnovnih fja */
 void podesi_biblioteke(int*, char**);
 void napravi_prozor(void);
 void postavi_kolbek(void);
 void postavi_svetlo(void);
+void zapocni_igru(void);
+void restartuj_igru(void);
 void napusti_igru(void);
 
 #endif /* OSNOV_H */

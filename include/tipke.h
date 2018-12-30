@@ -23,8 +23,8 @@
 #define RESET 64 /* 1 << 6 */
 #define KRENI 128 /* 1 << 7 */
 #define VRATI 256 /* 1 << 8 */
-#define SKOK 512 /* 1 << 9 */
-#define PAUZA 1024 /* 1 << 10 */
+/*#define SKOK 512*/ /* 1 << 9 */
+/*#define PAUZA 1024*/ /* 1 << 10 */
 
 int tipke;
 

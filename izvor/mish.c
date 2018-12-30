@@ -26,20 +26,16 @@ void postavi_mis(void)
      * strukturu sa koordinatama */
     /*mis.x = mis.y = PRAZNO*/
     
-    /* Postavljanje menija, koji sluzi da olaksa
-     * upotrebu opcija koje nisu u vezi sa kretanjem
-     * (osnovna interkativna komponenta igre), a koje su
-     * podrazumevano dostupne preko tipki tastature,
-     * posto iz korisnicke tacke gledista i nema mnogo
-     * svrhe pamtiti koji taster sta radi */
-    postavi_meni();
+    /* Postavljanje menija prebaceno u
+     * funkciju koja zapocinje igru */
+    /*postavi_meni();*/
 }
 
 void na_mis(int taster, int stanje, int x, int y)
 {
-    /* Ukoliko je pauza u toku,
-     * dogadjaj se zanemaruje */
-    if (tipke & PAUZA){
+    /* Dogadjaj se uzima u obzir
+     * samo ukoliko je igra u toku */
+    if (stanje != U_TOKU){
         return;
     }
     
@@ -94,9 +90,9 @@ void na_mis(int taster, int stanje, int x, int y)
 
 void na_pomeraj(int x, int y)
 {
-    /* Ukoliko je pauza u toku,
-     * pomeranje se zanemaruje */
-    if (tipke & PAUZA){
+    /* Pomeranje se uzima u obzir
+     * samo ukoliko je igra u toku */
+    if (stanje != U_TOKU){
         return;
     }
     
@@ -145,7 +141,7 @@ void postavi_meni(void)
      * i povezivanje sa odgovarajucim enumima */
     glutAddMenuEntry("Resetuj oko (R)", RESETUJ);
     glutAddMenuEntry("Promeni prikaz (F)", FULLSCREEN);
-    /*glutAddMenuEntry("Promeni rezim crtanja (G)", IKOSAEDAR);*/
+    glutAddMenuEntry("Restartuj igru (G)", RESTARTUJ);
     glutAddMenuEntry("Sacuvaj igru (K)", SACUVAJ);
     glutAddMenuEntry("Ucitaj igru (L)", UCITAJ);
     glutAddMenuEntry("Pauziraj igru (P)", PAUZIRAJ);
@@ -173,9 +169,9 @@ void na_meni(int opcija)
             tipka = 'F';
             break;
         
-        /*case IKOSAEDAR:
+        case RESTARTUJ:
             tipka = 'G';
-            break;*/
+            break;
         
         case SACUVAJ:
             tipka = 'K';

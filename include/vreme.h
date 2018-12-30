@@ -16,11 +16,13 @@
 struct vreme{
     int staro;
     int novo;
+    int pauza;
     int pom;
 } vreme;
 
 /* Deklaracija tajmera */
 void na_tajmer(int);
+void postavi_vreme(void);
 void popravi_vreme(void);
 
 #endif /* VREME.H */
