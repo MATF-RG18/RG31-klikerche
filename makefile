@@ -5,7 +5,7 @@ CC      = gcc
 # Zastavice za prevodjenje: ukljucuju se
 # debag rezim, ANSI standard, sva upozorenja,
 # a biblioteke se traze i na posebnim putevima
-ZAST    = -g -ansi -Wall -Wextra -L/usr/X11R6/lib -L/usr/pkg/lib
+ZAST    = -g -ansi -Wall -Wextra -I/usr/X11R6/lib -I/usr/pkg/lib
 # Spisak datoteka sa glavnim kodom
 PROG    = izvor/main.c izvor/osnov.c izvor/prikaz.c izvor/vreme.c izvor/tipke.c izvor/oko.c izvor/kliker.c izvor/scena.c izvor/cuvanje.c izvor/mish.c izvor/ispis.c
 # Spisak korisnicki definisanih zaglavlja

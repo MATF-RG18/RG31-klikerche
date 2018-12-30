@@ -99,7 +99,8 @@ void ispisi_statistike(void)
      * se ukoliko je manji od jedne sekunde */
     if (pomeraj >= stopw.starov + SEKUNDA){
         int sek = pomeraj / SEKUNDA;
-        sprintf(stopw.niska, "%02dm:%02ds", sek/MSuS, sek%MSuS);
+        sprintf(stopw.niska, "%02dm:%02ds",
+                             sek/SEK_U_MIN, sek%SEK_U_MIN);
         stopw.starov = pomeraj;
     }
     
@@ -116,7 +117,7 @@ void ispisi_statistike(void)
     
     /* Ispisivanje poruke o statistikama;
      * polozaj je gornji levi cosak ekrana */
-    ispisi_nisku(FPS_POL, FPS_POL, statistike);
+    ispisi_nisku(STAT_POL, STAT_POL, statistike);
 }
 
 void ispisi_cuvanje(void)
@@ -137,8 +138,8 @@ void ispisi_cuvanje(void)
     
     /* Ispisivanje poruke prema indikatoru;
      * za polozaj se uzima donji levi cosak */
-    int x = FPS_POL;
-    int y = glutGet(GLUT_WINDOW_HEIGHT) - FPS_POL;
+    int x = STAT_POL;
+    int y = glutGet(GLUT_WINDOW_HEIGHT) - STAT_POL;
     switch (por.poruka){
         case USPESNO_CUVANJE:
             ispisi_nisku(x, y, "Uspesno cuvanje igre!");
@@ -169,22 +170,22 @@ void ispisi_stanje(void)
     switch (stanje){
         /* Na pocetku se korisnik upoznaje sa igrom */
         case POCETAK:
-            ispisi_nisku(FPS_POL, 2*FPS_POL,
-            "DOBRO DOSLI U IGRU KLIKERCHE!\nKretanje: 'W', 'A', 'S', 'D'\nKamera: 'Q', 'E', 'Z', 'X'\nOstalo: tastatura i mis\nZadatak: dospeti do cilja\nZa pocetak igre pritisnite 'G'\nZa izlaz pritisnite 'Esc'");
+            ispisi_nisku(STAT_POL, 2*STAT_POL,
+            "DOBRO DOSLI U IGRU KLIKERCHE!\nKretanje: 'W', 'A', 'S', 'D'\nKamera: 'Q', 'E', 'Z', 'X'\nOstalo: tastatura i mis\nZadatak: dospeti do cilja!\nZa pocetak igre pritisnite 'G'\nZa izlaz pritisnite 'Esc'");
             break;
         
         /* U toku igre moguce je restartovati
          * je ili jednostavno napustiti */
         case U_TOKU:
-            ispisi_nisku(FPS_POL, 2*FPS_POL,
-            "IGRA JE U TOKU!\nZa restart pritisnite 'G'\nZa izlaz pritisnite 'Esc'");
+            ispisi_nisku(STAT_POL, 2*STAT_POL,
+            "IGRA JE U TOKU!\nPozurite do cilja!\nZa restart pritisnite 'G'\nZa izlaz pritisnite 'Esc'");
             break;
         
         /* U toku pauze je moguce nastaviti sa
          * igrom ili je jednostavno napustiti */
         case PAUZA:
-            ispisi_nisku(FPS_POL, 2*FPS_POL,
-            "IGRA JE PAUZIRANA!\nZa nastavak pritisnite 'P'\nZa restart pritisnite 'G'\nZa izlaz pritisnite 'Esc'");
+            ispisi_nisku(STAT_POL, 2*STAT_POL,
+            "IGRA JE PAUZIRANA!\nPrijatan odmor!\nZa nastavak pritisnite 'P'\nZa restart pritisnite 'G'\nZa izlaz pritisnite 'Esc'");
             break;
         
         /* Kada se stigne do cilja... */

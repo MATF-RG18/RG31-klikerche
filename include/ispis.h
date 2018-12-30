@@ -3,20 +3,31 @@
 
 #include "main.h"
 
+/* Opis vremenskih ispisa; posebne poruke
+ * cuvanja i citanja igre traju odnosno
+ * nestaju nakon tri sekunde */
+#define SEKUNDA 1000
+#define TRAJANJE 3000
+
+/* Makroi za statistike */
+#define STAT_POL 25
+#define STAT_VEL 16
+#define SEK_U_MIN 60
+
 /* Opis poruke o FPS; polozaj teksta
  * i pomocna struktura sa podacima */
-#define FPS_POL 25
 struct fps{
     char niska[7];
     int vreme;
 } fps;
 
-/* Svaka poruka traje odnosno
- * nestaje nakon tri sekunde */
-#define SEKUNDA 1000
-#define TRAJANJE 3000
-#define STAT_VEL 16
-#define MSuS 60
+/* Struktura koja enkapsulira
+ * stopericu koja meri vreme */
+struct stoperica{
+    int pocetak;
+    int starov;
+    char niska[8];
+} stopw;
 
 /* Enumeracija koja opisuje
  * aktivnost poruka na ekranu;
@@ -32,14 +43,6 @@ struct poruke{
     int poruka;
     int vreme;
 } por;
-
-/* Struktura koja enkapsulira
- * stopericu koja meri vreme */
-struct stoperica{
-    int pocetak;
-    int starov;
-    char niska[8];
-} stopw;
 
 /* Deklaracije fja za ispis */
 void ispisi_poruke(void);

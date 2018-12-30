@@ -49,10 +49,12 @@ void sacuvaj_igru(void)
     /* Od tipki nista nije bitno */
     /*int skok = tipke & SKOK;*/
     
-    /* Upisivanje parametra skoka,
-     * kao i stanja indikatora */
-    fprintf(fajl, "%lf %d %d\n", klik.s, stanje,
-            glutGet(GLUT_FULL_SCREEN));
+    /* Upisivanje parametra skoka, stanja
+     * indikatora, kao i aktivnog proteklog
+     * vremena zarad korektnosti stoperice */
+    fprintf(fajl, "%lf %d %d %d\n", klik.s, stanje,
+            glutGet(GLUT_FULL_SCREEN),
+            vreme.novo - stopw.pocetak - vreme.pauza);
     
     /* Upisivanje matrice rotacije; iako je u pitanju
      * matrica dimenzija 4x4, vredna cuvanja je samo
@@ -78,8 +80,8 @@ void sacuvaj_igru(void)
     fprintf(fajl, "# prvi: sferni parametri oka/kamere;\n");
     /*fprintf(fajl, "# drugi: razlike oka, za resetovanje;\n");*/
     fprintf(fajl, "# drugi: polozaj igracevog klikera;\n");
-    fprintf(fajl, "# treci: parametar skoka, indikatori\n");
-    fprintf(fajl, "# stanja igre i rezima prikaza/ekrana;\n");
+    fprintf(fajl, "# treci: parametar skoka, indikator\n");
+    fprintf(fajl, "# stanja, rezim prikaza, proteklo vreme;\n");
     fprintf(fajl, "# ostali: matrica rotacije/kotrljanja\n");
     
     /* Zatvaranje fajla */
@@ -104,7 +106,7 @@ void ucitaj_igru(void)
     char test[TEST_MAX];
     if (fajl == NULL || fscanf(fajl, "%*f %*f %*f\n \
                             %*f %*f %*f\n \
-                            %*f %*d %*d\n \
+                            %*f %*d %*d %*d\n \
                             %*f %*f %*f\n \
                             %*f %*f %*f\n \
                             %*f %*f %*f\n\n \
@@ -132,10 +134,11 @@ void ucitaj_igru(void)
     /* Citanje skoka i rotacije */
     /*fscanf(fajl, "%lf %lf", &klik.s, &rot.u);*/
     
-    /* Citanje parametra skoka,
-     * kao i stanja indikatora */
-    int prikaz;
-    fscanf(fajl, "%lf %d %d", &klik.s, &stanje, &prikaz);
+    /* Citanje parametra skoka, stanja
+     * indikatora i proteklog vremena */
+    int prikaz, proteklo;
+    fscanf(fajl, "%lf %d %d %d", &klik.s,
+                 &stanje, &prikaz, &proteklo);
     
     /* Citanje matrice rotacije */
     int i, kor = (int)sqrt(MAT_DIM);
@@ -154,6 +157,18 @@ void ucitaj_igru(void)
     if (prikaz != glutGet(GLUT_FULL_SCREEN)){
         glutFullScreenToggle();
     }
+    
+    /* Manipulacija parametrima vremena kako
+     * bi stoperica ostala korektna; staro vreme
+     * i vreme pauze postavljaju se na nulu, dok
+     * se pocetak stoperice postavlja na vreme
+     * 'proteklo' milisekundi manje od trenutnog;
+     * ovime se zarad elegantnijeg koda dobija
+     * mogucnost negativnog pocetnog vremena,
+     * ali to ne smeta pri izvrsavanju */
+    stopw.starov = NEAKTIVNO;
+    vreme.pauza = NEAKTIVNO;
+    stopw.pocetak = vreme.novo - proteklo;
     
     /* Tekucim tipkama menja se stanje
      * tako sto se zanemaruje resetovanje

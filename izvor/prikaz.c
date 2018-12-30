@@ -72,7 +72,7 @@ void na_prikaz(void)
     /* Odbaceni pokusaj ukljucivanja fiksiranog
      * pogleda koji simulira pticju perspektivu koja
      * lici na kosu ili aksonometrijsku projekciju,
-     * a bio bi postavljen na tipku "o"; ipak, rezultat
+     * a bio bi postavljen na tipku 'o'; ipak, rezultat
      * je bio vise nego zanimljiv, tako da su vidni
      * parametri zakomentarisani, a celoj situaciji
      * posvecen je bonus gif iz pete sedmice */

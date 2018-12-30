@@ -1,6 +1,6 @@
 8.096000 -1.002364 0.273253
 -33.411275 0.272625 0.000000
-0.000000 1 1
+0.000000 1 1 19387
 0.787530 -0.439149 -0.432371
 -0.439149 0.092333 -0.893657
 0.432371 0.893657 -0.120137
@@ -9,6 +9,6 @@
 # detalji se mogu naci u samom kodu;
 # prvi: sferni parametri oka/kamere;
 # drugi: polozaj igracevog klikera;
-# treci: parametar skoka, indikatori
-# stanja igre i rezima prikaza/ekrana;
+# treci: parametar skoka, indikator
+# stanja, rezim prikaza, proteklo vreme;
 # ostali: matrica rotacije/kotrljanja

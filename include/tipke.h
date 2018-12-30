@@ -38,4 +38,4 @@ void na_tipku(unsigned char, int);
 void na_tipku_dole(unsigned char, int, int);
 void na_tipku_gore(unsigned char, int, int);
 
-#endif /* TIPKE.H */
+#endif /* TIPKE_H */

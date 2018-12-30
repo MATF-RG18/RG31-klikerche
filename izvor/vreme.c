@@ -140,8 +140,8 @@ void popravi_vreme(void)
     }
     
     /* Mozda bi logicno bilo da se ovde nalazi
-     * i azuriranje poruke o FPS, ali je ono
-     * ipak ostavljeno za fuknciju ispisa kako
+     * i azuriranje poruke o statistikama, ali je
+     * ono ipak ostavljeno za fuknciju ispisa kako
      * bi popravka vremena bila manje opterecena */
     
     /* Vremenski pomeraj, neophodan kako
@@ -152,12 +152,14 @@ void popravi_vreme(void)
      * slika (frejmova) u sekundi (FPS) */
     vreme.pom = vreme.novo - vreme.staro;
     
-    /* Maksimalnim pomerajem izbegava
-     * se prevelika razlika u vremenima */
+    /* Maksimalnim pomerajem izbegava se
+     * prevelika razlika u vremenima; od
+     * ovoga se ipak odustalo, jer moze
+     * da napravi zbrku stoperici */
     /*if (vreme.pom > POM_MAX){
         vreme.pom = POM_MAX;
     }*/
-    vreme.pom = MINIM(vreme.pom, POM_MAX);
+    /*vreme.pom = MINIM(vreme.pom, POM_MAX);*/
     
     /* Novo vreme zastareva */
     vreme.staro = vreme.novo;

@@ -105,7 +105,7 @@ void postavi_kliker(void)
                 );*/
             
             /* Postavljaju se normala i koordinate
-             * jedne "vise" tacke sfernog klikera */
+             * jedne 'vise' tacke sfernog klikera */
             /*glTexCoord2f(0, 1);
             glNormal3f(
                 KLIK_RAD * cos(theta + pomeraj) * cos(phi),
@@ -230,7 +230,7 @@ void napravi_vektor(void)
  * najocekivanije ponasanje kada se uzme u
  * obzir cinjenica da je u pitanju objekat koji
  * nema jasno izdvojeno nesto poput ociju, pa da
- * mora da "gleda" u pravcu kretanja */
+ * mora da 'gleda' u pravcu kretanja */
 /*void rot_napred(void)
 {*/
     /* Kretanjem napred povecava
