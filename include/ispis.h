@@ -9,24 +9,31 @@
 #define SEKUNDA 1000
 #define TRAJANJE 3000
 
-/* Makroi za statistike */
+/* Makroi za statistike: polozaj
+ * teskta, velicina niski, broj
+ * sekundi u minutu za stopw */
 #define STAT_POL 25
 #define STAT_VEL 16
+#define FPS_VEL 7
+#define STOPW_VEL 8
 #define SEK_U_MIN 60
 
-/* Opis poruke o FPS; polozaj teksta
- * i pomocna struktura sa podacima */
+/* Struktura koja enkapsulira
+ * poruku o trenutnom FPS */
 struct fps{
-    char niska[7];
+    char niska[FPS_VEL];
     int vreme;
 } fps;
 
-/* Struktura koja enkapsulira
- * stopericu koja meri vreme */
+/* Struktura koja enkapsulira stopericu
+ * koja meri vreme, sa prekoracenjem od
+ * ulaska u stoti minut igre, sto se ne
+ * ocekuje svakako, posto se sve moze
+ * zavrsiti za nekoliko minuta */
 struct stoperica{
     int pocetak;
     int starov;
-    char niska[8];
+    char niska[STOPW_VEL];
 } stopw;
 
 /* Enumeracija koja opisuje

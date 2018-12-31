@@ -1,14 +1,18 @@
-8.096000 -1.002364 0.273253
--33.411275 0.272625 0.000000
-0.000000 1 1 19387
-0.787530 -0.439149 -0.432371
--0.439149 0.092333 -0.893657
-0.432371 0.893657 -0.120137
+15.000000 -0.967442 0.523599
+-16.996521 23.006213 3.000000
+7 14 3
+0.000000 1 1 7578
+0 0.000000 1
+-0.541581 -0.270358 -0.795987
+0.672046 -0.708075 -0.216755
+-0.505018 -0.652331 0.565173
 
-# Sacuvana igra sadrzi sest redova;
+# Sacuvana igra sadrzi osam redova;
 # detalji se mogu naci u samom kodu;
 # prvi: sferni parametri oka/kamere;
-# drugi: polozaj igracevog klikera;
-# treci: parametar skoka, indikator
+# drugi: polozaj klikera u prostoru;
+# treci: polozaj klikera na stazi;
+# cetvrti: parametar skoka, indikator
 # stanja, rezim prikaza, proteklo vreme;
+# peti: parametri obrade sudara/kolizija;
 # ostali: matrica rotacije/kotrljanja

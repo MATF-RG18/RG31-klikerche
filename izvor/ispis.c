@@ -68,7 +68,7 @@ void ispisi_statistike(void)
 {
     /* Staticki brojac koji prebrojava slike koje
      * se prikazuju pre nego sto prodje sekund */
-    static int frejm = NEAKTIVNO;
+    static int frejm = 0;
     frejm++;
     
     /* Izracunavanje vremenskog pomeraja */
@@ -82,7 +82,7 @@ void ispisi_statistike(void)
     if (pomeraj >= SEKUNDA){
         int frps = frejm * SEKUNDA / pomeraj;
         sprintf(fps.niska, "%2d FPS", frps);
-        frejm = NEAKTIVNO;
+        frejm = 0;
         fps.vreme = vreme.novo;
     }
     
@@ -178,7 +178,7 @@ void ispisi_stanje(void)
          * je ili jednostavno napustiti */
         case U_TOKU:
             ispisi_nisku(STAT_POL, 2*STAT_POL,
-            "IGRA JE U TOKU!\nPozurite do cilja!\nZa restart pritisnite 'G'\nZa izlaz pritisnite 'Esc'");
+            "IGRA JE U TOKU!\nStignite do cilja!\nZa restart pritisnite 'G'\nZa izlaz pritisnite 'Esc'");
             break;
         
         /* U toku pauze je moguce nastaviti sa
@@ -188,12 +188,18 @@ void ispisi_stanje(void)
             "IGRA JE PAUZIRANA!\nPrijatan odmor!\nZa nastavak pritisnite 'P'\nZa restart pritisnite 'G'\nZa izlaz pritisnite 'Esc'");
             break;
         
-        /* Kada se stigne do cilja... */
+        /* Kada se stigne do cilja, ispisuju
+         * se cestitke na uspesnom dolasku */
         case CESTITKE:
+            ispisi_nisku(STAT_POL, 2*STAT_POL,
+            "CILJ JE DOSTIGNUT!\nCestitke i hvala na igri!\nZa restart pritisnite 'G'\nZa izlaz pritisnite 'Esc'");
             break;
         
-        /* Kada se padne u provaliju... */
+        /* Kada se padne u provaliju, ispisuje
+         * se poruka o neuspesnom kraju igre */
         case GAME_OVER:
+            ispisi_nisku(STAT_POL, 2*STAT_POL,
+            "UPALI STE U PROVALIJU!\nVise srece sledeci put!\nZa restart pritisnite 'G'\nZa izlaz pritisnite 'Esc'");
             break;
     }
 }

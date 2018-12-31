@@ -14,7 +14,7 @@ int main(int argc, char** argv)
     
     /* Postavljanje kolbek fja, koje
      * sluze za obradu dogadjaja, u skladu
-     * sa cinjenicom da je OpenGL nosilac
+     * sa cinjenicom da je GLUT nosilac
      * event-driven programiranja */
     postavi_kolbek();
     

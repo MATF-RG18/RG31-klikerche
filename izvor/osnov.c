@@ -34,8 +34,12 @@ void napravi_prozor(void)
     /* Ulazak u rezim prikaza preko celog ekrana */
     glutFullScreen();
     
-    /* Stanje igre je pocetno */
+    /* Stanje igre je pocetno, a
+     * normale su z osa sistema */
     stanje = POCETAK;
+    norm.x = NORM_X;
+    norm.y = NORM_Y;
+    norm.z = NORM_Z;
     
     /* Inicijalizacija vremena */
     postavi_vreme();
@@ -136,6 +140,10 @@ void zapocni_igru(void)
      * posto iz korisnicke tacke gledista i nema mnogo
      * svrhe pamtiti koji taster sta radi */
     postavi_meni();
+    
+    /* Pokrece se resetovanje oka koje
+     * predstavlja uvodnu animaciju */
+    tipke |= RESET;
 }
 
 void restartuj_igru(void)
@@ -149,13 +157,19 @@ void restartuj_igru(void)
     
     /* Stanje je pocetno, poruke o
      * cuvanju igre postaju nebitne,
-     * a resetuje se i stoperica */
+     * a resetuje se i stoperica,
+     * kao i padanje klikera */
     stanje = POCETAK;
+    norm.x = NORM_X;
+    norm.y = NORM_Y;
+    norm.z = NORM_Z;
     por.poruka = NEAKTIVNO;
     stopw.starov = NEAKTIVNO;
     stopw.pocetak = vreme.novo;
     vreme.pauza = NEAKTIVNO;
     sprintf(stopw.niska, "00m:00s");
+    klik.pad = NEAKTIVNO;
+    klik.kret = NEAKTIVNO;
     
     /* Resetovanje parametara oka */
     napravi_oko();
@@ -164,8 +178,12 @@ void restartuj_igru(void)
     napravi_kliker();
 }
 
-void napusti_igru(void)
+void napusti_igru(const char* poruka)
 {
+    /* Ispis prosledjene poruke na
+     * standardni izlaz za greske */
+    fprintf(stderr, "%s\n", poruka);
+    
     /* Brisanje liste za icrtavanje staze */
     glDeleteLists(scena.lista, AKTIVNO);
     
@@ -187,8 +205,8 @@ void napusti_igru(void)
      * napravljene teksture objekata */
     glDeleteTextures(AKTIVNO, &scena.pozt);
     glDeleteTextures(AKTIVNO, &scena.zaklop);
-    glDeleteTextures(AKTIVNO, &scena.staza);
-    glDeleteTextures(AKTIVNO, &scena.kraj);
+    glDeleteTextures(AKTIVNO, &staza.tekst);
+    glDeleteTextures(AKTIVNO, &staza.kraj);
     glDeleteTextures(AKTIVNO, &klik.tekst);
     
     /* Izlaz iz programa sa oslobadjanjem

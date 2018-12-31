@@ -22,6 +22,14 @@
 #define S_Z 5
 #define S_A 0
 
+/* Struktura koja enkapsulira
+ * koordinate upravnog vektora */
+struct normala{
+    double x, nx;
+    double y, ny;
+    double z/*, nz*/;
+} norm;
+
 /* Deklaracije fja prikaza */
 void na_prozor(int, int);
 void na_prikaz(void);

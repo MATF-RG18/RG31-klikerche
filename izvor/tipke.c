@@ -6,14 +6,15 @@ void na_tipku(unsigned char tipka, int dogadjaj)
     case ESC:
         /* Prekid programa, nije
          * bitan dogadjaj tipke */
-        napusti_igru();
+        napusti_igru("Program prekinut dogadjajem tastature!");
     
     case SPACE:
-        /* Kliker krece u skok, ali
-         * samo ako je igra u toku;
-         * otpustanje nije bitno */
+        /* Kliker krece u skok, ali samo ako
+         * je igra u toku, nije prethodni skok
+         * aktivan i kliker trenutno ne pada;
+         * otpustanje tipke nije bitno */
         if (dogadjaj == DOLE && stanje == U_TOKU
-            && klik.s == UGAO_POC){
+            && klik.s == UGAO_POC && !klik.pad){
             kliker_skok();
         }
         break;
@@ -94,10 +95,16 @@ void na_tipku(unsigned char tipka, int dogadjaj)
     case 'K':
         /* Cuvanje trenutne igre, ali
          * samo ukoliko je u toku ili
-         * je privremeno pauzirana */
-        if (dogadjaj == DOLE &&
-            (stanje == U_TOKU || stanje == PAUZA)){
-            sacuvaj_igru();
+         * je privremeno pauzirana, pri
+         * cemu vazi da kliker ne pada */
+        if (dogadjaj == DOLE){
+            if (klik.pad || (stanje != U_TOKU
+                && stanje != PAUZA)){
+                por.vreme = vreme.novo;
+                por.poruka = NEUSPESNO_CUVANJE;
+            } else {
+                sacuvaj_igru();
+            }
         }
         break;
     
@@ -142,10 +149,15 @@ void na_tipku(unsigned char tipka, int dogadjaj)
     
     case 'r':
     case 'R':
-        /* Resetovanje pogleda, ali
+        /* Resetovanje pogleda ili
+         * prestanak resetovanja, ali
          * samo ako je igra u toku */
         if (dogadjaj == DOLE && stanje == U_TOKU){
-            tipke |= RESET;
+            if (tipke & RESET){
+                tipke &= ~RESET;
+            } else {
+                tipke |= RESET;
+            }
         }
         break;
     

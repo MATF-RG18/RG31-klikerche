@@ -23,7 +23,7 @@ enum {NEAKTIVNO, AKTIVNO};
 /*int ikosaedar;*/
 
 /* Enumeracija koja predstavlja tekuce
- * stanje igre sa gledista gameplaya */
+ * stanje igre sa gledista gejmpleja */
 int stanje;
 enum {POCETAK, U_TOKU, PAUZA,
       CESTITKE, GAME_OVER};
@@ -35,6 +35,6 @@ void postavi_kolbek(void);
 void postavi_svetlo(void);
 void zapocni_igru(void);
 void restartuj_igru(void);
-void napusti_igru(void);
+void napusti_igru(const char*);
 
 #endif /* OSNOV_H */

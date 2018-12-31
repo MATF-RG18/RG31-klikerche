@@ -60,14 +60,29 @@ void na_prikaz(void)
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     
-    /* Izracunavanje pozicije oka, te postavljanje
-     * vidnih parametara; scena se tranformise tako
+    /* Ukoliko igra nije u toku, oko tj.
+     * kamera se blago okrece nadesno */
+    if (stanje != U_TOKU &&
+        stanje != GAME_OVER){
+        oko_desno();
+    }
+    
+    /* Izracunavanje pozicije oka; ukoliko
+     * nije neuspesan kraj igre, racuna se
+     * klasicno; u suprotnom, postavlja se
+     * iznad klikera koji pada u ambis */
+    if (stanje != GAME_OVER){
+        popravi_oko();
+    } else if (oko.iznad) {
+        oko_iznad();
+    }
+    
+    /* Vidni parametri; scena se tranformise tako
      * da se oko nadje ispred, a kliker na centru
      * scene, cime se simulira sinteticka kamera */
-    popravi_oko();
     gluLookAt( oko.x,  oko.y,  oko.z,  /* polozaj kamere */
               klik.x, klik.y, klik.z,  /* centar pogleda */
-              NORM_X, NORM_Y, NORM_Z); /* vektor normale */
+              norm.x, norm.y, norm.z); /* vektor normale */
     
     /* Odbaceni pokusaj ukljucivanja fiksiranog
      * pogleda koji simulira pticju perspektivu koja

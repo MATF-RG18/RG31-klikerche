@@ -35,13 +35,17 @@ void sacuvaj_igru(void)
      * zapisivanjem bitnih promenljivih */
     
     /* Upisivanje parametara oka */
-    fprintf(fajl, "%lf %lf %lf\n", oko.r, oko.phi, oko.theta);
+    fprintf(fajl, "%lf %lf %lf\n",
+                  oko.r, oko.phi, oko.theta);
     
     /* Upisivanje razlika oka */
     /*fprintf(fajl, "%d %d %d\n", raz.r, raz.phi, raz.theta);*/
     
     /* Upisivanje polozaja klikera */
-    fprintf(fajl, "%lf %lf %lf\n", klik.x, klik.y, klik.z);
+    fprintf(fajl, "%lf %lf %lf\n",
+                  klik.x, klik.y, klik.z);
+    fprintf(fajl, "%d %d %d\n",
+                  klik.sx, klik.sy, klik.sz);
     
     /* Upisivanje skoka i rotacije */
     /*fprintf(fajl, "%lf %lf\n", klik.s, rot.u);*/
@@ -55,6 +59,10 @@ void sacuvaj_igru(void)
     fprintf(fajl, "%lf %d %d %d\n", klik.s, stanje,
             glutGet(GLUT_FULL_SCREEN),
             vreme.novo - stopw.pocetak - vreme.pauza);
+    
+    /* Upisivanje parametara sudara */
+    fprintf(fajl, "%d %lf %d\n", sudar.preblizu,
+                  sudar.svis, sudar.smer);
     
     /* Upisivanje matrice rotacije; iako je u pitanju
      * matrica dimenzija 4x4, vredna cuvanja je samo
@@ -75,13 +83,15 @@ void sacuvaj_igru(void)
     /* Upisivanje dokumentacionih komentara
      * u fajl pre njegovog zatvaranja */
     fputc('\n', fajl);
-    fprintf(fajl, "# Sacuvana igra sadrzi sest redova;\n");
+    fprintf(fajl, "# Sacuvana igra sadrzi osam redova;\n");
     fprintf(fajl, "# detalji se mogu naci u samom kodu;\n");
     fprintf(fajl, "# prvi: sferni parametri oka/kamere;\n");
     /*fprintf(fajl, "# drugi: razlike oka, za resetovanje;\n");*/
-    fprintf(fajl, "# drugi: polozaj igracevog klikera;\n");
-    fprintf(fajl, "# treci: parametar skoka, indikator\n");
+    fprintf(fajl, "# drugi: polozaj klikera u prostoru;\n");
+    fprintf(fajl, "# treci: polozaj klikera na stazi;\n");
+    fprintf(fajl, "# cetvrti: parametar skoka, indikator\n");
     fprintf(fajl, "# stanja, rezim prikaza, proteklo vreme;\n");
+    fprintf(fajl, "# peti: parametri obrade sudara/kolizija;\n");
     fprintf(fajl, "# ostali: matrica rotacije/kotrljanja\n");
     
     /* Zatvaranje fajla */
@@ -106,7 +116,9 @@ void ucitaj_igru(void)
     char test[TEST_MAX];
     if (fajl == NULL || fscanf(fajl, "%*f %*f %*f\n \
                             %*f %*f %*f\n \
+                            %*d %*d %*d\n \
                             %*f %*d %*d %*d\n \
+                            %*d %*f %*d\n \
                             %*f %*f %*f\n \
                             %*f %*f %*f\n \
                             %*f %*f %*f\n\n \
@@ -123,13 +135,17 @@ void ucitaj_igru(void)
     rewind(fajl);
     
     /* Citanje parametara oka */
-    fscanf(fajl, "%lf %lf %lf", &oko.r, &oko.phi, &oko.theta);
+    fscanf(fajl, "%lf %lf %lf",
+                 &oko.r, &oko.phi, &oko.theta);
     
     /* Citanje razlika oka */
     /*fscanf(fajl, "%d %d %d", &raz.r, &raz.phi, &raz.theta);*/
     
     /* Citanje polozaja klikera */
-    fscanf(fajl, "%lf %lf %lf", &klik.x, &klik.y, &klik.z);
+    fscanf(fajl, "%lf %lf %lf",
+                 &klik.x, &klik.y, &klik.z);
+    fscanf(fajl, "%d %d %d",
+                 &klik.sx, &klik.sy, &klik.sz);
     
     /* Citanje skoka i rotacije */
     /*fscanf(fajl, "%lf %lf", &klik.s, &rot.u);*/
@@ -139,6 +155,10 @@ void ucitaj_igru(void)
     int prikaz, proteklo;
     fscanf(fajl, "%lf %d %d %d", &klik.s,
                  &stanje, &prikaz, &proteklo);
+    
+    /* Citanje parametara sudara */
+    fscanf(fajl, "%d %lf %d\n", &sudar.preblizu,
+                  &sudar.svis, &sudar.smer);
     
     /* Citanje matrice rotacije */
     int i, kor = (int)sqrt(MAT_DIM);
@@ -169,6 +189,11 @@ void ucitaj_igru(void)
     stopw.starov = NEAKTIVNO;
     vreme.pauza = NEAKTIVNO;
     stopw.pocetak = vreme.novo - proteklo;
+    
+    /* Kliker svakako ne pada, posto nije
+     * dozvoljeno cuvati igru tada */
+    klik.pad = NEAKTIVNO;
+    klik.kret = NEAKTIVNO;
     
     /* Tekucim tipkama menja se stanje
      * tako sto se zanemaruje resetovanje

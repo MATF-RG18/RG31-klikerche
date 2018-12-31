@@ -2,7 +2,10 @@
 
 void napravi_scenu(void)
 {
-    /* Pravljenje tekstura za stazu/teren; one se
+    /* Citanje staze iz datoteke */
+    ucitaj_stazu();
+    
+    /* Pravljenje tekstura za scenu; one se
      * prave pomocu biblioteke SOIL ucitavanjem u
      * podrazumevanom rezimu, a prave im se novi
      * identifikatori, kao i propratne mipmape, dok
@@ -14,21 +17,32 @@ void napravi_scenu(void)
     SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
     scena.zaklop = SOIL_load_OGL_texture(SCENA_ZAKL,
     SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
-    scena.staza = SOIL_load_OGL_texture(STAZA_TEKST,
-    SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
-    scena.kraj = SOIL_load_OGL_texture(STAZA_KRAJ,
-    SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
+    
+    /* Teksture moraju biti ucitane */
+    if (scena.pozt == NEAKTIVNO
+        || scena.zaklop == NEAKTIVNO){
+        napusti_igru("Neuspesno citanje tekstura scene!");
+    }
     
     /* Iscrtavanje pozadine resava se preko
      * GLU-ovog quadric valjka, posto on
      * ima ugradjenu podrsku za teksture;
      * pravi se novi quadric i sugerise mu
-     * se da prihvati aktivnu teksturu */
+     * se da prihvati aktivnu teksturu;
+     * quadric mora biti uspesno napravljen */
     scena.obj = gluNewQuadric();
+    if (scena.obj == NULL){
+        napusti_igru("Neuspesno pravljenje quadrica pozadine!");
+    }
     gluQuadricTexture(scena.obj, GLU_TRUE);
     
     /* Registrovanje liste za scenu */
     scena.lista = glGenLists(AKTIVNO);
+    
+    /* Registracija mora biti uspesna */
+    if (scena.lista == NEAKTIVNO){
+        napusti_igru("Neuspesno pravljenje liste scene!");
+    }
     
     /* Pravljenje liste za scenu */
     glNewList(scena.lista, GL_COMPILE);
@@ -40,9 +54,6 @@ void napravi_scenu(void)
     
     /* Pravljenje pozadine */
     napravi_pozadinu();
-    
-    /* Vezivanje teksture za iscrtavanje staze */
-    glBindTexture(GL_TEXTURE_2D, scena.staza);
     
     /* Pravljenje staze */
     napravi_stazu();
@@ -130,123 +141,6 @@ void napravi_pozadinu(void)
     glTexCoord2i(0, 0);
     glVertex3f(POZ_DIM, -POZ_DIM, POZ_VIS/2.);
     glEnd();
-}
-
-void napravi_stazu(void)
-{
-    /* Iscrtavanje staze; magicni brojevi
-     * koji se po potrebi mogu menjati; push
-     * i pop su neophodni zbog kretanja tj.
-     * inace transformacija klikera, dok se
-     * zbog dobrog osvetljenja ne moze bez
-     * normalizacije upravnih vektora */
-    glEnable(GL_NORMALIZE);
-    glPushMatrix();
-    
-    /* Spustanje staze ispod klikera
-     * i pravljenje prve plocice */
-    glTranslatef(0, 0, -1.13);
-    napravi_plocicu();
-    
-    /* Pravljenje jos sest plocica
-     * duz x ose; produzavanje puta */
-    int i;
-    for (i = 0; i < 6; i++){
-        glTranslatef(-6, 0, 0);
-        napravi_plocicu();
-    }
-    
-    /* Pravljenje jos tri plocice
-     * duz y ose; malo skretanje */
-    for (i = 0; i < 3; i++){
-        glTranslatef(0, 6, 0);
-        napravi_plocicu();
-    }
-    
-    /* Ukljucivanje teksture za kraj
-     * i iscrtavanje zavrsne plocice */
-    glBindTexture(GL_TEXTURE_2D, scena.kraj);
-    glTranslatef(0, 6, 0);
-    napravi_plocicu();
-    
-    /* Kraj iscrtavanja, a samim tim
-     * i potrebe za normalizacijom */
-    glPopMatrix();
-    glDisable(GL_NORMALIZE);
-}
-
-void napravi_plocicu(void)
-{
-    /* Ideja za makroizovano icrtavanje plocica
-     * preuzeta je direktno iz implementacije fje
-     * glutSolidCube() biblioteke FreeGLUT; doradjena
-     * je tako da bude skalirana i teksturirana */
-    
-    /* Normale i teksture su direktno definisane
-     * koordinatama, a temena znakom ispred unapred
-     * izracunatih vrednosti koordinata prema skali */
-    #define N(a,b,c) glNormal3i(a, b, c)
-    #define T(a, b) glTexCoord2i(a, b)
-    #define V(a,b,c) glVertex3f(a 3, b 3, c 0.13)
-    
-    /* Plocice se icrtavaju kao skup cetvorouglova */
-    glBegin(GL_QUADS);
-    
-    /* Crta se prednja strana plocice u odnosu
-     * na pocetni polozaj oka i klikera */
-    N(1, 0, 0);
-    T(0, 1); V(+, -, +);
-    T(0, 0); V(+, -, -);
-    T(1, 0); V(+, +, -);
-    T(1, 1); V(+, +, +);
-    
-    /* Crta se desna strana plocice u odnosu
-     * na pocetni polozaj oka i klikera */
-    N(0, 1, 0);
-    T(0, 1); V(+, +, +);
-    T(0, 0); V(+, +, -);
-    T(1, 0); V(-, +, -);
-    T(1, 1); V(-, +, +);
-    
-    /* Crta se gornja strana plocice u odnosu
-     * na pocetni polozaj oka i klikera */
-    N(0, 0, 1);
-    T(0, 1); V(+, +, +);
-    T(0, 0); V(-, +, +);
-    T(1, 0); V(-, -, +);
-    T(1, 1); V(+, -, +);
-    
-    /* Crta se zadnja strana plocice u odnosu
-     * na pocetni polozaj oka i klikera */
-    N(-1, 0, 0);
-    T(0, 1); V(-, -, +);
-    T(0, 0); V(-, +, +);
-    T(1, 0); V(-, +, -);
-    T(1, 1); V(-, -, -);
-    
-    /* Crta se leva strana plocice u odnosu
-     * na pocetni polozaj oka i klikera */
-    N(0, -1, 0);
-    T(0, 1); V(-, -, +);
-    T(0, 0); V(-, -, -);
-    T(1, 0); V(+, -, -);
-    T(1, 1); V(+, -, +);
-    
-    /* Crta se donja strana plocice u odnosu
-     * na pocetni polozaj oka i klikera */
-    N(0, 0, -1);
-    T(0, 1); V(-, -, -);
-    T(0, 0); V(-, +, -);
-    T(1, 0); V(+, +, -);
-    T(1, 1); V(+, -, -);
-    
-    /* Kraj iscrtavanja plocica */
-    glEnd();
-    
-    /* Prestanak vazenja makroa */
-    #undef N
-    #undef T
-    #undef V
 }
 
 void postavi_scenu(void)

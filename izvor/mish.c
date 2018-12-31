@@ -43,10 +43,15 @@ void na_mis(int taster, int stanje, int x, int y)
     mis.x = x;
     mis.y = y;
     
-    switch (stanje){
+    /* Grananje prema stanjima je odbaceno
+     * posto je naprasno prestalo generisanje
+     * dogadjaja pritiskanja; kako iz nekog
+     * razloga trenutno biva registrovano samo
+     * otpustanje tastera, nema vise kretanja */
+    /*switch (stanje){*/
         /* Ukoliko je registrovan
          * dogadjaj pritiskanja */
-        case GLUT_DOWN:
+        /*case GLUT_DOWN:*/
             switch (taster) {
                 /* Obrtanjem tocka misa nagore
                  * oko se priblizava klikeru */
@@ -70,22 +75,22 @@ void na_mis(int taster, int stanje, int x, int y)
                 
                 /* Pritisak srednjeg tastera
                  * pokrece kliker unapred */
-                case GLUT_MIDDLE_BUTTON:
+                /*case GLUT_MIDDLE_BUTTON:
                     tipke |= KRENI;
-                    break;
+                    break;*/
             }
-            break;
+            /*break;*/
         
         /* Ukoliko je registrovan
          * dogadjaj otpustanja */
-        case GLUT_UP:
+        /*case GLUT_UP:*/
             /* Otpustanje srednjeg tastera
              * zaustavlja kretanje klikera */
-            if (taster == GLUT_MIDDLE_BUTTON){
+            /*if (taster == GLUT_MIDDLE_BUTTON){
                 tipke &= ~KRENI;
             }
             break;
-    }
+    }*/
 }
 
 void na_pomeraj(int x, int y)
@@ -107,9 +112,9 @@ void na_pomeraj(int x, int y)
     /* Ukoliko je pomeraj po x osi pozitivan,
      * mis je prevucen nadesno, sto znaci da
      * se oko pomera nalevo, i suprotno */
-    if (pom_x > PRAZNO){
+    if (pom_x > 0){
         oko_levo();
-    } else if (pom_x < PRAZNO){
+    } else if (pom_x < 0){
         oko_desno();
     }
     
@@ -119,9 +124,9 @@ void na_pomeraj(int x, int y)
      * samo ukoliko se kliker ne krece, posto
      * je inace tesko ispratiti kretanje */
     if (!(tipke & KRENI) && !(tipke & VRATI)){
-        if (pom_y > PRAZNO){
+        if (pom_y > 0){
             oko_gore();
-        } else if (pom_y < PRAZNO){
+        } else if (pom_y < 0){
             oko_dole();
         }
     }
@@ -132,6 +137,11 @@ void postavi_meni(void)
     /* Pravljenje menija i postavljanje
      * kolbek fje za obradu dogadjaja */
     meni = glutCreateMenu(na_meni);
+    
+    /* Meni mora biti uspesno napravljen */
+    if (meni == NEAKTIVNO){
+        napusti_igru("Neuspesno pravljenje menija!");
+    }
     
     /* Postavljanje fonta odrednica; nazalost,
      * ova funkcija FreeGLUT-a nije dostupna */
@@ -154,6 +164,11 @@ void postavi_meni(void)
 
 void na_meni(int opcija)
 {
+    /* Napustanje igre, ukoliko je to opcija */
+    if (opcija == NAPUSTI){
+        napusti_igru("Program prekinut dogadjajem misa!");
+    }
+    
     /* Meni radi tako sto simulira dogadjaje
      * tastature, a time i zeljene radnje */
     unsigned char tipka;
@@ -183,10 +198,6 @@ void na_meni(int opcija)
         
         case PAUZIRAJ:
             tipka = 'P';
-            break;
-        
-        case NAPUSTI:
-            tipka = ESC;
             break;
     }
     

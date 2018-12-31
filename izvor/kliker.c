@@ -17,16 +17,40 @@ void napravi_kliker(void)
     klik.tekst = SOIL_load_OGL_texture(KLIK_TEKST,
     SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
     
+    /* Tekstura mora biti ucitana */
+    if (klik.tekst == NEAKTIVNO){
+        napusti_igru("Neuspesno citanje teksture klikera!");
+    }
+    
     /* Iscrtavanje klikera resava se preko
      * GLU-ovog quadric objekta, posto on
      * ima ugradjenu podrsku za teksture;
      * pravi se novi quadric i sugerise mu
-     * se da prihvati aktivnu teksturu */
+     * se da prihvati aktivnu teksturu;
+     * quadric mora biti uspesno napravljen */
     klik.obj = gluNewQuadric();
+    if (klik.obj == NULL){
+        napusti_igru("Neuspesno pravljenje quadrica klikera!");
+    }
     gluQuadricTexture(klik.obj, GLU_TRUE);
     
-    /* Postavljanje parametra skoka */
+    /* Postavljanje parametra skoka
+     * i indikatora pada na nule */
     klik.s = UGAO_POC;
+    klik.pad = NEAKTIVNO;
+    klik.kret = NEAKTIVNO;
+    
+    /* Postavljanje relativnih
+     * polozaja na stazi na nule */
+    klik.sx = STAZA_DIM/2;
+    klik.sy = STAZA_DIM/2;
+    klik.sz = NEAKTIVNO;
+    
+    /* Postavljanje parametara
+     * sudara na nule */
+    sudar.preblizu = NEAKTIVNO;
+    sudar.svis = NEAKTIVNO;
+    sudar.smer = NAPRED;
     
     /* Postavljanje ugla rotacije; nije
      * vazno u novom modelu kotrljanja */
@@ -145,8 +169,11 @@ void kliker_napred(void)
     double duzina = sqrt((klik.x - oko.x) * (klik.x - oko.x)
                     + (klik.y - oko.y) * (klik.y - oko.y))
                     * KLIK_POM / vreme.pom; /* normalizacija */
-    klik.x += (klik.x - oko.x) / duzina;
-    klik.y += (klik.y - oko.y) / duzina;
+    klik.px = (klik.x - oko.x) / duzina;
+    klik.py = (klik.y - oko.y) / duzina;
+    
+    /* Obrada sudara prilikom kretanja */
+    obradi_sudare();
     
     /* Rotacija koja odgovara
      * kretanju unapred */
@@ -163,41 +190,16 @@ void kliker_nazad(void)
     double duzina = sqrt((oko.x - klik.x) * (oko.x - klik.x)
                     + (oko.y - klik.y) * (oko.y - klik.y))
                     * KLIK_POM / vreme.pom; /* normalizacija */
-    klik.x += (oko.x - klik.x) / duzina;
-    klik.y += (oko.y - klik.y) / duzina;
+    klik.px = (oko.x - klik.x) / duzina;
+    klik.py = (oko.y - klik.y) / duzina;
+    
+    /* Obrada sudara prilikom kretanja */
+    obradi_sudare();
     
     /* Rotacija koja odgovara
      * kretanju unazad */
     /*rot_nazad();*/
     kotrljaj(UNAZAD);
-}
-
-void kliker_skok(void)
-{
-    /* Odbaceno cuvanje povratne vrednosti;
-     * podrazumevano nije bio kraj skoka */
-    /*int vracam = SKOK_NIJE;*/
-    
-    /* Povecavanje parametra skoka */
-    klik.s += UGAO_PAR * vreme.pom;
-    
-    /* Ako je parametar dostigao maksimum,
-     * resetuje se, sto oznacava kraj skoka */
-    if (klik.s >= UGAO_EXT){
-        klik.s = UGAO_POC;
-        /*vracam = SKOK_KRAJ;*/
-    }
-    
-    /* Skok se modeluje sinusoidnom funkcijom;
-     * kao argument se forsira vrednost od nula
-     * do pi, tako da sinus vraca vrednosti koje
-     * rastu od nule do jedinice, a zatim opet
-     * opadaju do nule; mnozenje sa ocekivanom
-     * visinom skoka daje z koordinatu klikera */
-    klik.z = SKOK_VIS * sin(klik.s * M_PI / UGAO_EXT);
-    
-    /* 0 ako nije kraj, 1 ako jeste */
-    /*return vracam;*/
 }
 
 void napravi_vektor(void)
@@ -258,6 +260,9 @@ void napravi_vektor(void)
 
 void kotrljaj(int smer)
 {
+    /* Kopiranje smera za pad u provaliju */
+    sudar.smer = smer;
+    
     /* Odabir matrice transformacije modela
      * i pogleda kao trenutne; bez ovoga bi
      * doslo do problema ako se u toku kretanja

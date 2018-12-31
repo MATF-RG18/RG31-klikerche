@@ -24,10 +24,6 @@
 /*#define UGAO_POM 360*/
 #define UGAO_PAR 0.333333
 
-/* Dodatni opis skoka */
-#define SKOK_VIS 2.75
-/*enum {SKOK_NIJE, SKOK_KRAJ};*/
-
 /* Dodatni opis rotacije; posebna
  * enumeracija predstavlja znak ugla
  * to jest smer u kom se rotira */
@@ -40,6 +36,12 @@ struct kliker{
     /* Koordinate centra */
     GLdouble x, y, z;
     
+    /* Koordinate na stazi */
+    int sx, sy, sz;
+    
+    /* Trenutni pomeraj */
+    GLdouble px, py;
+    
     /* Tekstura mermera */
     GLuint tekst;
     
@@ -48,6 +50,11 @@ struct kliker{
     
     /* Parametar skoka */
     GLdouble s;
+    
+    /* Indikatori pada i visina
+     * do koje treba pasti */
+    int pad, kret;
+    double padv;
 } klik;
 
 /* Struktura koja enkapsulira rotaciju */
@@ -69,7 +76,6 @@ void napravi_kliker(void);
 void postavi_kliker(void);
 void kliker_napred(void);
 void kliker_nazad(void);
-void kliker_skok(void);
 void napravi_vektor(void);
 /*void rot_napred(void);
 void rot_nazad(void);*/

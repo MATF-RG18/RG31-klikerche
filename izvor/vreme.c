@@ -18,6 +18,12 @@ void na_tajmer(int id)
      * valja preduprediti talasanje */
     popravi_vreme();
     
+    /* Zavrsni pad u provaliju */
+    if (stanje == GAME_OVER && klik.pad){
+        kotrljaj(sudar.smer);
+        kliker_pad();
+    }
+    
     /* Igra koja nije u toku znaci da se nista
      * posebno ne desava na tajmer, te se samo
      * forsira ponovno iscrtavanje scene, a sam
@@ -30,9 +36,11 @@ void na_tajmer(int id)
         return;
     }
     
-    /* Kliker skace */
+    /* Kliker skace ili mozda pada */
     if (klik.s != UGAO_POC){
         kliker_skok();
+    } else if (klik.pad){
+        kliker_pad();
     }
     
     /* Resetovanje pogleda */

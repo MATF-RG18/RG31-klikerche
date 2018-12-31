@@ -2,8 +2,10 @@
 
 void napravi_oko(void)
 {
-    /* Postavljanje radijusa */
-    oko.r = OKO_RAD;
+    /* Postavljanje radijusa; za pocetni
+     * se bira maksimalan, koji ce se
+     * smanjiti u pocetnoj animaciji */
+    oko.r = OKO_RAD_MAX;
     
     /* Postavljanje azimuta */
     oko.phi = OKO_PHI;
@@ -135,6 +137,10 @@ int oko_reset(void)
 
 void oko_levo(void)
 {
+    /* Svako kretanje kamere
+     * zaustavlja resetovanje */
+    /*tipke &= ~RESET;*/
+    
     /* Okretanjem oka levo
      * smanjuje se azimut */
     oko.phi -= OKO_PHI_D * vreme.pom;
@@ -149,9 +155,15 @@ void oko_levo(void)
 
 void oko_desno(void)
 {
-    /* Okretanjem oka desno
-     * povecava se azimut */
-    oko.phi += OKO_PHI_D * vreme.pom;
+    /* Svako kretanje kamere
+     * zaustavlja resetovanje */
+    /*tipke &= ~RESET;*/
+    
+    /* Okretanjem oka desno povecava
+     * se azimut; ukoliko je izazvano
+     * stanjem igre, usporava se */
+    int kraj = (stanje != U_TOKU) ? OKR_USP : OKR_INC;
+    oko.phi += OKO_PHI_D * vreme.pom / kraj;
     /*raz.phi++;*/
     
     /* Popravka jer phi = [-pi, pi) */
@@ -163,6 +175,10 @@ void oko_desno(void)
 
 void oko_gore(void)
 {
+    /* Svako kretanje kamere
+     * zaustavlja resetovanje */
+    tipke &= ~RESET;
+    
     /* Podizanjem oka se
      * povecava polar */
     oko.theta += OKO_THETA_D * vreme.pom;
@@ -180,6 +196,10 @@ void oko_gore(void)
 
 void oko_dole(void)
 {
+    /* Svako kretanje kamere
+     * zaustavlja resetovanje */
+    tipke &= ~RESET;
+    
     /* Spustanjem oka se
      * smanjuje polar */
     oko.theta -= OKO_THETA_D * vreme.pom;
@@ -197,6 +217,10 @@ void oko_dole(void)
 
 void oko_napred(void)
 {
+    /* Svako kretanje kamere
+     * zaustavlja resetovanje */
+    tipke &= ~RESET;
+    
     /* Priblizavanjem oka se
      * smanjuje radijus */
     oko.r -= OKO_RAD_D * vreme.pom;
@@ -212,6 +236,10 @@ void oko_napred(void)
 
 void oko_nazad(void)
 {
+    /* Svako kretanje kamere
+     * zaustavlja resetovanje */
+    tipke &= ~RESET;
+    
     /* Udaljavanjem oka se
      * povecava radijus */
     oko.r += OKO_RAD_D * vreme.pom;

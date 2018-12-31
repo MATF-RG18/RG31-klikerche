@@ -33,6 +33,10 @@
 #define RES_PAR 200
 #define RES_THETA 5
 
+/* Parametri okretanja */
+#define OKR_USP 7
+#define OKR_INC 1
+
 /* Enumeracija za resetovanje */
 enum {RES_NIJE, RES_KRAJ};
 
@@ -51,6 +55,9 @@ struct oko{
     /* Dekartove koordinate,
      * tzv. tacka pogleda */
     GLdouble x, y, z;
+    
+    /* Indikator za kraj igre */
+    int iznad;
 } oko;
 
 /* Struktura koja enkapsulira razlike
