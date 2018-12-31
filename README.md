@@ -1,7 +1,7 @@
 #### RG31-klikerche
 
 ## Klikerče :globe_with_meridians:
-Projekat na kursu Računarska grafika. Korisnik upravlja klikerom koji se na komande korisnika kreće po generisanom terenu odnosno stazi sa preprekama, sa namerom uspešnog dolaska do cilja – kraja staze.
+Projekat na kursu Računarska grafika. Korisnik upravlja klikerom koji se na komande tastature kreće po generisanom terenu odnosno stazi sa preprekama, sa namerom uspešnog dolaska do cilja – kraja staze.
 
 Ukratko, projekat uključuje većinu gradiva obuhvaćenog vežbama na već pomenutom kursu, kao što je: crtanje 2D i 3D primitiva, provera dubine (depth tj. z-bafer), tempirana animacija, upravljanje pogledom (interaktivno postavljanje oka i perspektive), upotreba korisnički kreiranih matrica transformacija, osvetljenje, materijali, liste, tastatura, miš, ispis teksta, parametrizovane površi, teksture... Za bolji uvid preporučuje se analiza koda i proba same igre. :smiley:
 
@@ -32,11 +32,11 @@ Tipka | Događaj | Tipka | Događaj
 <kbd>W</kbd> <kbd>S</kbd> | kretanje klikera | <kbd>Q</kbd> <kbd>E</kbd> | udaljenost oka
 <kbd>A</kbd> <kbd>D</kbd> | okretanje oka | <kbd>Z</kbd> <kbd>X</kbd> | visina pogleda
 <kbd>R</kbd> | resetovanje oka | <kbd>Space</kbd> | skok
-<kbd>F</kbd> | fullscreen | <kbd>G</kbd> | ikosaedarski režim
+<kbd>F</kbd> | fullscreen | <kbd>G</kbd> | pokretanje i restart
 <kbd>K</kbd> | čuvanje igre | <kbd>L</kbd> | čitanje igre
 <kbd>P</kbd> | pauza | <kbd>Esc</kbd> | izlaz iz igre
 
-Za ljubitelje miša, ugrađene su mnoge paralelne komande koje omogućuju igru uz minimalnu upotrebu tastature. Naime, preko miša jedino nije moguće ići unazad i skočiti, s tim što, kada se uzme u obzir da se kretanje unazad može izvesti okretanjem za pola kruga, a zatim kretanjem unapred, prvo ograničenje i nije veliki problem.
+Za ljubitelje miša, ugrađene su mnoge paralelne komande koje omogućuju igru uz minimalnu upotrebu tastature. Naime, preko miša jedino nije moguće ići unazad i skočiti, s tim što, kada se uzme u obzir da se kretanje unazad može izvesti okretanjem za pola kruga, a zatim kretanjem unapred, prvo ograničenje i nije veliki problem. Napomena: pojedini sistemi ne generišu precizno događaje miša, tako da se ipak preporučuje upotreba tastature.
 
 Taster | Događaj
 ----- | ------

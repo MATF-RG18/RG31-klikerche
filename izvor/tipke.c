@@ -96,7 +96,9 @@ void na_tipku(unsigned char tipka, int dogadjaj)
         /* Cuvanje trenutne igre, ali
          * samo ukoliko je u toku ili
          * je privremeno pauzirana, pri
-         * cemu vazi da kliker ne pada */
+         * cemu vazi da kliker ne pada,
+         * kako bi se izbeglo pogresno
+         * izracunavanje visine pada */
         if (dogadjaj == DOLE){
             if (klik.pad || (stanje != U_TOKU
                 && stanje != PAUZA)){

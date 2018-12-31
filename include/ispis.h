@@ -29,7 +29,7 @@ struct fps{
  * koja meri vreme, sa prekoracenjem od
  * ulaska u stoti minut igre, sto se ne
  * ocekuje svakako, posto se sve moze
- * zavrsiti za nekoliko minuta */
+ * zavrsiti cak i za jedan minut */
 struct stoperica{
     int pocetak;
     int starov;
