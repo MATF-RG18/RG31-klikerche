@@ -280,11 +280,15 @@ void oko_iznad(void)
      * deljenjem sa njegovom duzinom i jos
      * mnozenjem sa parametrom reseta */
     double duz = sqrt(t_x*t_x + t_y*t_y + t_z*t_z)
-                 * RES_PAR / vreme.pom;
+                 * OKO_PADP / vreme.pom;
     t_x /= duz; t_y /= duz; t_z /= duz;
     
-    /* Translacija se proglasava gotovom */
+    /* Translacija se proglasava gotovom,
+     * a normale se resetuju */
     oko.iznad = NEAKTIVNO;
+    norm.x = NORM_X;
+    norm.y = NORM_Y;
+    norm.z = NORM_Z;
     
     /* Translacija po izracunatom vektoru,
      * ali samo ako je vrednost pomeraja
@@ -311,10 +315,16 @@ void oko_iznad(void)
     }
     
     /* Postavljanje novih koordinata normale
-     * kako bi se resila cinjenica da inace
-     * pravac pogleda postaje kolinearan sa
-     * normalom, sto nije prihvatljivo */
-    if (!oko.iznad){
+     * kako bi se resila cinjenica da pravac
+     * pogleda neprihvatljivo postaje kolinearan
+     * sa normalom, bilo na kraju animacije,
+     * bilo u toku (tada nisu istog znaka
+     * tekuca i sacuvana vrednost); bez ovoga
+     * bi kamera menjala orijentaciju u toku
+     * pada ili bi se skroz zacrnela */
+    if (!oko.iznad ||
+        norm.nx * (klik.x-oko.x) <= 0 ||
+        norm.ny * (klik.y-oko.y) <= 0){
         norm.x = norm.nx;
         norm.y = norm.ny;
         norm.z = NEAKTIVNO;

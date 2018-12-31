@@ -5,10 +5,10 @@
 
 /* Opis pada */
 #define KLIK_PAD 0.008
-#define KLIK_PADV -50
+#define KLIK_PADV -74
 #define KLIK_PADB 2.5
 #define OKO_PAD 10
-#define OKO_PADP 350
+#define OKO_PADP 150
 
 /* Dodatni opis skoka */
 #define SKOK_VIS 2.75

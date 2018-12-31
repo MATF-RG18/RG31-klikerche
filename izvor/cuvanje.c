@@ -190,6 +190,13 @@ void ucitaj_igru(void)
     vreme.pauza = NEAKTIVNO;
     stopw.pocetak = vreme.novo - proteklo;
     
+    /* Postavljanje normale oka na klasicnu,
+     * za slucaj da se ucitava iz krajnjeg
+     * stanja neuspesno zavrsene igre */
+    norm.x = NORM_X;
+    norm.y = NORM_Y;
+    norm.z = NORM_Z;
+    
     /* Kliker svakako ne pada, posto nije
      * dozvoljeno cuvati igru tada */
     klik.pad = NEAKTIVNO;
