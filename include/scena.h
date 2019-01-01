@@ -5,7 +5,7 @@
 
 /* Teksture scene */
 #define SCENA_POZT "ostalo/pozadina.png"
-#define SCENA_ZAKL "ostalo/plavetnilo.png"
+#define SCENA_ZAKL "ostalo/zaklop.png"
 
 /* Opis pozadine */
 #define POZ_DIM 100
