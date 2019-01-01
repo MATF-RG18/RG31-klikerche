@@ -32,6 +32,7 @@ struct sudar{
 void kliker_skok(void);
 void kliker_pad(void);
 void obradi_sudare(void);
+double nadji_visinu(int, int);
 int dovoljno_blizu_cilja(void);
 void oko_iznad(void);
 void game_over(void);

@@ -148,22 +148,18 @@ void obradi_sudare(void)
     int stary = (int)(klik.y + kory)
                 / PLOC_DIM + STAZA_DIM/2;
     
-    /* Dodavanje poluprecnika klikera
-     * na stari korektivni faktor */
-    korx += (klik.px > 0) ? KLIK_RAD : -KLIK_RAD;
-    kory += (klik.py > 0) ? KLIK_RAD : -KLIK_RAD;
-    
     /* Racunanje novih koordinata na stazi
      * po istom principu kao za stare */
-    klik.sx = (int)(klik.x + klik.px + korx)
+    int novx = (int)(klik.x + klik.px + korx)
                 / PLOC_DIM + STAZA_DIM/2;
-    klik.sy = (int)(klik.y + klik.py + kory)
+    int novy = (int)(klik.y + klik.py + kory)
                 / PLOC_DIM + STAZA_DIM/2;
     
-    /* Ukoliko se kliker sada nalazi iznad
-     * provalije, igra je neuspesno zavrsena */
-    if ((klik.sx < 0 || klik.sy < 0 || klik.sx > STAZA_DIM-1
-        || klik.sy > STAZA_DIM-1 || staza.mat[klik.sx][klik.sy]
+    /* Ukoliko se kliker sada nalazi iznad provalije
+     * ili je mozda izasao izvan dimenzija terena (to
+     * je kao ambis), igra je neuspesno zavrsena */
+    if ((novx < 0 || novy < 0 || novx > STAZA_DIM-1
+        || novy > STAZA_DIM-1 || staza.mat[novx][novy]
         == PROVALIJA) && klik.z == 0){
         game_over();
         
@@ -173,52 +169,52 @@ void obradi_sudare(void)
         return;
     }
     
-    /* Racunanje prethodne visine staze */
-    double svis;
-    switch (staza.mat[starx][stary]){
-        case PROVALIJA:
-        case PLOCICA:
-            svis = 0;
-            break;
-        
-        case PREPREKA1:
-            svis = PREP1_VIS;
-            break;
-        
-        case PREPREKA2:
-            svis = PREP2_VIS;
-            break;
+    /* Racunanje kako prethodne, tako
+     * i nove visine polja staze */
+    double svis = nadji_visinu(starx, stary);
+    double nvis = nadji_visinu(novx, novy);
+    
+    /* Ukoliko je visina novog polja manja od
+     * starog, a kliker se nalazi na vecoj visini,
+     * pada dokle je potrebno; ovo doprinosi vernosti
+     * simulacije, ali ipak ne uspeva da sasvim resi
+     * problem coskova, kao i ivica visih polja uopsteno,
+     * tako da je situacija nesavrsena po tom pitanju;
+     * desava se da se prilikom pada mali deo klikera
+     * preklopi sa preprekom; ovo ne utice na samu igru,
+     * a pokazalo se kao tesko za potpunu popravku */
+    if (nvis < svis && klik.z > nvis){
+        klik.pad = AKTIVNO;
+        klik.padv = nvis;
     }
     
-    /* Racunanje nove visine staze */
-    double nvis;
-    switch (staza.mat[klik.sx][klik.sy]){
-        case PROVALIJA:
-        case PLOCICA:
-            nvis = 0;
-            break;
-        
-        case PREPREKA1:
-            nvis = PREP1_VIS;
-            break;
-        
-        case PREPREKA2:
-            nvis = PREP2_VIS;
-            break;
-    }
+    /* Dodavanje poluprecnika klikera na stari
+     * korektivni faktor; dodatna korekcija je
+     * neophodna zarad realnijeg priljubljivanja
+     * uz prepreku; bez ovoga se kliker zakuca tek
+     * kada mu centar udari u prepreku, a to je
+     * prekasno, tako da se mora gledati radijus */
+    korx += (klik.px > 0) ? KLIK_RAD : -KLIK_RAD;
+    kory += (klik.py > 0) ? KLIK_RAD : -KLIK_RAD;
+    
+    /* Racunanje korigovanih novih koordinata
+     * na stazi po istom principu kao dosad */
+    klik.sx = (int)(klik.x + klik.px + korx)
+                / PLOC_DIM + STAZA_DIM/2;
+    klik.sy = (int)(klik.y + klik.py + kory)
+                / PLOC_DIM + STAZA_DIM/2;
+    
+    /* Racunanje korigovane nove visine staze */
+    nvis = nadji_visinu(klik.sx, klik.sy);
     
     /* Ukoliko je visina novog polja veca od
      * starog, a kliker se nalazi na manjoj
      * visini, odustaje se od pokreta, ali se
      * pamti da je priljubljen uz prepreku; isto
      * se radi ukoliko trenutne stare visinske
-     * koordinate ne odgovaraju novim, pri cemu
-     * kliker ne skace; sve ovo doprinosi vernosti
-     * simulacije, ali ipak ne uspeva da resi
-     * problem coskova, kao i ivica visih polja
-     * uopsteno, tako da je situacija nesavrsena po
-     * tom pitanju; ovo, doduse, ne utice mnogo na
-     * igru, a pokazalo se kao tesko za popravku */
+     * koordinate ne odgovaraju novim, posto bi
+     * u suprotnom greska u racunu prilikom
+     * korekcije dovela do pogresnog ponasanja */
     if ((nvis > svis || sudar.svis != nvis)
         && klik.z < nvis){
         sudar.preblizu = AKTIVNO;
@@ -227,25 +223,39 @@ void obradi_sudare(void)
         sudar.preblizu = NEAKTIVNO;
     }
     
-    /* Ukoliko je visina novog polja manja od
-     * starog, a kliker se nalazi na vecoj
-     * visini, kliker pada dokle je potrebno */
-    if (nvis < svis && klik.z > nvis){
-        klik.pad = AKTIVNO;
-        klik.padv = nvis;
-    }
-    
     /* Ukoliko se kliker sada nalazi na
      * cilju, igra je uspesno zavrsena */
     if (klik.sx == staza.cilj.x &&
         klik.sy == staza.cilj.y &&
-        klik.z == nvis && dovoljno_blizu_cilja()){
+        klik.z == nvis &&
+        dovoljno_blizu_cilja()){
         stanje = CESTITKE;
     }
     
     /* Azuriranje koordinata klikera */
     klik.x += klik.px;
     klik.y += klik.py;
+}
+
+double nadji_visinu(int x, int y)
+{
+    /* Postavljanje povratne vrednosti;
+     * na pocetku se pretpostavlja nula */
+    double vracam = 0;
+    
+    /* Popravka, ukoliko je neophodna */
+    switch (staza.mat[x][y]){
+        case PREPREKA1:
+            vracam = PREP1_VIS;
+            break;
+        
+        case PREPREKA2:
+            vracam = PREP2_VIS;
+            break;
+    }
+    
+    /* Vracanje izracunate vrednosti */
+    return vracam;
 }
 
 int dovoljno_blizu_cilja(void)
