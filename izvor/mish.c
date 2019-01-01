@@ -39,15 +39,18 @@ void na_mis(int taster, int stanje, int x, int y)
         return;
     }
     
-    /* Pamti se pozicija pokazivaca */
+    /* Pamti se pozicija pokazivaca,
+     * kao i koji je taster aktivan */
     mis.x = x;
     mis.y = y;
+    /*mis.tast = taster;*/
     
     /* Grananje prema stanjima je odbaceno
      * posto je naprasno prestalo generisanje
-     * dogadjaja pritiskanja; kako iz nekog
-     * razloga trenutno biva registrovano samo
-     * otpustanje tastera, nema vise kretanja */
+     * dogadjaja pritiskanja; kako autoru iz
+     * nekog razloga GLUT na Ubuntuu trenutno
+     * registruje iskljucivo otpustanje tastera,
+     * nema vise kretanja pomocu tocka misa */
     /*switch (stanje){*/
         /* Ukoliko je registrovan
          * dogadjaj pritiskanja */
@@ -96,8 +99,10 @@ void na_mis(int taster, int stanje, int x, int y)
 void na_pomeraj(int x, int y)
 {
     /* Pomeranje se uzima u obzir
-     * samo ukoliko je igra u toku */
-    if (stanje != U_TOKU){
+     * samo ukoliko je igra u toku
+     * i ako je aktivan levi klik */
+    if (stanje != U_TOKU /*||
+        mis.tast != GLUT_LEFT_BUTTON*/){
         return;
     }
     

@@ -217,7 +217,8 @@ void obradi_sudare(void)
      * simulacije, ali ipak ne uspeva da resi
      * problem coskova, kao i ivica visih polja
      * uopsteno, tako da je situacija nesavrsena po
-     * tom pitanju; ovo ne utice na samu igru */
+     * tom pitanju; ovo, doduse, ne utice mnogo na
+     * igru, a pokazalo se kao tesko za popravku */
     if ((nvis > svis || sudar.svis != nvis)
         && klik.z < nvis){
         sudar.preblizu = AKTIVNO;

@@ -11,12 +11,13 @@
 #define GLUT_WHEEL_DOWN 4
 #endif
 
-/* Struktura koja enkapsulira mis
- * predstavljen tekucim relativnim
- * koordinatama pokazivaca */
+/* Struktura koja enkapsulira mis predstavljen
+ * tekucim relativnim koordinatama pokazivaca,
+ * kao i poslednjim aktivnim tasterom */
 struct mis{
     int x;
     int y;
+    /*int tast;*/
 } mis;
 
 /* Enumeracija koja opisuje

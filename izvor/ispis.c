@@ -171,7 +171,7 @@ void ispisi_stanje(void)
         /* Na pocetku se korisnik upoznaje sa igrom */
         case POCETAK:
             ispisi_nisku(STAT_POL, 2*STAT_POL,
-            "DOBRO DOSLI U IGRU KLIKERCHE!\nKretanje: 'W', 'A', 'S', 'D'\nKamera: 'Q', 'E', 'Z', 'X'\nOstalo: tastatura i mis\nZadatak: dospeti do cilja!\nZa pocetak igre pritisnite 'G'\nZa izlaz pritisnite 'Esc'");
+            "DOBRO DOSLI U KLIKERCHE!\nKretanje: 'W', 'A', 'S', 'D'\nKamera: 'Q', 'E', 'Z', 'X'\nOstalo: tastatura i mis\nZadatak: dospeti do cilja!\nZa pocetak igre pritisnite 'G'\nZa izlaz pritisnite 'Esc'");
             break;
         
         /* U toku igre moguce je restartovati
@@ -192,14 +192,14 @@ void ispisi_stanje(void)
          * se cestitke na uspesnom dolasku */
         case CESTITKE:
             ispisi_nisku(STAT_POL, 2*STAT_POL,
-            "CILJ JE DOSTIGNUT!\nCestitke i hvala na igri!\nZa restart pritisnite 'G'\nZa izlaz pritisnite 'Esc'");
+            "STIGLI STE DO CILJA!\nCestitke i hvala na igri!\nZa restart pritisnite 'G'\nZa izlaz pritisnite 'Esc'");
             break;
         
         /* Kada se padne u provaliju, ispisuje
          * se poruka o neuspesnom kraju igre */
         case GAME_OVER:
             ispisi_nisku(STAT_POL, 2*STAT_POL,
-            "UPALI STE U PROVALIJU!\nVise srece sledeci put!\nZa restart pritisnite 'G'\nZa izlaz pritisnite 'Esc'");
+            "SPALI STE SA STAZE!\nVise srece sledeci put!\nZa restart pritisnite 'G'\nZa izlaz pritisnite 'Esc'");
             break;
     }
 }
