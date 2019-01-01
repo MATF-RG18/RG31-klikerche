@@ -181,8 +181,9 @@ void obradi_sudare(void)
      * problem coskova, kao i ivica visih polja uopsteno,
      * tako da je situacija nesavrsena po tom pitanju;
      * desava se da se prilikom pada mali deo klikera
-     * preklopi sa preprekom; ovo ne utice na samu igru,
-     * a pokazalo se kao tesko za potpunu popravku */
+     * presece sa preprekom; ovo ne utice na samu igru,
+     * ali stoji da nije vizuelno prijemcivo; pokazalo
+     * se, medjutim, kao tesko za potpunu popravku */
     if (nvis < svis && klik.z > nvis){
         klik.pad = AKTIVNO;
         klik.padv = nvis;
