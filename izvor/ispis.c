@@ -171,7 +171,7 @@ void ispisi_stanje(void)
         /* Na pocetku se korisnik upoznaje sa igrom */
         case POCETAK:
             ispisi_nisku(STAT_POL, 2*STAT_POL,
-            "DOBRO DOSLI U KLIKERCHE!\nKretanje: 'W', 'A', 'S', 'D'\nKamera: 'Q', 'E', 'Z', 'X'\nOstalo: tastatura i mis\nZadatak: dospeti do cilja!\nZa pocetak igre pritisnite 'G'\nZa izlaz pritisnite 'Esc'");
+            "DOBRO DOSLI U KLIKERCHE!\nKretanje: 'W', 'A', 'S', 'D'\nKamera: 'Q', 'E', 'Z', 'X'\nSkok: 'Space', izlaz: 'Esc'\nOstalo: tastatura i mis\nZadatak: dospeti do cilja!\nZa pocetak igre pritisnite 'G'");
             break;
         
         /* U toku igre moguce je restartovati
