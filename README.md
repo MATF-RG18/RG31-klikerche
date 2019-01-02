@@ -22,8 +22,6 @@ Istovremeno prevođenje i pokretanje: `make makerun`.
 
 Za prevođenje je neophodno imati kompajler [GCC](https://gcc.gnu.org/), podrazumevano dostupan kao [naredba ljuske](http://man7.org/linux/man-pages/man1/gcc.1.html) na većini distribucija Linuksa, dok se u include putu moraju nalaziti relevantni činioci biblioteke [FreeGLUT](http://freeglut.sourceforge.net/) aplikativnog programskog interfejsa [OpenGL](https://www.opengl.org/). Za učitavanje tekstura korišćena je biblioteka [SOIL](http://www.lonesock.net/soil.html), koju je moguće posebno preuzeti i prevesti, a koja se može i prosto preuzeti i instalirati kao aplikacija. Sve neophodno, kada su bibliteke u pitanju, moguće je podesiti komandom terminala poput `sudo apt-get install binutils-gold freeglut3 freeglut3-dev libsoil-dev` za Ubuntu.
 
-Ukoliko iz bilo kog razloga pomenute biblioteke u trenutku nisu dostupne, u direktorijumu projekta nalazi se i izvršiva verzija programa, prevedena na 32-bitnom izdanju operativnog sistema [Ubuntu 12.04.5 LTS (Precise Pangolin)](http://releases.ubuntu.com/12.04/), pa je moguće probati direktno pokretanje komandom `make run` ili nekom drugom koja odgovara radnom sistemu, kao što je `./klikerche` u slučaju Ubuntua. Ovaj metod provereno radi na nekoliko drugih distribucija Linuksa, samo je neophodno prvo dodeliti sebi pravo izvršavanja komandom poput `chmod u+x klikerche` za većinu distribucija.
-
 ## Komande :video_game:
 Kako je program interaktivne prirode, ugrađeni su mnogi odgovori na događaje (korisničkog unosa preko) tastature. Sledi tabelarni prikaz implementiranih komandi, uz napomenu da su sve neosetljive na veličinu slova odnosno <kbd>Caps Lock</kbd>.
 
@@ -36,7 +34,7 @@ Tipka | Događaj | Tipka | Događaj
 <kbd>K</kbd> | čuvanje igre | <kbd>L</kbd> | čitanje igre
 <kbd>P</kbd> | pauza | <kbd>Esc</kbd> | izlaz iz igre
 
-Za ljubitelje miša, ugrađene su mnoge paralelne komande koje omogućuju igru uz minimalnu upotrebu tastature. Naime, preko miša jedino nije moguće ići unazad i skočiti, s tim što, kada se uzme u obzir da se kretanje unazad može izvesti okretanjem za pola kruga, a zatim kretanjem unapred, prvo ograničenje i nije veliki problem. Napomena: pojedini sistemi ne generišu precizno događaje miša, tako da se ipak preporučuje upotreba tastature.
+Za ljubitelje miša, ugrađene su mnoge paralelne komande koje omogućuju igru uz minimalnu upotrebu tastature. Naime, preko miša jedino nije moguće ići unazad i skočiti, s tim što, kada se uzme u obzir da se kretanje unazad može izvesti okretanjem za pola kruga, a zatim kretanjem unapred, prvo ograničenje i nije veliki problem. Napomena: pojedini sistemi ne generišu precizno događaje miša, tako da se ipak preporučuje upotreba tastature. Kretanje je zakomentarisano.
 
 Taster | Događaj
 ----- | ------
